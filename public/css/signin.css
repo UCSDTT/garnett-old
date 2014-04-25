@@ -1,0 +1,58 @@
+body {
+     background: url('../images/background.jpg') no-repeat center center fixed; 
+     -webkit-background-size: cover;
+     -moz-background-size: cover;
+     -o-background-size: cover;
+     background-size: cover;
+
+     padding-top: 0px;
+  	padding-bottom: 0px;
+}
+
+h1, p, span, input, label {
+	color: #FFFFFF;
+}
+
+
+.form_signin {
+	max-width: 330px;
+	margin: 10% auto;
+}
+
+.form_signin > h1 {
+	text-align: center;
+}
+
+.form_signin input {
+	color: #FFFFFF;
+	background: transparent;
+}
+
+.btn-signin {
+	border: 2px solid #FFFFFF;
+	background-color: transparent;
+	color: #FFFFFF;
+}
+.btn-signin:hover {
+	border: 2px solid #FFFFFF;
+	background-color: #FFFFFF;
+	color: #000000;
+}
+.btn-signin:hover {
+	border: 2px solid #FFFFFF;
+	background-color: #FFFFFF;
+	color: #000000;
+}
+
+.form_signin ::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #FFFFFF;
+}
+.form_signin :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #FFFFFF;
+}
+.form_signin ::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #FFFFFF;
+}
+.form_signin :-ms-input-placeholder { /* Internet Explorer 10+ */
+    color:    #FFFFFF;
+}
