@@ -14,6 +14,7 @@ sudo npm install <-- this installs dependencies for the project
 Installing some packages may fix some errors if that didn't work:
 ===============================
 sudo apt-get install libpq-dev
+
 sudo npm -g install node-gyp
 
 
@@ -33,8 +34,11 @@ sudo su - postgres (password is also postgres if required)
 createuser --pwprompt
 
 Enter name of role to add: ttuser
+
 Enter password: ttuser
+
 Re-enter password: ttuser
+
 Shall the new role be a superuser? (y/n) y 
 
 createdb ttapp
@@ -45,10 +49,10 @@ To access database ttapp that you created:
 ==========================================
 
 sudo su - postgres <-- login
+
 psql -d ttapp <-- enter postgres cmd
 
-[!!!!Now go to the file members.sql and paste the CREATE TABLE and INSERT queries from there
- into postgres!!!!]
+[!!!!Now go to the file members.sql and paste the CREATE TABLE and INSERT queries from there into postgres!!!!]
 
 \dt <-- show tables
 \q  <-- quit
