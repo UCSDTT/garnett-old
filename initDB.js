@@ -6,7 +6,9 @@ var query;
 client = new pg.Client(conString);
 client.connect();
 
-var createTableQuery = "CREATE TABLE members (" +
+var insertAdminQuery = "INSERT INTO members(id, firstname, lastname, username, password) VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin')";
+
+/*var createTableQuery = "CREATE TABLE members (" +
                           "id                 int  NOT NULL," +
                           "firstname            varchar(50) NOT NULL," +
                           "lastname             varchar(50) NOT NULL," +
@@ -21,7 +23,7 @@ var createTableQuery = "CREATE TABLE members (" +
                           "securityquestion     varchar(60)," +
                           "securityanswer       varchar(60)," +
                           "CONSTRAINT pk_members PRIMARY KEY ( id )" +
-                        ")";
+                        ")";*/
 query = client.query(createTableQuery);
 
 query.on('end', function () {
