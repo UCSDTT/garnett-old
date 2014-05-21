@@ -11,17 +11,15 @@ sudo npm install <-- this installs dependencies for the project
 
 
 
-If the previous command did not work,
-installing some packages may fix some errors:
+Installing some packages may fix some errors if that didn't work:
 ===============================
 sudo apt-get install libpq-dev
 sudo npm -g install node-gyp
 
 
 
-If you get a weird error about clock skew
-after the previous commands
-=========================================
+If you get a weird error about clock skew after the previous commands, try this:
+
 touch [file-name-here] <-- Use this to fix clock skew problem
 
 
