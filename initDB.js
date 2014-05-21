@@ -6,7 +6,7 @@ var query;
 client = new pg.Client(conString);
 client.connect();
 
-var insertAdminQuery = "INSERT INTO members(id, firstname, lastname, username, password) VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin')";
+var createTableQuery = "INSERT INTO members(id, firstname, lastname, username, password) VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin')";
 
 /*var createTableQuery = "CREATE TABLE members (" +
                           "id                 int  NOT NULL," +
