@@ -2,7 +2,7 @@
 
 <html>
 <head>
-	<title>Theta Tau UCSD</title>	
+	<title>{{title}}</title>	
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -20,36 +20,28 @@
 
 <body>
 	<div class="container">
-
 		<div class='row'>
-
-			<form role="form" class='form_signin'>
-
-				<h1>Theta Tau UCSD</h1>
-
-				{{#if error}}
-		            <div class="alert alert-danger">
+			<form role="form" class='form_login' action="/login" method="post">
+				<h1>{{title}}</h1>
+		        {{#if errorMessage}}
+		            <div class="alert alert-dismissable alert-danger register-fail">
 		              <button type="button" class="close" data-dismiss="alert">&times;</button>
-		              <strong>Oh No!</strong> Incorrect user password combination.
+		              <p>{{errorMessage}}</p>
 		            </div>
 		        {{/if}}
 
 				<div class="form-group">
-					<input type="email" class="form-control" id="login_username" placeholder="Username">
+					<input type="text" class="form-control" id="login_username" placeholder="Username" name="username">
 				</div>
 				<div class="form-group">
-					<input type="password" class="form-control" id="login_password" placeholder="Password">
+					<input type="password" class="form-control" id="login_password" placeholder="Password" name="password">
 				</div>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox"> Remember Me
-					</label>
+				
+				<div>
+					<input type="submit" value="Log In" class="btn btn-login btn-lg btn-block">
 				</div>
-				<button class="btn btn-signin btn-lg btn-block">Sign In</button>
 			</form>
-
 		</div>
-
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>

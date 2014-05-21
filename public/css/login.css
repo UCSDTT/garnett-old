@@ -9,50 +9,50 @@ body {
   	padding-bottom: 0px;
 }
 
-h1, p, span, input, label {
+h1, h5, p, span, input, label {
 	color: #FFFFFF;
 }
 
 
-.form_signin {
+.form_login {
 	max-width: 330px;
 	margin: 10% auto;
 }
 
-.form_signin > h1 {
+.form_login > h1 {
 	text-align: center;
 }
 
-.form_signin input {
+.form_login input {
 	color: #FFFFFF;
 	background: transparent;
 }
 
-.btn-signin {
+.btn-login {
 	border: 2px solid #FFFFFF;
 	background-color: transparent;
 	color: #FFFFFF;
 }
-.btn-signin:hover {
+.btn-login:hover {
 	border: 2px solid #FFFFFF;
 	background-color: #FFFFFF;
 	color: #000000;
 }
-.btn-signin:hover {
+.btn-login:hover {
 	border: 2px solid #FFFFFF;
 	background-color: #FFFFFF;
 	color: #000000;
 }
 
-.form_signin ::-webkit-input-placeholder { /* WebKit browsers */
+.form_login ::-webkit-input-placeholder { /* WebKit browsers */
     color:    #FFFFFF;
 }
-.form_signin :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+.form_login :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
     color:    #FFFFFF;
 }
-.form_signin ::-moz-placeholder { /* Mozilla Firefox 19+ */
+.form_login ::-moz-placeholder { /* Mozilla Firefox 19+ */
     color:    #FFFFFF;
 }
-.form_signin :-ms-input-placeholder { /* Internet Explorer 10+ */
+.form_login :-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    #FFFFFF;
 }

@@ -1,0 +1,99 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>{{title}}</title>	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="/css/login.css" rel="stylesheet">
+	<!-- this is a comment in HTML -->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->        
+</head>
+
+<body>
+	<div class="container">
+		<div class='row'>
+			<table align="left">
+				<tr>
+					<td><p><h5>Welcome, {{user}} | </h5></p></td>
+					<td><a href="logout"><h5>Logout</h5></a></td>
+				</tr>
+			</table>
+
+			<form role="form" class='form_login' action="/admin" method="post">
+				<h1>Add a member</h1>
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_id" placeholder="ID" name="reg_id">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_firstname" placeholder="First Name" name="reg_firstname">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_lastname" placeholder="Last Name" name="reg_lastname">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_username" placeholder="Username" name="reg_username">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_password" placeholder="Password" name="reg_password">
+				</div>
+
+				<div class="form-group">
+					<input type="email" class="form-control" id="reg_email" placeholder="Email (X@X.XXX)" name="reg_email">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_phonenumber" placeholder="Phone Number (XXX-XXX-XXXX)" name="reg_phonenumber">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_startyear" placeholder="Start Year (XXXX)" name="reg_startyear">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_gradyear" placeholder="Grad Year (XXXX)" name="reg_gradyear">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_major" placeholder="Major" name="reg_major">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_class" placeholder="Class" name="reg_class">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_securityquestion" placeholder="Security Question" name="reg_securityquestion">
+				</div>
+
+				<div class="form-group">
+					<input type="text" class="form-control" id="reg_securityanswer" placeholder="Security Answer" name="reg_securityanswer">
+				</div>
+				
+				<div>
+					<input type="submit" value="Register User" class="btn btn-login btn-lg btn-block">
+				</div>
+			</form>
+
+			{{#each data}}
+			<p>{{member.username}}</p>
+			{{/each}}
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
