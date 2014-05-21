@@ -5,7 +5,7 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
 // PostgreSQL
-var pg = require('pg');
+var pg = require('pg').native;
 
 //Dependencies for login/authentication system
 var passport = require('passport')
@@ -20,7 +20,7 @@ var dashboard = require('./routes/dashboard');
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
 var local_database_name = 'ttapp';
-var conString = "postgres://ttuser:ttuser@localhost:5432/" + local_database_name;
+var conString = process.env.DATABASE_URL || "postgres://ttuser:ttuser@localhost:5432/" + local_database_name;
 var client = new pg.Client(conString);
 client.connect();
 

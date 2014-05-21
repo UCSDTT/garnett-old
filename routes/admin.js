@@ -3,9 +3,9 @@
  */
 
 // Connect to PostgreSQL database called ttapp
-var pg = require('pg');
+var pg = require('pg').native;
 var local_database_name = 'ttapp';
-var conString = "postgres://ttuser:ttuser@localhost:5432/" + local_database_name;
+var conString = process.env.DATABASE_URL || "postgres://ttuser:ttuser@localhost:5432/" + local_database_name;
 var client = new pg.Client(conString);
 client.connect();
 
