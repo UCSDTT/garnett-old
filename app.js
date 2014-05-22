@@ -7,7 +7,7 @@ var handlebars = require('express3-handlebars');
 // PostgreSQL
 var pg = require('pg').native;
 
-//Dependencies for login/authentication system
+//Dependencies for signin/authentication system
 var passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
@@ -20,7 +20,8 @@ var dashboard = require('./routes/dashboard');
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
 var local_database_name = 'ttapp';
-var conString = process.env.DATABASE_URL || "postgres://ttuser:ttuser@localhost:5432/" + local_database_name;
+var conString = process.env.DATABASE_URL || 
+                "postgres://ttuser:ttuser@localhost:5432/" + local_database_name;
 var client = new pg.Client(conString);
 client.connect();
 
@@ -28,12 +29,31 @@ console.log("Connected to DB");
 
 // Serialize the user session
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  done(null, user.id);
 });
 
 // Deserialize the user session
 passport.deserializeUser(function(id, done) {
-  done(null, id.firstname);
+  var rows = [];
+
+  // Reconnect to database if there is an error
+  client.on('error', function(e) {
+    client.connect(); 
+  });
+
+  // Find user by id
+  var query = client.query("SELECT * " +
+                           "FROM members WHERE id = " + id);
+  query.on('row', function(row) {
+    rows.push(row);
+  }); 
+  
+  // Fired once and only once, after the last row has been returned 
+  // and after all 'row' events are emitted
+  query.on('end', function(result) {
+    // rows[0].firstname becomes {{user}} in handlebars
+    done(null, rows[0].firstname);
+  });
 });
 
 var app = express();
@@ -76,7 +96,7 @@ passport.use(new LocalStrategy({
       client.connect(); 
     });
 
-    var query = client.query("SELECT firstname " +
+    var query = client.query("SELECT * " +
                              "FROM members WHERE username = $1 AND password = $2",
                              [username, password]);
     query.on('row', function(row) {
@@ -86,11 +106,13 @@ passport.use(new LocalStrategy({
       // Fired once and only once, after the last row has been returned 
       // and after all 'row' events are emitted
       if(result.rowCount == 0) {
-        return done(null, false, { message: 'Incorrect login/password combination.' });
+        return done(null, false, { message: 'Incorrect user/password combination.' });
       }
       else {
         return done(null, { 
-          "firstname": rows[0].firstname
+          "id": rows[0].id,
+          "firstname": rows[0].firstname,
+          "username": rows[0].username
         });
       }
     });
@@ -107,6 +129,7 @@ app.get('/', auth.goToLogin);
 app.get('/login', auth.loginView);
 app.get('/logout', auth.logoutView);
 app.get('/admin', admin.adminView);
+app.get('/admin/add', admin.adminViewAdd)
 app.get('/dashboard', dashboard.dashboardView);
 
 app.post('/login',
@@ -114,7 +137,7 @@ app.post('/login',
                                    failureRedirect: '/login',
                                    failureFlash: true })
 );
-app.post('/admin', admin.addMember);
+app.post('/admin/add', admin.addMember);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

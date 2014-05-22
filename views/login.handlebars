@@ -7,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-	<link href="/css/login.css" rel="stylesheet">
+	<link href="/css/signin.css" rel="stylesheet">
 	<!-- this is a comment in HTML -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -19,32 +19,39 @@
 </head>
 
 <body>
-	<div class="container">
-		<div class='row'>
-			<form role="form" class='form_login' action="/login" method="post">
-				<h1>{{title}}</h1>
-		        {{#if errorMessage}}
-		            <div class="alert alert-dismissable alert-danger register-fail">
-		              <button type="button" class="close" data-dismiss="alert">&times;</button>
-		              <p>{{errorMessage}}</p>
-		            </div>
-		        {{/if}}
-
-				<div class="form-group">
-					<input type="text" class="form-control" id="login_username" placeholder="Username" name="username">
-				</div>
-				<div class="form-group">
-					<input type="password" class="form-control" id="login_password" placeholder="Password" name="password">
-				</div>
-				
-				<div>
-					<input type="submit" value="Log In" class="btn btn-login btn-lg btn-block">
-				</div>
-			</form>
-		</div>
-	</div>
+  <div class="container">
+      <div class="row">
+          <div class="col-sm-6 col-md-4 col-md-offset-4">
+              <h1 class="text-center login-title">Sign in to continue to TT App</h1>
+              <div class="account-wall">
+                  <img class="profile-img" src="/images/thetatau.png" alt="">
+                  <form class="form-signin" action="/login" method="post">
+                    {{#if errorMessage}}
+                        <div class="alert alert-dismissable alert-danger register-fail">
+                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <p>{{errorMessage}}</p>
+                        </div>
+                    {{/if}}
+                    <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Username" id="login_username" name="username" required autofocus>
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" placeholder="Password" id="login_password" name="password" required>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        Sign in
+                    </button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+  <script src="/js/ttapp.js"></script>
+
+
 </body>
 </html>

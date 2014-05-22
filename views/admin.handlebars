@@ -7,7 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-	<link href="/css/login.css" rel="stylesheet">
+  <link href="/css/bootstrap.css" rel="stylesheet">
+	<link href="/css/signin.css" rel="stylesheet">
 	<!-- this is a comment in HTML -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -21,79 +22,111 @@
 <body>
 	<div class="container">
 		<div class='row'>
-			<table align="left">
-				<tr>
-					<td><p><h5>Welcome, {{user}} | </h5></p></td>
-					<td><a href="logout"><h5>Logout</h5></a></td>
-				</tr>
-			</table>
+  		<ul class="nav nav-pills">
+        <li><a href="/admin" class="linknav">Home</a></li>
+        <li><a href="/admin/add" class="linknav">Add</a></li>
+        <li><a href="/logout">Logout</a></li>
+      </ul>
 
-			<form role="form" class='form_login' action="/admin" method="post">
+      {{#if viewTable}}
+        <br></br>
+      <table class="table table-condensed table-hover table-responsive table-bordered">
+        <thead>
+          <tr>
+            <td><h4>#</h4></td>
+            <td><h4>First</h4></td>
+            <td><h4>Last</h4></td>
+            <td><h4>User</h4></td>
+            <td><h4>Password</h4></td>
+            <td><h4>Email</h4></td>
+            <td><h4>Phone</h4></td>
+            <td><h4>Start</h4></td>
+            <td><h4>Grad</h4></td>
+            <td><h4>Major</h4></td>
+            <td><h4>Class</h4></td>
+          </tr>
+        </thead>
+        <tbody>
+        {{#each data}}
+        <tr>
+          <td>{{member.id}}</td>
+          <td>{{member.firstname}}</td>
+          <td>{{member.lastname}}</td>
+          <td>{{member.username}}</td>
+          <td>{{member.password}}</td>
+          <td>{{member.email}}</td>
+          <td>{{member.phonenumber}}</td>
+          <td>{{member.startyear}}</td>
+          <td>{{member.gradyear}}</td>
+          <td>{{member.major}}</td>
+          <td>{{member.class}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+
+      {{#if add}}
+			<form role="form" action="/admin/add" method="post">
 				<h1>Add a member</h1>
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_id" placeholder="ID" name="reg_id">
+					<input type="number" class="form-control" id="reg_id" placeholder="ID" name="reg_id" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_firstname" placeholder="First Name" name="reg_firstname">
+					<input type="text" class="form-control" id="reg_firstname" placeholder="First Name" name="reg_firstname" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_lastname" placeholder="Last Name" name="reg_lastname">
+					<input type="text" class="form-control" id="reg_lastname" placeholder="Last Name" name="reg_lastname" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_username" placeholder="Username" name="reg_username">
+					<input type="text" class="form-control" id="reg_username" placeholder="Username" name="reg_username" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_password" placeholder="Password" name="reg_password">
+					<input type="text" class="form-control" id="reg_password" placeholder="Password" name="reg_password" required>
 				</div>
 
 				<div class="form-group">
-					<input type="email" class="form-control" id="reg_email" placeholder="Email (X@X.XXX)" name="reg_email">
+					<input type="email" class="form-control" id="reg_email" placeholder="Email" name="reg_email" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_phonenumber" placeholder="Phone Number (XXX-XXX-XXXX)" name="reg_phonenumber">
+					<input type="tel" pattern="\d{3}-\d{3}-\d{4}" title="i.e. 777-777-7777" class="form-control" id="reg_phonenumber" placeholder="Phone Number" name="reg_phonenumber" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_startyear" placeholder="Start Year (XXXX)" name="reg_startyear">
+					<input type="text" pattern="^\d{4}$" title="i.e. 2014" class="form-control" id="reg_startyear" placeholder="Start Year" name="reg_startyear" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_gradyear" placeholder="Grad Year (XXXX)" name="reg_gradyear">
+					<input type="text" pattern="^\d{4}$" title="i.e. 2014" class="form-control" id="reg_gradyear" placeholder="Grad Year" name="reg_gradyear" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_major" placeholder="Major" name="reg_major">
+					<input type="text" class="form-control" id="reg_major" placeholder="Major" name="reg_major" required>
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_class" placeholder="Class" name="reg_class">
-				</div>
-
-				<div class="form-group">
-					<input type="text" class="form-control" id="reg_securityquestion" placeholder="Security Question" name="reg_securityquestion">
-				</div>
-
-				<div class="form-group">
-					<input type="text" class="form-control" id="reg_securityanswer" placeholder="Security Answer" name="reg_securityanswer">
+					<input type="text" class="form-control" id="reg_class" placeholder="Class" name="reg_class" required>
 				</div>
 				
-				<div>
-					<input type="submit" value="Register User" class="btn btn-login btn-lg btn-block">
-				</div>
+				<button class="btn btn-lg btn-primary btn-block" type="submit">
+          Register User
+        </button>
 			</form>
-
-			{{#each data}}
-			<p>{{member.username}}</p>
-			{{/each}}
+      {{/if}}
+      <br></br>
 		</div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+  <script src="/js/bootstrap.js"></script>
+  <script src="/js/ttapp.js"></script>
+
+
 </body>
 </html>

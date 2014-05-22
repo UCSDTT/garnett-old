@@ -27,29 +27,37 @@ exports.adminView = function(req, res) {
 	var query = client.query("SELECT * FROM members");
 	var rows = [];
 
-	// Ignore admin user, add all members to rows array
+	// Add all members to rows array
 	query.on('row', function(row) {
-		if(row.username != 'ttadmin') {
-			rows.push({
-				"member": row 
-			});
-		}
+		rows.push({
+			"member": row 
+		});
 	});
 
 	// Fired once and only once, after the last row has been returned 
     // and after all 'row' events are emitted
 	query.on('end', function(result) {
-      	console.log(rows)
-      	console.log("rowCount: ", result.rowCount);
-
-      	// Render admin page and pass the data
-      	res.render('admin', {
-			title: 'Administrator Console',
+    // Render admin page and pass the data
+    res.render('admin', {
+			title: 'Theta Tau Management',
 			user: req.user,
-			data: rows
-		});
+			data: rows,
+      viewTable: true
+	  });
 	});	
 };
+
+exports.adminViewAdd = function(req, res) {
+  // If user not logged in
+  if(!req.user) {
+    res.redirect('login');
+  }
+  res.render('admin', {
+      title: 'Theta Tau Management',
+      user: req.user,
+      add: true
+  });
+}
 
 // POST admin registers a new user 
 exports.addMember = function(req, res) {
@@ -66,28 +74,35 @@ exports.addMember = function(req, res) {
 	// Grab the input data
 	var json = req.body;
 
-	// Create the query
-	var insertQuery = "INSERT INTO members(id, " +
-										   "firstname, " +
-										   "lastname, " +
-										   "username, " +
-										   "password, " +
-										   "email, " +
-										   "phonenumber, " +
-										   "startyear, " +
-										   "gradyear, " +
-										   "major, " +
-										   "class, " +
-										   "securityquestion, " +
-										   "securityanswer) " +
-					  "VALUES(" + json.reg_id + ", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)";
+	// Check if primary key constraint for id is broken or unique username broken
+	var query0 = client.query("SELECT * FROM members WHERE id = $1 OR username = $2", [json.reg_id, json.reg_username]);
 
-	// Insert into table 'members' in database 'ttapp'
-	var query = client.query(insertQuery, [json.reg_firstname, json.reg_lastname, 
-										   json.reg_username, json.reg_password, json.reg_email,
-										   json.reg_phonenumber, json.reg_startyear, json.reg_gradyear,
-										   json.reg_major, json.reg_class, json.reg_securityquestion,
-										   json.reg_securityanswer]);
+	query0.on('end', function(result) {
+		// If the desired id or username is not already in the db
+		if(result.rowCount == 0) {
+			// Create the insert member query
+			var insertQuery = "INSERT INTO members( " +
+						   		"id, " +
+							   	"firstname, " +
+							   	"lastname, " +
+								  "username, " +
+  								"password, " +
+  								"email, " +
+  								"phonenumber, " +
+  								"startyear, " +
+  								"gradyear, " +
+  								"major, " +
+  								"class) " +
+  							  "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
+
+			// Insert into table 'members' in database 'ttapp'
+			var query1 = client.query(insertQuery, 
+									[json.reg_id, json.reg_firstname, json.reg_lastname, 
+									 json.reg_username, json.reg_password, json.reg_email,
+									 json.reg_phonenumber, json.reg_startyear, json.reg_gradyear,
+									 json.reg_major, json.reg_class]);
+		}
+	});
 
 	// Get all members
 	var query2 = client.query("SELECT * FROM members");
@@ -95,24 +110,23 @@ exports.addMember = function(req, res) {
 
 	// Ignore admin user, add all members to rows array
 	query2.on('row', function(row) {
-		if(row.username != 'ttadmin') {
-			rows.push({
-				"member": row 
-			});
-		}
+		rows.push({
+			"member": row 
+		});
 	});
 
 	// Fired once and only once, after the last row has been returned 
     // and after all 'row' events are emitted
 	query2.on('end', function(result) {
-      	console.log(rows)
-      	console.log("rowCount: ", result.rowCount);
+    console.log(rows)
+    console.log("rowCount: ", result.rowCount);
 
-      	// Render admin page and pass the data
-      	res.render('admin', {
-			title: 'Administrator Console',
+    // Render admin page and pass the data
+    res.render('admin', {
+			title: 'Theta Tau Management',
 			user: req.user,
-			data: rows
+			data: rows,
+      add: true
 		});
 	});	
 }

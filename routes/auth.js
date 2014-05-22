@@ -27,5 +27,5 @@ exports.loginView = function(req, res) {
 // Logout session
 exports.logoutView = function(req, res) {
 	req.logout();
-  	res.redirect('/login');
+  res.redirect('/login');
 } 

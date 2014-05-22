@@ -9,6 +9,8 @@ Setting up the app on your local machine
 ========================================
 sudo npm install <-- this installs dependencies for the project
 
+(You actually don't have to do this since I pushed the node_modules folder to this repo)
+
 
 
 Installing some packages may fix some errors if that didn't work:
