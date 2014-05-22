@@ -24,11 +24,12 @@ var createTableQuery = "CREATE TABLE members ( "+
   "securityanswer       text"+
 ")";
 
-query = client.query(createTableQuery);
+client.query(createTableQuery);
+
+var query = client.query("INSERT INTO members(id, firstname, lastname, username, password, major, class)" +
+  "VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin', 'none', 'none')");
 
 query.on('end', function () {
-  client.query("INSERT INTO members(id, firstname, lastname, username, password, major, class)" +
-  "VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin', 'none', 'none')");
   client.end();
 });
 
