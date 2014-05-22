@@ -1,3 +1,5 @@
+DROP TABLE members;
+
 CREATE TABLE members ( 
 	id             		 integer PRIMARY KEY NOT NULL,
 	firstname            text 	 NOT NULL,
