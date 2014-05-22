@@ -27,8 +27,8 @@ var createTableQuery = "CREATE TABLE members ( "+
 query = client.query(createTableQuery);
 
 query.on('end', function () {
+  client.query("INSERT INTO members(id, firstname, lastname, username, password, major, class)" +
+  "VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin', 'none', 'none')");
   client.end();
 });
 
-client.query("INSERT INTO members(id, firstname, lastname, username, password, major, class)" +
-  "VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin', 'none', 'none')");
