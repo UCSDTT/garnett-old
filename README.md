@@ -25,7 +25,7 @@ touch [file-name-here] <-- Use this to fix clock skew problem
 
 
 
-Installing PostgreSQL:
+Setting up local PostgreSQL db:
 ======================
 https://www.digitalocean.com/community/articles/how-to-install-and-use-postgresql-on-ubuntu-12-04
 
@@ -55,6 +55,7 @@ psql -d ttapp <-- enter postgres cmd
 [!!!!Now go to the file members.sql and paste the CREATE TABLE and INSERT queries from there into postgres!!!!]
 
 \dt <-- show tables
+
 \q  <-- quit
 
 
