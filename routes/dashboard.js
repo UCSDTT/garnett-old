@@ -1,7 +1,8 @@
 /**
- * GET dashboard page
+ * Dashboard page
  */
 
+// GET Dashboard
 exports.dashboardView = function(req, res) {
 	// If no user is logged in, force login page
 	if(!req.user) {

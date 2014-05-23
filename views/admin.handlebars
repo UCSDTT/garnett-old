@@ -32,6 +32,7 @@
         <br></br>
       <table class="table table-condensed table-hover table-responsive table-bordered">
         <thead>
+          <tr><h4 align="center">Click on a row to update member</h4></tr>
           <tr>
             <td><h4>#</h4></td>
             <td><h4>First</h4></td>
@@ -48,18 +49,18 @@
         </thead>
         <tbody>
         {{#each data}}
-        <tr>
-          <td>{{member.id}}</td>
-          <td>{{member.firstname}}</td>
-          <td>{{member.lastname}}</td>
-          <td>{{member.username}}</td>
-          <td>{{member.password}}</td>
-          <td>{{member.email}}</td>
-          <td>{{member.phonenumber}}</td>
-          <td>{{member.startyear}}</td>
-          <td>{{member.gradyear}}</td>
-          <td>{{member.major}}</td>
-          <td>{{member.class}}</td>
+        <tr class="rowdata">
+          <td class="rowid">{{member.id}}</td>
+          <td class="rowfirstname">{{member.firstname}}</td>
+          <td class="rowlastname">{{member.lastname}}</td>
+          <td class="rowusername">{{member.username}}</td>
+          <td class="rowpassword">{{member.password}}</td>
+          <td class="rowemail">{{member.email}}</td>
+          <td class="rowphonenumber">{{member.phonenumber}}</td>
+          <td class="rowstartyear">{{member.startyear}}</td>
+          <td class="rowgradyear">{{member.gradyear}}</td>
+          <td class="rowmajor">{{member.major}}</td>
+          <td class="rowclass">{{member.class}}</td>
         </tr>
         {{/each}}
         </tbody>
@@ -86,7 +87,7 @@
 				</div>
 
 				<div class="form-group">
-					<input type="text" class="form-control" id="reg_password" placeholder="Password" name="reg_password" required>
+					<input type="text" pattern="^[^_\W]{6,32}$" title="6-32 Alphanumeric Characters" class="form-control" id="reg_password" placeholder="Password" name="reg_password" required>
 				</div>
 
 				<div class="form-group">
@@ -157,6 +158,95 @@
           Sign Up
         </button>
 			</form>
+      {{/if}}
+
+
+      {{#if seeUpdate}}
+      <form role="form" action={{updateURL}} method="post">
+        <h1>Update Member (ID: {{data.0.member.id}}, Username: {{data.0.member.username}})</h1>
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="up_firstname" placeholder="First Name" name="up_firstname" value="{{data.0.member.firstname}}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" class="form-control" id="up_lastname" placeholder="Last Name" name="up_lastname" value="{{data.0.member.lastname}}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" pattern="^[^_\W]{6,32}$" title="6-32 Alphanumeric Characters" class="form-control" id="up_password" placeholder="Password" name="up_password" value="{{data.0.member.password}}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="email" class="form-control" id="up_email" placeholder="Email" name="up_email" value="{{data.0.member.email}}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="tel" pattern="\d{3}-\d{3}-\d{4}" title="i.e. 777-777-7777" class="form-control" id="up_phonenumber" placeholder="Phone Number" name="up_phonenumber" value="{{data.0.member.phonenumber}}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" pattern="^\d{4}$" title="i.e. 2014" class="form-control" id="up_startyear" placeholder="Start Year" name="up_startyear" value="{{data.0.member.startyear}}" required>
+        </div>
+
+        <div class="form-group">
+          <input type="text" pattern="^\d{4}$" title="i.e. 2014" class="form-control" id="up_gradyear" placeholder="Grad Year" name="up_gradyear" value="{{data.0.member.gradyear}}" required>
+        </div>
+
+        <div class="form-group">
+          <select type="text" class="form-control" id="up_major" name="up_major" required>
+            <option value="{{data.0.member.major}}">{{data.0.member.major}}</option>
+            <option value="Aerospace Engineering">Aerospace Engineering</option>
+            <option value="Bioengineering">Bioengineering</option>
+            <option value="Bioengineering, Biotech">Bioengineering, Biotech</option>
+            <option value="Biology, Bioengineering">Biology, Bioengineering</option>
+            <option value="Chemical Engineering">Chemical Engineering</option>
+            <option value="Computer Engineering">Computer Engineering</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Economics">Economics</option>
+            <option value="Electrical Engineering">Electrical Engineering</option>
+            <option value="Environmental Engineering">Environmental Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Nanoengineering">Nanoengineering</option>
+            <option value="Physics">Physics</option>
+            <option value="Structural Engineering">Structural Engineering</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <select type="text" class="form-control" id="up_class" name="up_class" required>
+            <option value="{{data.0.member.major}}">{{data.0.member.class}}</option>
+            <option value="Charter">Charter</option>
+            <option value="Alpha">Alpha</option>
+            <option value="Beta">Beta</option>
+            <option value="Gamma">Gamma</option>
+            <option value="Delta">Delta</option>
+            <option value="Epsilon">Epsilon</option>
+            <option value="Zeta">Zeta</option>
+            <option value="Eta">Eta</option>
+            <option value="Theta">Theta</option>
+            <option value="Iota">Iota</option>
+            <option value="Kappa">Kappa</option>
+            <option value="Lambda">Lambda</option>
+            <option value="Mu">Mu</option>
+            <option value="Nu">Nu</option>
+            <option value="Xi">Xi</option>
+            <option value="Omicron">Omicron</option>
+            <option value="Pi">Pi</option>
+            <option value="Sigma">Sigma</option>
+            <option value="Tau">Tau</option>
+            <option value="Upsilon">Upsilon</option>
+            <option value="Phi">Phi</option>
+            <option value="Chi">Chi</option>
+            <option value="Psi">Psi</option>
+            <option value="Omega">Omega</option>
+          </select>
+        </div>
+        <input type="hidden" value="{{data.0.member.id}}" name="up_id">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+          Send
+        </button>
+      </form>
       {{/if}}
       <br></br>
 		</div>

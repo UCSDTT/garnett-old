@@ -128,9 +128,11 @@ if ('development' == app.get('env')) {
 app.get('/', auth.goToLogin);
 app.get('/login', auth.loginView);
 app.get('/logout', auth.logoutView);
-app.get('/admin', admin.adminView);
-app.get('/admin/add', admin.adminViewAdd)
+app.get('/admin', admin.adminViewHome);
+app.get('/admin/add', admin.adminViewAdd);
+app.get('/admin/update/:id', admin.adminViewUpdate);
 app.get('/dashboard', dashboard.dashboardView);
+
 
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/dashboard',
@@ -138,6 +140,7 @@ app.post('/login',
                                    failureFlash: true })
 );
 app.post('/admin/add', admin.addMember);
+app.post('/admin/update/:id', admin.updateMember);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
