@@ -28,7 +28,7 @@
         <li><a href="/logout">Logout</a></li>
       </ul>
 
-      {{#if viewTable}}
+      {{#if seeTable}}
         <br></br>
       <table class="table table-condensed table-hover table-responsive table-bordered">
         <thead>
@@ -66,11 +66,11 @@
       </table>
       {{/if}}
 
-      {{#if add}}
+      {{#if seeAdd}}
 			<form role="form" action="/admin/add" method="post">
-				<h1>Add a member</h1>
+				<h1>Add Memmber</h1>
 				<div class="form-group">
-					<input type="number" class="form-control" id="reg_id" placeholder="ID" name="reg_id" required>
+					<input type="number" min="1" max="999" class="form-control" id="reg_id" placeholder="ID" name="reg_id" required>
 				</div>
 
 				<div class="form-group">
@@ -105,16 +105,56 @@
 					<input type="text" pattern="^\d{4}$" title="i.e. 2014" class="form-control" id="reg_gradyear" placeholder="Grad Year" name="reg_gradyear" required>
 				</div>
 
-				<div class="form-group">
-					<input type="text" class="form-control" id="reg_major" placeholder="Major" name="reg_major" required>
-				</div>
+        <div class="form-group">
+          <select type="text" class="form-control" id="reg_major" name="reg_major" required>
+            <option value="Aerospace Engineering">Aerospace Engineering</option>
+            <option value="Bioengineering">Bioengineering</option>
+            <option value="Bioengineering, Biotech">Bioengineering, Biotech</option>
+            <option value="Biology, Bioengineering">Biology, Bioengineering</option>
+            <option value="Chemical Engineering">Chemical Engineering</option>
+            <option value="Computer Engineering">Computer Engineering</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Economics">Economics</option>
+            <option value="Electrical Engineering">Electrical Engineering</option>
+            <option value="Environmental Engineering">Environmental Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Nanoengineering">Nanoengineering</option>
+            <option value="Physics">Physics</option>
+            <option value="Structural Engineering">Structural Engineering</option>
+          </select>
+        </div>
 
-				<div class="form-group">
-					<input type="text" class="form-control" id="reg_class" placeholder="Class" name="reg_class" required>
-				</div>
+        <div class="form-group">
+          <select type="text" class="form-control" id="reg_class" name="reg_class" required>
+            <option value="Charter">Charter</option>
+            <option value="Alpha">Alpha</option>
+            <option value="Beta">Beta</option>
+            <option value="Gamma">Gamma</option>
+            <option value="Delta">Delta</option>
+            <option value="Epsilon">Epsilon</option>
+            <option value="Zeta">Zeta</option>
+            <option value="Eta">Eta</option>
+            <option value="Theta">Theta</option>
+            <option value="Iota">Iota</option>
+            <option value="Kappa">Kappa</option>
+            <option value="Lambda">Lambda</option>
+            <option value="Mu">Mu</option>
+            <option value="Nu">Nu</option>
+            <option value="Xi">Xi</option>
+            <option value="Omicron">Omicron</option>
+            <option value="Pi">Pi</option>
+            <option value="Sigma">Sigma</option>
+            <option value="Tau">Tau</option>
+            <option value="Upsilon">Upsilon</option>
+            <option value="Phi">Phi</option>
+            <option value="Chi">Chi</option>
+            <option value="Psi">Psi</option>
+            <option value="Omega  ">Omega</option>
+          </select>
+        </div>
 				
 				<button class="btn btn-lg btn-primary btn-block" type="submit">
-          Register User
+          Sign Up
         </button>
 			</form>
       {{/if}}

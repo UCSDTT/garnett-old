@@ -42,7 +42,7 @@ exports.adminView = function(req, res) {
 			title: 'Theta Tau Management',
 			user: req.user,
 			data: rows,
-      viewTable: true
+      seeTable: true
 	  });
 	});	
 };
@@ -55,7 +55,7 @@ exports.adminViewAdd = function(req, res) {
   res.render('admin', {
       title: 'Theta Tau Management',
       user: req.user,
-      add: true
+      seeAdd: true
   });
 }
 
@@ -126,7 +126,7 @@ exports.addMember = function(req, res) {
 			title: 'Theta Tau Management',
 			user: req.user,
 			data: rows,
-      add: true
+      seeAdd: true
 		});
 	});	
 }
