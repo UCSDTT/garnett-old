@@ -10,8 +10,8 @@ exports.dashboardView = function(req, res) {
 	}
 
 	// Redirect admins to console, regular users go to dashboard
-	if(req.user == 'adminuser') {
-		res.redirect('admin');
+	if(req.session.passport.user == 0) {
+		res.redirect('/admin');
 	}
 	else {
 		res.render('dashboard', {
