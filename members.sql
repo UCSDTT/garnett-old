@@ -16,8 +16,7 @@ CREATE TABLE members (
 	securityanswer	     text
 );
 
-INSERT INTO members(id, firstname, lastname, username, password, major, class) 
-	VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin', 'none', 'none');
+INSERT INTO members(id, firstname, lastname, username, password, major, class) VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin', 'none', 'none');
 
 
 
