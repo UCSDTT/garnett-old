@@ -5,6 +5,12 @@ UCSD Theta Tau Web application and server
 
 Setting up Vagrant
 ========================================
+
+EASY WAY: (May or May not work for you...works for OSX I believe)
+after installing VirtualBox and Vagrant, run this script in the root directory
+'curl -L http://rove.io/install | bash'
+
+MANUAL WAY:
 0. Install VirtualBox from here: https://www.virtualbox.org/wiki/Downloads (I am using 4.3.12, but get the latest version)
 1. Install vagrant from here:  http://www.vagrantup.com/
 2. Install Chef by using the command: 'gem install librarian-chef' 
