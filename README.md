@@ -1,10 +1,6 @@
-UCSD Theta Tau Web Application and Server  
-=============
+#UCSD Theta Tau Web Application and Server  
 
-<img src="https://raw.githubusercontent.com/ashermccall/TTUCSD-WebApp/master/public/images/thetatau.png" alt="Drawing" style="width: 300px;"/>
-
-Setting up Vagrant
-========================================
+##Setting up Vagrant
 
 #####EASY WAY: (May or may not work for you...works for OSX I believe)
 after installing VirtualBox and Vagrant, run this script in the root directory:
@@ -23,8 +19,7 @@ after installing VirtualBox and Vagrant, run this script in the root directory:
 *NOTE: This process is going to take a LONG time.  So be patient.*
 
 
-Setting up the app on your local machine
-========================================
+##Setting up the app on your local machine
 `sudo npm install` <-- this installs dependencies for the project
 
 (You actually don't have to do this since I pushed the node_modules folder to this repo)  
@@ -39,8 +34,7 @@ touch [file-name-here] <-- Use this to fix clock skew problem
 
 
 
-Setting up PostgreSQL on Local Machine:
-======================
+##Setting up PostgreSQL on Local Machine:
 Postgres is preinstalled to the Vagrant Box.  
 Once your virtual machine is up and running, run these commands to set up the database:  
 
@@ -54,22 +48,17 @@ Once your virtual machine is up and running, run these commands to set up the da
 
 Reference: https://www.digitalocean.com/community/articles/how-to-install-and-use-postgresql-on-ubuntu-12-04
 
-To access database ttapp that you created:
-==========================================
+##To access database ttapp that you created:
 
-sudo su - postgres <-- login
-
-psql -d ttapp <-- enter postgres cmd
-
-[!!!!Now go to the file members.sql and paste the CREATE TABLE and INSERT queries from there into postgres!!!!]
-
-\dt <-- show tables
-
-\q  <-- quit
+`sudo su - postgres` <-- login  
+`psql -d ttapp` <-- enter postgres cmd  
+**Now go to the file members.sql and paste the CREATE TABLE and INSERT queries from there into postgres!!**  
+`\dt` <-- show tables  
+`\q`  <-- quit
 
 
-To Run the Application:
-==========================================
+##To Run the Application:
+
 1. First, make sure you have followed the steps to create the database and insert the sample rows above.
 2. In the terminal, type `node app.js`
 3. View the application in your browser at [localhost:3000](http://localhost:3000/)
