@@ -1,5 +1,4 @@
 # encoding: utf-8
-# This file originally created at http://rove.io/b49de907eedbfc8d3b69a86bc8f042b6
 
 # -*- mode: ruby -*-
 # vi: set ft=ruby :

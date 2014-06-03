@@ -4,7 +4,7 @@
   "author": "ThetaTau App Team",
   "repository": {
     "type": "git",
-    "url": "https://github.com/michael-luo/TTUCSDWebApp"
+    "url": "https://github.com/ashermccall/TTUCSD-WebApp"
   },
   "license": "MIT",
   "private": true,
@@ -18,7 +18,8 @@
     "express": "3.x",
     "express-session": "~1.1.0",
     "passport": "~0.2.0",
-    "passport-local": "*"
+    "passport-local": "*",
+    "nodemon": "*"
   },
   "engines": {
     "node": "0.10.x"
