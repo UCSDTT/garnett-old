@@ -65,4 +65,4 @@ Reference: https://www.digitalocean.com/community/articles/how-to-install-and-us
 3. Navigate to the application root directory, by typing `cd /vagrant`.
 4. In the terminal, type `node app.js`.
 5. View the application in your browser at [localhost:3000](http://localhost:3000/).  
-*NOTE: if you get an error delete node_modules/ directory, run `npm install`. and try again.*
+*NOTE: If you get an error delete node_modules/ directory, run `npm install`. and try again.*
