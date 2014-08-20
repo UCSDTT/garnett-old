@@ -1,18 +1,22 @@
+var app = require('../app');
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
 /**
  * Admin page
  */
-var app = require('../app');
 
 // GET admin console page
 exports.adminViewHome = function(req, res) {
 	// If user not logged in
 	if(!req.user) {
-		res.redirect('login');
+    console.log("redirecting to login?");
+		return res.redirect('login');
 	}
 
   // If user is not admin
-  if(req.session.passport.user !== 0) {
-    res.redirect('/');
+  if(req.session.passport.user !== 1) {
+    console.log("redirecting cus not 1?");
+    return res.redirect('/');
   }
 
 	// Reconnect to database if there is an error
@@ -35,7 +39,7 @@ exports.adminViewHome = function(req, res) {
     // and after all 'row' events are emitted
 	query.on('end', function(result) {
     // Render admin page and pass the data
-    res.render('admin', {
+    return res.render('admin', {
 			title: 'Theta Tau Management',
 			user: req.user,
 			data: rows,
@@ -48,15 +52,15 @@ exports.adminViewHome = function(req, res) {
 exports.adminViewAdd = function(req, res) {
   // If user not logged in
   if(!req.user) {
-    res.redirect('login');
+    return res.redirect('login');
   }
 
   // If user is not admin
-  if(req.session.passport.user !== 0) {
-    res.redirect('/');
+  if(req.session.passport.user !== 1) {
+    return res.redirect('dashboard');
   }
 
-  res.render('admin', {
+  return res.render('admin', {
       title: 'Theta Tau Management',
       user: req.user,
       seeAdd: true
@@ -67,12 +71,12 @@ exports.adminViewAdd = function(req, res) {
 exports.addMember = function(req, res) {
 	// If user not logged in
 	if(!req.user) {
-		res.redirect('login');
+		return res.redirect('login');
 	}
 
   // If user is not admin
-  if(req.session.passport.user !== 0) {
-    res.redirect('/');
+  if(req.session.passport.user !== 1) {
+    return res.redirect('dashboard');
   }
 
 	// Reconnect to database if there is an error
@@ -95,7 +99,6 @@ exports.addMember = function(req, res) {
 		if(result.rowCount === 0) {
 			// Create the insert member query
 			var insertQuery = "INSERT INTO members( " +
-						   		"id, " +
 							   	"firstname, " +
 							   	"lastname, " +
 								  "username, " +
@@ -106,29 +109,29 @@ exports.addMember = function(req, res) {
   								"gradyear, " +
   								"major, " +
   								"class) " +
-  							  "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
+  							  "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
 
 			// Insert into table 'members' in database 'ttapp'
 			var query1 = app.client.query(insertQuery,
-									[json.reg_id, json.reg_firstname, json.reg_lastname,
+									[json.reg_firstname, json.reg_lastname,
 									 json.reg_username, json.reg_password, json.reg_email,
 									 json.reg_phonenumber, json.reg_startyear, json.reg_gradyear,
 									 json.reg_major, json.reg_class]);
 		}
 	});
-  res.redirect('admin');
+  return res.redirect('admin');
 };
 
 // Get admin/update/:id view
 exports.adminViewUpdate = function(req, res) {
   // If user not logged in
   if(!req.user) {
-    res.redirect('login');
+    return res.redirect('login');
   }
 
   // If user is not admin
-  if(req.session.passport.user !== 0) {
-    res.redirect('/');
+  if(req.session.passport.user !== 1) {
+    return res.redirect('/');
   }
 
   // Reconnect to database if there is an error
@@ -139,7 +142,7 @@ exports.adminViewUpdate = function(req, res) {
   // Check is argument is an int
   var id = req.params.id;
   if(isNaN(id)) {
-    res.redirect('admin');
+    return res.redirect('admin');
   }
   else {
     // Get the member information and put into array
@@ -158,11 +161,11 @@ exports.adminViewUpdate = function(req, res) {
     query.on('end', function(result) {
       // If no such member, then redirect to admin home
       if(result.rowCount === 0) {
-        res.redirect('admin');
+        return res.redirect('admin');
       }
       else {
         // Render admin update page and pass the data
-        res.render('admin', {
+        return res.render('admin', {
           title: 'Theta Tau Management',
           user: req.user,
           data: rows,
@@ -179,12 +182,12 @@ exports.adminViewUpdate = function(req, res) {
 exports.updateMember = function(req, res) {
   // If user not logged in
   if(!req.user) {
-    res.redirect('login');
+    return res.redirect('login');
   }
 
   // If user is not admin
-  if(req.session.passport.user != 0) {
-    res.redirect('/');
+  if(req.session.passport.user != 1) {
+    return res.redirect('dashboard');
   }
 
   // Reconnect to database if there is an error
@@ -216,6 +219,6 @@ exports.updateMember = function(req, res) {
                json.up_id]);
 
   query1.on('end', function(result) {
-    res.redirect('admin');
+    return res.redirect('admin');
   });
 };
