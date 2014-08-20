@@ -1,14 +1,7 @@
 /**
  * Admin page
  */
-
-// Connect to PostgreSQL database called ttapp
-var pg = require('pg').native;
-var local_database_name = 'ttapp';
-var conString = process.env.DATABASE_URL || "postgres://ttuser:ttuser@localhost:5432/" + local_database_name;
-var client = new pg.Client(conString);
-client.connect();
-
+var app = require('../app');
 
 // GET admin console page
 exports.adminViewHome = function(req, res) {
@@ -18,27 +11,27 @@ exports.adminViewHome = function(req, res) {
 	}
 
   // If user is not admin
-  if(req.session.passport.user != 0) {
+  if(req.session.passport.user !== 0) {
     res.redirect('/');
   }
 
 	// Reconnect to database if there is an error
-	client.on('error', function(e) {
-  	client.connect(); 
+	app.client.on('error', function(e) {
+  	app.client.connect();
   });
 
     // Get all members
-	var query = client.query("SELECT * FROM members ORDER BY id");
+	var query = app.client.query("SELECT * FROM members ORDER BY id");
 	var rows = [];
 
 	// Add all members to rows array
 	query.on('row', function(row) {
 		rows.push({
-			"member": row 
+			"member": row
 		});
 	});
 
-	// Fired once and only once, after the last row has been returned 
+	// Fired once and only once, after the last row has been returned
     // and after all 'row' events are emitted
 	query.on('end', function(result) {
     // Render admin page and pass the data
@@ -48,7 +41,7 @@ exports.adminViewHome = function(req, res) {
 			data: rows,
       seeTable: true
 	  });
-	});	
+	});
 };
 
 // Get the /admin/add view
@@ -59,7 +52,7 @@ exports.adminViewAdd = function(req, res) {
   }
 
   // If user is not admin
-  if(req.session.passport.user != 0) {
+  if(req.session.passport.user !== 0) {
     res.redirect('/');
   }
 
@@ -70,7 +63,7 @@ exports.adminViewAdd = function(req, res) {
   });
 };
 
-// POST admin registers a new user 
+// POST admin registers a new user
 exports.addMember = function(req, res) {
 	// If user not logged in
 	if(!req.user) {
@@ -78,20 +71,20 @@ exports.addMember = function(req, res) {
 	}
 
   // If user is not admin
-  if(req.session.passport.user != 0) {
+  if(req.session.passport.user !== 0) {
     res.redirect('/');
   }
 
 	// Reconnect to database if there is an error
-	client.on('error', function(e) {
-  	client.connect(); 
+	app.client.on('error', function(e) {
+  	app.client.connect();
   });
 
 	// Grab the input data
 	var json = req.body;
 
 	// Check if primary key constraint for id is broken or unique username broken
-	var query0 = client.query("SELECT * FROM members WHERE id = $1 OR username = $2", [json.reg_id, json.reg_username]);
+	var query0 = app.client.query("SELECT * FROM members WHERE id = $1 OR username = $2", [json.reg_id, json.reg_username]);
 
   /**======================
    * NOTE TO SELF: Nesting queries like this might be causing memory leak warning
@@ -99,7 +92,7 @@ exports.addMember = function(req, res) {
    */
 	query0.on('end', function(result) {
 		// If the desired id or username is not already in the db
-		if(result.rowCount == 0) {
+		if(result.rowCount === 0) {
 			// Create the insert member query
 			var insertQuery = "INSERT INTO members( " +
 						   		"id, " +
@@ -116,8 +109,8 @@ exports.addMember = function(req, res) {
   							  "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
 
 			// Insert into table 'members' in database 'ttapp'
-			var query1 = client.query(insertQuery, 
-									[json.reg_id, json.reg_firstname, json.reg_lastname, 
+			var query1 = app.client.query(insertQuery,
+									[json.reg_id, json.reg_firstname, json.reg_lastname,
 									 json.reg_username, json.reg_password, json.reg_email,
 									 json.reg_phonenumber, json.reg_startyear, json.reg_gradyear,
 									 json.reg_major, json.reg_class]);
@@ -134,13 +127,13 @@ exports.adminViewUpdate = function(req, res) {
   }
 
   // If user is not admin
-  if(req.session.passport.user != 0) {
+  if(req.session.passport.user !== 0) {
     res.redirect('/');
   }
 
   // Reconnect to database if there is an error
-  client.on('error', function(e) {
-    client.connect(); 
+  app.client.on('error', function(e) {
+    app.client.connect();
   });
 
   // Check is argument is an int
@@ -151,7 +144,7 @@ exports.adminViewUpdate = function(req, res) {
   else {
     // Get the member information and put into array
     var rows = [];
-    var query = client.query("SELECT * FROM members WHERE id = $1", [id]);
+    var query = app.client.query("SELECT * FROM members WHERE id = $1", [id]);
 
     // Add all members to rows array
     query.on('row', function(row) {
@@ -160,11 +153,11 @@ exports.adminViewUpdate = function(req, res) {
       })
     });
 
-    // Fired once and only once, after the last row has been returned 
+    // Fired once and only once, after the last row has been returned
     // and after all 'row' events are emitted
     query.on('end', function(result) {
       // If no such member, then redirect to admin home
-      if(result.rowCount == 0) {
+      if(result.rowCount === 0) {
         res.redirect('admin');
       }
       else {
@@ -177,7 +170,7 @@ exports.adminViewUpdate = function(req, res) {
           updateURL: ('/admin/update/' + rows[0].member.id)
         });
       }
-    }); 
+    });
   }
 };
 
@@ -195,8 +188,8 @@ exports.updateMember = function(req, res) {
   }
 
   // Reconnect to database if there is an error
-  client.on('error', function(e) {
-    client.connect(); 
+  app.client.on('error', function(e) {
+    app.client.connect();
   });
 
   // Grab the input data
@@ -216,9 +209,9 @@ exports.updateMember = function(req, res) {
               "WHERE id=$10";
 
   // Update 'members' in database 'ttapp'
-  var query1 = client.query(updateQuery, 
-              [json.up_firstname, json.up_lastname, json.up_password, 
-               json.up_email, json.up_phonenumber, json.up_startyear, 
+  var query1 = app.client.query(updateQuery,
+              [json.up_firstname, json.up_lastname, json.up_password,
+               json.up_email, json.up_phonenumber, json.up_startyear,
                json.up_gradyear, json.up_major, json.up_class,
                json.up_id]);
 

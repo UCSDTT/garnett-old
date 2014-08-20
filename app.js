@@ -19,11 +19,21 @@ var dashboard = require('./routes/dashboard');
 
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
-var local_database_name = 'ttapp';
-var conString = process.env.DATABASE_URL || 
-                "postgres://ttuser:ttuser@localhost:5432/" + local_database_name;
+var conString = "postgres://ttuser:ttuser@192.241.220.164/ttadmin";
 var client = new pg.Client(conString);
-client.connect();
+client.connect(function(err) {
+  if(err) {
+    return console.error('could not connect to postgres', err);
+  }
+  client.query('SELECT NOW() AS "theTime"', function(err, result) {
+    if(err) {
+      return console.error('error running query', err);
+    }
+    console.log(result.rows[0].theTime);
+    //output: Tue Jan 15 2013 19:12:47 GMT-600 (CST)
+    client.end();
+  });
+});
 
 console.log("Connected to DB");
 
@@ -38,7 +48,7 @@ passport.deserializeUser(function(id, done) {
 
   // Reconnect to database if there is an error
   client.on('error', function(e) {
-    client.connect(); 
+    client.connect();
   });
 
   // Find user by id
@@ -46,9 +56,9 @@ passport.deserializeUser(function(id, done) {
                            "FROM members WHERE id = " + id);
   query.on('row', function(row) {
     rows.push(row);
-  }); 
-  
-  // Fired once and only once, after the last row has been returned 
+  });
+
+  // Fired once and only once, after the last row has been returned
   // and after all 'row' events are emitted
   query.on('end', function(result) {
     // rows[0].firstname becomes {{user}} in handlebars
@@ -59,7 +69,7 @@ passport.deserializeUser(function(id, done) {
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 2014);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
@@ -72,9 +82,9 @@ app.use(express.methodOverride());
 app.use(express.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session( { 
-  secret: 'Theta Tau', 
-  name: 'sid', 
+app.use(session( {
+  secret: 'Theta Tau',
+  name: 'sid',
   cookie: { secure: true }
 }));
 
@@ -93,7 +103,7 @@ passport.use(new LocalStrategy({
 
     // Reconnect to database if there is an error
     client.on('error', function(e) {
-      client.connect(); 
+      client.connect();
     });
 
     var query = client.query("SELECT * " +
@@ -103,13 +113,13 @@ passport.use(new LocalStrategy({
       rows.push(row);
     });
     query.on('end', function(result) {
-      // Fired once and only once, after the last row has been returned 
+      // Fired once and only once, after the last row has been returned
       // and after all 'row' events are emitted
       if(result.rowCount == 0) {
         return done(null, false, { message: 'Incorrect user/password combination.' });
       }
       else {
-        return done(null, { 
+        return done(null, {
           "id": rows[0].id,
           "firstname": rows[0].firstname,
           "username": rows[0].username
@@ -142,8 +152,8 @@ app.post('/login',
 app.post('/admin/add', admin.addMember);
 app.post('/admin/update/:id', admin.updateMember);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+http.createServer(app).listen(process.env.PORT, function(){
+  console.log('Express server listening on port ' + process.env.PORT);
 });
 
 
