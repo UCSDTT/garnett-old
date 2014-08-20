@@ -1,5 +1,5 @@
 var express = require('express');
-var app = express(); 
+var app = express();
 
 // Module dependencies
 var connect        = require('connect');
@@ -17,7 +17,7 @@ var morgan  = require('morgan');
 var pg = require('pg').native;
 
 //Dependencies for signin/authentication system
-var passport = exports.passport =  require('passport')
+var passport = exports.passport =  require('passport');
 var LocalStrategy = exports.LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 
@@ -58,7 +58,7 @@ client.connect(function(err) {
         // Fired once and only once, after the last row has been returned
         // and after all 'row' events are emitted
         console.log(result.rows.length + ' row(s) were received');
-        if(result.rows.length === 0) { 
+        if(result.rows.length === 0) {
           return done(null, false, { message: 'Incorrect user/password combination.' });
         }
         else {
@@ -70,7 +70,7 @@ client.connect(function(err) {
         }
       });
     }
-  )); 
+  ));
 
 passport.serializeUser(function(user, done) {
   console.log(user);

@@ -3,3 +3,4 @@ tmp/
 cookbooks/
 node_modules/
 .DS_Store
+.c9/
