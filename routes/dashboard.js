@@ -6,15 +6,14 @@
 exports.dashboardView = function(req, res) {
 	// If no user is logged in, force login page
 	if(!req.user) {
-		res.redirect('login');
+		return res.redirect('login');
 	}
-
 	// Redirect admins to console, regular users go to dashboard
-	if(req.session.passport.user == 0) {
-		res.redirect('/admin');
+	if(req.session.passport.user == 1) {
+		return res.redirect('/admin');
 	}
 	else {
-		res.render('dashboard', {
+		return res.render('dashboard', {
 			title: 'Dashboard',
 			user: req.user
 		});

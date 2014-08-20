@@ -11,11 +11,11 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "pg": "~2.11.1",
+    "pg": "*",
     "express-handlebars": "*",
     "express": "4.x",
     "express-session": "1.x",
-    "passport": "~0.2.0",
+    "passport": "*",
     "passport-local": "*",
     "nodemon": "*",
     "serve-favicon": "*",
