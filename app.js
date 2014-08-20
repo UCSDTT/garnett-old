@@ -23,6 +23,7 @@ var session = require('express-session');
 var auth = require('./routes/auth');
 var admin = require('./routes/admin');
 var dashboard = require('./routes/dashboard');
+var app = express();
 
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
@@ -73,16 +74,14 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-var app = express();
-
+var port = process.env.PORT || 2014;
 // all environments
-app.set('port', process.env.PORT || 2014);
+app.set('port', port);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 app.use(cookieParser('Theta Tau secret key'));
 app.use(morgan('dev'));
-
 app.use(session( {
   secret: 'Theta Tau',
   name: 'sid',
@@ -91,7 +90,7 @@ app.use(session( {
   resave: true
 }));
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(express.static((__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -158,9 +157,8 @@ passport.use(new LocalStrategy({
   }
 ));
 
-
-http.createServer(app).listen((process.env.PORT || 2014), function(){
-  console.log('Express server listening on port ' + process.env.PORT);
+http.createServer(app).listen(app.get('port'), function(){
+  console.log('Express server listening on port ' + app.get('port'));
 });
 
 
