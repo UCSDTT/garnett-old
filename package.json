@@ -20,7 +20,11 @@
     "nodemon": "*",
     "serve-favicon": "*",
     "cookie-parser": "*",
-    "body-parser": "*"
+    "body-parser": "*",
+    "connect-flash": "*",
+    "morgan": "*",
+    "method-override": "*",
+    "connect": "*"
   },
   "engines": {
     "node": "0.10.x"

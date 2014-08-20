@@ -1,4 +1,6 @@
 // Module dependencies
+var connect        = require('connect');
+var methodOverride = require('method-override');
 var flash = require('connect-flash');
 var express = require('express');
 var cookieParser = require('cookie-parser');
@@ -7,6 +9,7 @@ var favicon = require('serve-favicon');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express-handlebars');
+var morgan  = require('morgan');
 
 // PostgreSQL
 var pg = require('pg').native;
@@ -75,24 +78,26 @@ var app = express();
 // all environments
 app.set('port', process.env.PORT || 2014);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', exphbs());
+app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
 app.use(cookieParser('Theta Tau secret key'));
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-
-app.use(express.session());
-app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(express.static((__dirname, 'public')));
-app.use(bodyParser());
-app.use(express.methodOverride());
+app.use(morgan('dev'));
 
 app.use(session( {
   secret: 'Theta Tau',
   name: 'sid',
-  cookie: { secure: true }
+  cookie: { secure: true },
+  saveUninitialized: true,
+  resave: true
 }));
+//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(express.static((__dirname, 'public')));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+app.use(methodOverride());
+
 
 app.use(flash());
 app.use(passport.initialize());
@@ -139,7 +144,7 @@ passport.use(new LocalStrategy({
     query.on('end', function(result) {
       // Fired once and only once, after the last row has been returned
       // and after all 'row' events are emitted
-      if(result.rowCount == 0) {
+      if(result.rowCount === 0) {
         return done(null, false, { message: 'Incorrect user/password combination.' });
       }
       else {
@@ -153,10 +158,6 @@ passport.use(new LocalStrategy({
   }
 ));
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
 
 http.createServer(app).listen((process.env.PORT || 2014), function(){
   console.log('Express server listening on port ' + process.env.PORT);
