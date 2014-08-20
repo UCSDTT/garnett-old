@@ -1,9 +1,13 @@
 // Module dependencies
 var flash = require('connect-flash');
 var express = require('express');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var favicon = require('serve-favicon');
 var http = require('http');
 var path = require('path');
-var handlebars = require('express3-handlebars');
+var handlebars = require('express-handlebars');
+
 // PostgreSQL
 var pg = require('pg').native;
 
@@ -71,16 +75,18 @@ var app = express();
 // all environments
 app.set('port', process.env.PORT || 2014);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', handlebars());
+app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
-app.use(express.favicon());
+app.use(cookieParser('Theta Tau secret key'));
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
-app.use(express.cookieParser('Theta Tau secret key'));
-app.use(express.methodOverride());
+
 app.use(express.session());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(express.static((__dirname, 'public')));
+app.use(bodyParser());
+app.use(express.methodOverride());
 
 app.use(session( {
   secret: 'Theta Tau',
@@ -91,7 +97,25 @@ app.use(session( {
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(app.router);
+
+// Add routes here
+app.get('/', auth.goToLogin);
+app.get('/login', auth.loginView);
+app.get('/logout', auth.logoutView);
+app.get('/admin', admin.adminViewHome);
+app.get('/admin/add', admin.adminViewAdd);
+app.get('/admin/update/:id', admin.adminViewUpdate);
+app.get('/dashboard', dashboard.dashboardView);
+
+
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/dashboard',
+                                   failureRedirect: '/login',
+                                   failureFlash: true })
+);
+app.post('/admin/add', admin.addMember);
+app.post('/admin/update/:id', admin.updateMember);
+
 
 // Check if username and pw input are correct by querying db
 passport.use(new LocalStrategy({
@@ -134,25 +158,7 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-// Add routes here
-app.get('/', auth.goToLogin);
-app.get('/login', auth.loginView);
-app.get('/logout', auth.logoutView);
-app.get('/admin', admin.adminViewHome);
-app.get('/admin/add', admin.adminViewAdd);
-app.get('/admin/update/:id', admin.adminViewUpdate);
-app.get('/dashboard', dashboard.dashboardView);
-
-
-app.post('/login',
-  passport.authenticate('local', { successRedirect: '/dashboard',
-                                   failureRedirect: '/login',
-                                   failureFlash: true })
-);
-app.post('/admin/add', admin.addMember);
-app.post('/admin/update/:id', admin.updateMember);
-
-http.createServer(app).listen(process.env.PORT, function(){
+http.createServer(app).listen((process.env.PORT || 2014), function(){
   console.log('Express server listening on port ' + process.env.PORT);
 });
 

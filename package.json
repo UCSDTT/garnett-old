@@ -4,22 +4,23 @@
   "author": "ThetaTau App Team",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ashermccall/TTUCSD-WebApp"
+    "url": "https://github.com/bgenchel/TTUCSD-WebApp"
   },
   "license": "MIT",
-  "private": true,
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
     "pg": "~2.11.1",
-    "express3-handlebars": "*",
-    "connect-flash": "~0.1.1",
-    "express": "3.x",
-    "express-session": "~1.1.0",
+    "express-handlebars": "*",
+    "express": "4.x",
+    "express-session": "1.x",
     "passport": "~0.2.0",
     "passport-local": "*",
-    "nodemon": "*"
+    "nodemon": "*",
+    "serve-favicon": "*",
+    "cookie-parser": "*",
+    "body-parser": "*"
   },
   "engines": {
     "node": "0.10.x"

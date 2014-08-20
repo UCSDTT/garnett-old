@@ -1,7 +1,7 @@
 DROP TABLE members;
 
 CREATE TABLE members ( 
-	id             		 integer PRIMARY KEY NOT NULL,
+	id             		 serial PRIMARY KEY NOT NULL,
 	firstname            text 	 NOT NULL,
 	lastname             text 	 NOT NULL,
 	username             text 	 UNIQUE NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE members (
 	securityanswer	     text
 );
 
-INSERT INTO members(id, firstname, lastname, username, password, major, class) VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin', 'none', 'none');
+INSERT INTO members(firstname, lastname, username, password, major, class) VALUES(0, 'adminuser', 'adminuser', 'ttadmin', 'ttadmin', 'none', 'none');
 
 
 
