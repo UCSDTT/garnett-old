@@ -26,7 +26,6 @@ var auth = require('./routes/auth');
 var admin = require('./routes/admin');
 var dashboard = require('./routes/dashboard');
 
-
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
 var conString = "postgres://ttuser:ttuser@192.241.220.164/ttadmin";
@@ -35,56 +34,34 @@ var knex = exports.knex = require('knex')({
   connection: conString
 });
 
-knex.select('*').from('members')
-  .then(function(rows) {
-    return console.log("Connected to DB");
-  })
-  .catch(function(error) {
-    return console.error('could not connect to postgres', error);
-  });
+passport.use(new LocalStrategy({
+  usernameField: 'username',
+  passwordField: 'password'
+},
+  function(username, password, done) {
+    knex('members').where({
+      username: username,
+      password: password
+    }).select('*')
 
-var client = exports.client = new pg.Client(conString);
-client.connect(function(err) {
-  if(err) {
-    return console.error('could not connect to postgres', err);
+    .then(function(rows) {
+      console.log(rows.length + ' row(s) were received');
+      if(rows.length === 0) {
+        return done(null, false, { message: 'Incorrect user/password combination.' });
+      } else {
+        return done(null, {
+          "id": rows[0].id,
+          "firstname": rows[0].firstname,
+          "username": rows[0].username
+        });
+      }
+    })
+
+    .catch(function(error) {
+      return console.error('error making query', error);
+    });
   }
-  client.query('SELECT NOW() AS "theTime"', function(err, result) {
-    if(err) {
-      return console.error('error running query', err);
-    }
-    console.log("Connected to DB at " + result.rows[0].theTime);
-    //client.end();
-  });
-});
-
-  passport.use(new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password'
-  },
-    function(username, password, done) {
-      knex('members').where({
-        username: username,
-        password: password
-      }).select('*')
-
-      .then(function(rows) {
-        console.log(rows.length + ' row(s) were received');
-        if(rows.length === 0) {
-          return done(null, false, { message: 'Incorrect user/password combination.' });
-        } else {
-          return done(null, {
-            "id": rows[0].id,
-            "firstname": rows[0].firstname,
-            "username": rows[0].username
-          });
-        }
-      })
-
-      .catch(function(error) {
-        return console.error('error making query', error);
-      });
-    }
-  ));
+));
 
 passport.serializeUser(function(user, done) {
   console.log(user);
@@ -101,6 +78,12 @@ passport.deserializeUser(function(id, done) {
         return done(null, rows[0].firstname);
       });
 });
+
+// Simple route middleware to ensure user is authenticated.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/');
+}
 
 var port = process.env.PORT || 2014;
 // all environments
@@ -128,16 +111,16 @@ app.use(methodOverride());
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/public', { redirect : false }));
 
 // Add routes here
-app.get('/', dashboard.dashboardView);
+app.get('/', auth.loginView);
 app.get('/login', auth.loginView);
-app.get('/logout', auth.logoutView);
-app.get('/admin', admin.adminViewHome);
-app.get('/admin/add', admin.adminViewAdd);
-app.get('/admin/update/:id', admin.adminViewUpdate);
-app.get('/dashboard', dashboard.dashboardView);
+app.get('/logout', ensureAuthenticated, auth.logoutView);
+app.get('/admin', ensureAuthenticated, admin.adminViewHome);
+app.get('/admin/add', ensureAuthenticated, admin.adminViewAdd);
+app.get('/admin/update/:id', ensureAuthenticated, admin.adminViewUpdate);
+app.get('/dashboard', ensureAuthenticated, dashboard.dashboardView);
 
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/dashboard',
