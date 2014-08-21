@@ -30,6 +30,19 @@ var dashboard = require('./routes/dashboard');
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
 var conString = "postgres://ttuser:ttuser@192.241.220.164/ttadmin";
+var knex = exports.knex = require('knex')({
+  client: 'pg',
+  connection: conString
+});
+
+knex.select('*').from('members')
+  .then(function(rows) {
+    return console.log("Connected to DB");
+  })
+  .catch(function(error) {
+    return console.error('could not connect to postgres', error);
+  });
+
 var client = exports.client = new pg.Client(conString);
 client.connect(function(err) {
   if(err) {
@@ -49,25 +62,26 @@ client.connect(function(err) {
     passwordField: 'password'
   },
     function(username, password, done) {
-      var query = client.query("SELECT * " + "FROM members WHERE username = $1 AND password = $2", [username, password]);
-      query.on('row', function(row, result) {
-        console.log("grabbing row");
-        result.addRow(row);
-      });
-      query.on('end', function(result) {
-        // Fired once and only once, after the last row has been returned
-        // and after all 'row' events are emitted
-        console.log(result.rows.length + ' row(s) were received');
-        if(result.rows.length === 0) {
+      knex('members').where({
+        username: username,
+        password: password
+      }).select('*')
+
+      .then(function(rows) {
+        console.log(rows.length + ' row(s) were received');
+        if(rows.length === 0) {
           return done(null, false, { message: 'Incorrect user/password combination.' });
-        }
-        else {
+        } else {
           return done(null, {
-            "id": result.rows[0].id,
-            "firstname": result.rows[0].firstname,
-            "username": result.rows[0].username
+            "id": rows[0].id,
+            "firstname": rows[0].firstname,
+            "username": rows[0].username
           });
         }
+      })
+
+      .catch(function(error) {
+        return console.error('error making query', error);
       });
     }
   ));
@@ -79,25 +93,13 @@ passport.serializeUser(function(user, done) {
 
 // Deserialize the user session
 passport.deserializeUser(function(id, done) {
+  knex('members').where({
+        id: id,
+      }).select('*')
 
-  // Reconnect to database if there is an error
-  client.on('error', function(e) {
-    client.connect();
-  });
-
-  // Find user by id
-  var query = client.query("SELECT * " +
-                           "FROM members WHERE id = " + id);
-  query.on('row', function(row, result) {
-    result.addRow(row);
-  });
-
-  // Fired once and only once, after the last row has been returned
-  // and after all 'row' events are emitted
-  query.on('end', function(result) {
-    // rows[0].firstname becomes {{user}} in handlebars
-    return done(null, result.rows[0].firstname);
-  });
+      .then(function(rows) {
+        return done(null, rows[0].firstname);
+      });
 });
 
 var port = process.env.PORT || 2014;

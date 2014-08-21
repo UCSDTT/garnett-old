@@ -19,33 +19,24 @@ exports.adminViewHome = function(req, res) {
     return res.redirect('/');
   }
 
-	// Reconnect to database if there is an error
-	app.client.on('error', function(e) {
-  	app.client.connect();
-  });
+  app.knex('members')
+    .orderBy('id', 'asc')
 
-    // Get all members
-	var query = app.client.query("SELECT * FROM members ORDER BY id");
-	var rows = [];
-
-	// Add all members to rows array
-	query.on('row', function(row) {
-		rows.push({
-			"member": row
-		});
-	});
-
-	// Fired once and only once, after the last row has been returned
-    // and after all 'row' events are emitted
-	query.on('end', function(result) {
-    // Render admin page and pass the data
-    return res.render('admin', {
-			title: 'Theta Tau Management',
-			user: req.user,
-			data: rows,
-      seeTable: true
-	  });
-	});
+    .then(function(rows) {
+      console.log(rows.length + ' member(s) loaded.');
+      var members = [];
+      for (var i = 0; i < rows.length; i++){
+        members.push({
+          "member": rows[i]
+        });
+      }
+      return res.render('admin', {
+  			title: 'Theta Tau Management',
+  			user: req.user,
+  			data: members,
+        seeTable: true
+  	  });
+    });
 };
 
 // Get the /admin/add view
@@ -79,47 +70,41 @@ exports.addMember = function(req, res) {
     return res.redirect('dashboard');
   }
 
-	// Reconnect to database if there is an error
-	app.client.on('error', function(e) {
-  	app.client.connect();
-  });
-
 	// Grab the input data
 	var json = req.body;
 
-	// Check if primary key constraint for id is broken or unique username broken
-	var query0 = app.client.query("SELECT * FROM members WHERE id = $1 OR username = $2", [json.reg_id, json.reg_username]);
+	//Check if primary key constraint for id is broken or unique username broken
+  app.knex('members')
+    .select('*')
+    .where('id', json.reg_id)
+    .orWhere('username', json.reg_username)
 
-  /**======================
-   * NOTE TO SELF: Nesting queries like this might be causing memory leak warning
-   * ======================
-   */
-	query0.on('end', function(result) {
-		// If the desired id or username is not already in the db
-		if(result.rowCount === 0) {
-			// Create the insert member query
-			var insertQuery = "INSERT INTO members( " +
-							   	"firstname, " +
-							   	"lastname, " +
-								  "username, " +
-  								"password, " +
-  								"email, " +
-  								"phonenumber, " +
-  								"startyear, " +
-  								"gradyear, " +
-  								"major, " +
-  								"class) " +
-  							  "VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)";
-
-			// Insert into table 'members' in database 'ttapp'
-			var query1 = app.client.query(insertQuery,
-									[json.reg_firstname, json.reg_lastname,
-									 json.reg_username, json.reg_password, json.reg_email,
-									 json.reg_phonenumber, json.reg_startyear, json.reg_gradyear,
-									 json.reg_major, json.reg_class]);
-		}
-	});
-  return res.redirect('admin');
+    .then(function(rows) {
+      console.log(rows.length + ' rows loaded.');
+      return rows.length;
+    })
+    .then(function(length){
+      if( length === 0 ){
+        console.log(json);
+        return app.knex.insert(
+          {firstname: json.reg_firstname,
+          lastname: json.reg_lastname,
+          username: json.reg_username,
+          password: json.reg_password,
+          email: json.reg_email,
+          phonenumber: json.reg_phonenumber,
+          startyear: json.reg_startyear,
+          gradyear: json.reg_gradyear,
+          major: json.reg_major,
+          class: json.reg_class
+        })
+        .into('members')
+        .catch(function(error) {
+          console.error(error);
+        });
+      }
+    });
+  return res.redirect('/');
 };
 
 // Get admin/update/:id view
@@ -148,32 +133,57 @@ exports.adminViewUpdate = function(req, res) {
     // Get the member information and put into array
     var rows = [];
     var query = app.client.query("SELECT * FROM members WHERE id = $1", [id]);
+    app.knex('members')
+      .select('*')
+      .where('id', id)
 
-    // Add all members to rows array
-    query.on('row', function(row) {
-      rows.push( {
-        "member": row
-      })
-    });
+      .then(function(rows){
+        var members = [];
+        for (var i = 0; i < rows.length; i++){
+          members.push({
+            "member": rows[i]
+          });
+        }
+        if(members.length === 0) {
+          return res.redirect('admin');
+        }
+        else {
+          // Render admin update page and pass the data
+          return res.render('admin', {
+            title: 'Theta Tau Management',
+            user: req.user,
+            data: members,
+            seeUpdate: true,
+            updateURL: ('/admin/update/' + members[0].member.id)
+          });
+        }
+      });
+
+    // // Add all members to rows array
+    // query.on('row', function(row) {
+    //   rows.push( {
+    //     "member": row
+    //   })
+    // });
 
     // Fired once and only once, after the last row has been returned
     // and after all 'row' events are emitted
-    query.on('end', function(result) {
-      // If no such member, then redirect to admin home
-      if(result.rowCount === 0) {
-        return res.redirect('admin');
-      }
-      else {
-        // Render admin update page and pass the data
-        return res.render('admin', {
-          title: 'Theta Tau Management',
-          user: req.user,
-          data: rows,
-          seeUpdate: true,
-          updateURL: ('/admin/update/' + rows[0].member.id)
-        });
-      }
-    });
+    // query.on('end', function(result) {
+    //   // If no such member, then redirect to admin home
+    //   if(result.rowCount === 0) {
+    //     return res.redirect('admin');
+    //   }
+    //   else {
+    //     // Render admin update page and pass the data
+    //     return res.render('admin', {
+    //       title: 'Theta Tau Management',
+    //       user: req.user,
+    //       data: rows,
+    //       seeUpdate: true,
+    //       updateURL: ('/admin/update/' + rows[0].member.id)
+    //     });
+    //   }
+    // });
   }
 };
 
@@ -198,27 +208,47 @@ exports.updateMember = function(req, res) {
   // Grab the input data
   var json = req.body;
 
-  // Create the update member query
-  var updateQuery = "UPDATE members SET " +
-              "firstname=$1, " +
-              "lastname=$2, " +
-              "password=$3, " +
-              "email=$4, " +
-              "phonenumber=$5, " +
-              "startyear=$6, " +
-              "gradyear=$7, " +
-              "major=$8, " +
-              "class=$9 " +
-              "WHERE id=$10";
+  // // Create the update member query
+  // var updateQuery = "UPDATE members SET " +
+  //             "firstname=$1, " +
+  //             "lastname=$2, " +
+  //             "password=$3, " +
+  //             "email=$4, " +
+  //             "phonenumber=$5, " +
+  //             "startyear=$6, " +
+  //             "gradyear=$7, " +
+  //             "major=$8, " +
+  //             "class=$9 " +
+  //             "WHERE id=$10";
 
-  // Update 'members' in database 'ttapp'
-  var query1 = app.client.query(updateQuery,
-              [json.up_firstname, json.up_lastname, json.up_password,
-               json.up_email, json.up_phonenumber, json.up_startyear,
-               json.up_gradyear, json.up_major, json.up_class,
-               json.up_id]);
+  // // Update 'members' in database 'ttapp'
+  // var query1 = app.client.query(updateQuery,
+  //             [json.up_firstname, json.up_lastname, json.up_password,
+  //             json.up_email, json.up_phonenumber, json.up_startyear,
+  //             json.up_gradyear, json.up_major, json.up_class,
+  //             json.up_id]);
 
-  query1.on('end', function(result) {
-    return res.redirect('admin');
-  });
+  // query1.on('end', function(result) {
+  //   return res.redirect('admin');
+  // });
+  app.knex('members')
+    .update(
+      {firstname: json.reg_firstname,
+      lastname: json.reg_lastname,
+      username: json.reg_username,
+      password: json.reg_password,
+      email: json.reg_email,
+      phonenumber: json.reg_phonenumber,
+      startyear: json.reg_startyear,
+      gradyear: json.reg_gradyear,
+      major: json.reg_major,
+      class: json.reg_class
+    })
+    .where('id', 0)
+    .catch(function(error) {
+      console.error(error);
+    })
+    .then(function(){
+      res.redirect('admin');
+    });
 };

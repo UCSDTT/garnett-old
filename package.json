@@ -24,7 +24,8 @@
     "connect-flash": "*",
     "morgan": "*",
     "method-override": "*",
-    "connect": "*"
+    "connect": "*",
+    "knex": "*"
   },
   "engines": {
     "node": "0.10.x"

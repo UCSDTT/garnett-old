@@ -1,3 +1,4 @@
+var app = require('../app');
 /**
  * Dashboard page
  */
