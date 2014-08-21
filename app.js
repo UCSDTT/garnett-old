@@ -13,9 +13,6 @@ var path = require('path');
 var handlebars = require('express-handlebars');
 var morgan  = require('morgan');
 
-// PostgreSQL
-var pg = require('pg').native;
-
 //Dependencies for signin/authentication system
 var passport = exports.passport =  require('passport');
 var LocalStrategy = exports.LocalStrategy = require('passport-local').Strategy;
@@ -28,6 +25,8 @@ var dashboard = require('./routes/dashboard');
 
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
+// PostgreSQL
+var pg = require('pg').native;
 var conString = "postgres://ttuser:ttuser@192.241.220.164/ttadmin";
 var knex = exports.knex = require('knex')({
   client: 'pg',
@@ -63,12 +62,12 @@ passport.use(new LocalStrategy({
   }
 ));
 
+// Derialize the user session by id
 passport.serializeUser(function(user, done) {
-  console.log(user);
   return done(null, user.id);
 });
 
-// Deserialize the user session
+// Deserialize the user session by id
 passport.deserializeUser(function(id, done) {
   knex('members').where({
         id: id,

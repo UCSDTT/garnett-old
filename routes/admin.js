@@ -1,6 +1,4 @@
 var app = require('../app');
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
 /**
  * Admin page
  */
@@ -10,8 +8,7 @@ exports.adminViewHome = function(req, res) {
 
   // If user is not admin
   if(req.session.passport.user !== 1) {
-    console.log("redirecting cus not 1?");
-    return res.redirect('/');
+    return res.redirect('/dashboard');
   }
 
   app.knex('members')
@@ -70,7 +67,6 @@ exports.addMember = function(req, res) {
     })
     .then(function(length){
       if( length === 0 ){
-        console.log(json);
         return app.knex.insert(
           {firstname: json.reg_firstname,
           lastname: json.reg_lastname,
