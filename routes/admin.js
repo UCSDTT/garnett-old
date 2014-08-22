@@ -18,10 +18,9 @@ exports.adminViewHome = function(req, res) {
       console.log(rows.length + ' member(s) loaded.');
       var members = [];
       for (var i = 0; i < rows.length; i++){
-        members.push({
-          "member": rows[i]
-        });
+        members.push(rows[i]);
       }
+      console.log(members);
       return res.render('admin', {
   			title: 'Theta Tau Management',
   			user: req.user,
@@ -108,9 +107,7 @@ exports.adminViewUpdate = function(req, res) {
       .then(function(rows){
         var members = [];
         for (var i = 0; i < rows.length; i++){
-          members.push({
-            "member": rows[i]
-          });
+          members.push(rows[i]);
         }
         if(members.length === 0) {
           return res.redirect('/admin');
@@ -122,7 +119,7 @@ exports.adminViewUpdate = function(req, res) {
             user: req.user,
             data: members,
             seeUpdate: true,
-            updateURL: ('/admin/update/' + members[0].member.id)
+            updateURL: ('/admin/update/' + members[0].id)
           });
         }
       });
