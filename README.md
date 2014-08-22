@@ -1,4 +1,5 @@
 #Garnett
+[![Build Status](https://travis-ci.org/UCSDTT/Garnett.svg?branch=master)](https://travis-ci.org/UCSDTT/Garnett)
 
 Web application for members of the Epsilon Delta Chapter of Theta Tau.
 This application is currently under development.
