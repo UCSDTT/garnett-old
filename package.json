@@ -12,6 +12,9 @@
   },
   "dependencies": {
     "pg": "*",
+    "jade": "*",
+    "async": "*",
+    "lodash": "*",
     "express-handlebars": "*",
     "express": "*",
     "express-session": "*",

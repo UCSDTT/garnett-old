@@ -1,0 +1,186 @@
+extends layout
+block body
+  .container
+      .row
+          ul.nav.nav-pills
+            li
+              a.linknav(href='/admin') Home
+            li
+              a.linknav(href='/admin/add') Add
+            li
+              a(href='/logout') Logout
+          if seeTable
+            br
+            table.table.table-condensed.table-hover.table-responsive.table-bordered
+              thead
+                tr
+                  h4(align='center') Click on a row to update member
+                tr
+                  td
+                    h4 #
+                  td
+                    h4 First
+                  td
+                    h4 Last
+                  td
+                    h4 User
+                  td
+                    h4 Password
+                  td
+                    h4 Email
+                  td
+                    h4 Phone
+                  td
+                    h4 Start
+                  td
+                    h4 Grad
+                  td
+                    h4 Major
+                  td
+                    h4 Class
+              tbody
+                each member in data
+                  tr.rowdata
+                    td.rowid #{member.id}
+                    td.rowfirstname #{member.firstname}
+                    td.rowlastname #{member.lastname}
+                    td.rowusername #{member.username}
+                    td.rowpassword #{member.password}
+                    td.rowemail #{member.email}
+                    td.rowphonenumber #{member.phonenumber}
+                    td.rowstartyear #{member.startyear}
+                    td.rowgradyear #{member.gradyear}
+                    td.rowmajor #{member.major}
+                    td.rowclass #{member.class}
+          if seeAdd
+            form(role='form', action='/admin/add', method='post')
+              h1 Add Member
+              .form-group
+                input#reg_firstname.form-control(type='text', placeholder='First Name', name='reg_firstname', required='required')
+              .form-group
+                input#reg_lastname.form-control(type='text', placeholder='Last Name', name='reg_lastname', required='required')
+              .form-group
+                input#reg_username.form-control(type='text', placeholder='Username', name='reg_username', required='required')
+              .form-group
+                input#reg_password.form-control(type='text', title='6-32 Alphanumeric Characters', placeholder='Password', name='reg_password', required='required')
+              .form-group
+                input#reg_email.form-control(type='email', placeholder='Email', name='reg_email', required='required')
+              .form-group
+                input#reg_phonenumber.form-control(type='tel', title='i.e. 777-777-7777', placeholder='Phone Number', name='reg_phonenumber', required='required')
+              .form-group
+                input#reg_startyear.form-control(type='text', title='i.e. 2014', placeholder='Start Year', name='reg_startyear', required='required')
+              .form-group
+                input#reg_gradyear.form-control(type='text', title='i.e. 2014', placeholder='Grad Year', name='reg_gradyear', required='required')
+              .form-group
+                select#reg_major.form-control(type='text', name='reg_major', required='required')
+                  option(value='Aerospace Engineering') Aerospace Engineering
+                  option(value='Bioengineering') Bioengineering
+                  option(value='Bioengineering, Biotech') Bioengineering, Biotech
+                  option(value='Biology, Bioengineering') Biology, Bioengineering
+                  option(value='Chemical Engineering') Chemical Engineering
+                  option(value='Computer Engineering') Computer Engineering
+                  option(value='Computer Science') Computer Science
+                  option(value='Economics') Economics
+                  option(value='Electrical Engineering') Electrical Engineering
+                  option(value='Environmental Engineering') Environmental Engineering
+                  option(value='Mechanical Engineering') Mechanical Engineering
+                  option(value='Nanoengineering') Nanoengineering
+                  option(value='Physics') Physics
+                  option(value='Structural Engineering') Structural Engineering
+              .form-group
+                select#reg_class.form-control(type='text', name='reg_class', required='required')
+                  option(value='Charter') Charter
+                  option(value='Alpha') Alpha
+                  option(value='Beta') Beta
+                  option(value='Gamma') Gamma
+                  option(value='Delta') Delta
+                  option(value='Epsilon') Epsilon
+                  option(value='Zeta') Zeta
+                  option(value='Eta') Eta
+                  option(value='Theta') Theta
+                  option(value='Iota') Iota
+                  option(value='Kappa') Kappa
+                  option(value='Lambda') Lambda
+                  option(value='Mu') Mu
+                  option(value='Nu') Nu
+                  option(value='Xi') Xi
+                  option(value='Omicron') Omicron
+                  option(value='Pi') Pi
+                  option(value='Sigma') Sigma
+                  option(value='Tau') Tau
+                  option(value='Upsilon') Upsilon
+                  option(value='Phi') Phi
+                  option(value='Chi') Chi
+                  option(value='Psi') Psi
+                  option(value='Omega  ') Omega
+              button.btn.btn-lg.btn-primary.btn-block(type='submit')
+                | Sign Up
+          if seeUpdate
+            form(role='form', action='#{updateURL}', method='post')
+              h1 Update Member ID: #{data[0].id}, Username: #{data[0].username}
+              .form-group
+                input#up_firstname.form-control(type='text', placeholder='First Name', name='up_firstname', value='#{data[0].firstname}', required='required')
+              .form-group
+                input#up_lastname.form-control(type='text', placeholder='Last Name', name='up_lastname', value='#{data[0].lastname}', required='required')
+              .form-group
+                input#up_password.form-control(type='text', title='6-32 Alphanumeric Characters', placeholder='Password', name='up_password', value='#{data[0].password}', required='required')
+              .form-group
+                input#up_email.form-control(type='email', placeholder='Email', name='up_email', value='#{data[0].email}', required='required')
+              .form-group
+                input#up_phonenumber.form-control(type='tel', title='i.e. 777-777-7777', placeholder='Phone Number', name='up_phonenumber', value='#{data[0].phonenumber}', required='required')
+              .form-group
+                input#up_startyear.form-control(type='text', title='i.e. 2014', placeholder='Start Year', name='up_startyear', value='#{data[0].startyear}', required='required')
+              .form-group
+                input#up_gradyear.form-control(type='text', title='i.e. 2014', placeholder='Grad Year', name='up_gradyear', value='#{data[0].gradyear}', required='required')
+              .form-group
+                select#up_major.form-control(type='text', name='up_major', required='required')
+                  option(value='#{data[0].major}') #{data[0].major}
+                  option(value='Aerospace Engineering') Aerospace Engineering
+                  option(value='Bioengineering') Bioengineering
+                  option(value='Bioengineering, Biotech') Bioengineering, Biotech
+                  option(value='Biology, Bioengineering') Biology, Bioengineering
+                  option(value='Chemical Engineering') Chemical Engineering
+                  option(value='Computer Engineering') Computer Engineering
+                  option(value='Computer Science') Computer Science
+                  option(value='Economics') Economics
+                  option(value='Electrical Engineering') Electrical Engineering
+                  option(value='Environmental Engineering') Environmental Engineering
+                  option(value='Mechanical Engineering') Mechanical Engineering
+                  option(value='Nanoengineering') Nanoengineering
+                  option(value='Physics') Physics
+                  option(value='Structural Engineering') Structural Engineering
+              .form-group
+                select#up_class.form-control(type='text', name='up_class', required='required')
+                  option(value='#{data[0].class}') #{data[0].class}
+                  option(value='Charter') Charter
+                  option(value='Alpha') Alpha
+                  option(value='Beta') Beta
+                  option(value='Gamma') Gamma
+                  option(value='Delta') Delta
+                  option(value='Epsilon') Epsilon
+                  option(value='Zeta') Zeta
+                  option(value='Eta') Eta
+                  option(value='Theta') Theta
+                  option(value='Iota') Iota
+                  option(value='Kappa') Kappa
+                  option(value='Lambda') Lambda
+                  option(value='Mu') Mu
+                  option(value='Nu') Nu
+                  option(value='Xi') Xi
+                  option(value='Omicron') Omicron
+                  option(value='Pi') Pi
+                  option(value='Sigma') Sigma
+                  option(value='Tau') Tau
+                  option(value='Upsilon') Upsilon
+                  option(value='Phi') Phi
+                  option(value='Chi') Chi
+                  option(value='Psi') Psi
+                  option(value='Omega') Omega
+              input(type='hidden', value='#{data[0].id}', name='up_id')
+              button.btn.btn-lg.btn-primary.btn-block(type='submit')
+                | Send
+
+  script(src='https://code.jquery.com/jquery.js')
+  script(src='/js/bootstrap.min.js')
+  script(src='/js/bootstrap.js')
+  script(src='/js/ttapp.js')

@@ -16,6 +16,5 @@ function initializePage() {
 function redirectToUpdateView(e) {
   e.preventDefault();
   var userid = $(this).find('.rowid').html();
-  console.log(userid);
   window.location.href = '/admin/update/' + userid;
 }

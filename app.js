@@ -88,8 +88,7 @@ var port = process.env.PORT || 2014;
 // all environments
 app.set('port', port);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', handlebars());
-app.set('view engine', 'handlebars');
+app.set('view engine', 'jade');
 app.use(cookieParser('Theta Tau secret key'));
 app.use(morgan('dev'));
 app.use(session( {
