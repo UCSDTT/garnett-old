@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 // Module dependencies
-var connect        = require('connect');
+var connect = require('connect');
 var methodOverride = require('method-override');
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
@@ -85,6 +85,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 var port = process.env.PORT || 2014;
+
 // all environments
 app.set('port', port);
 app.set('views', path.join(__dirname, 'views'));
@@ -129,10 +130,6 @@ app.post('/login',
 app.post('/admin/add', admin.addMember);
 app.post('/admin/update/:id', admin.updateMember);
 
-
-
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
-
-

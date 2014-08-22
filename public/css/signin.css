@@ -1,5 +1,5 @@
 body {
-    background: #FFFFF7 no-repeat center center fixed; 
+    background: #FFFFF7 no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -27,7 +27,7 @@ h1, span, input, label {
 	color: #000000;
 }
 
-.form-signin {	
+.form-signin {
 	max-width: 330px;
 	margin: 0 auto;
 	padding: 15px;

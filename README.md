@@ -1,4 +1,4 @@
-#UCSD Theta Tau Web Application and Server
+#Garnett
 
 Web application for members of the Epsilon Delta Chapter of Theta Tau.
 This application is currently under development.

@@ -5,7 +5,6 @@ var app = require('../app');
 
 // GET admin console page
 exports.adminViewHome = function(req, res) {
-
   // If user is not admin
   if(req.session.passport.user !== 1) {
     return res.redirect('/dashboard');
@@ -16,15 +15,10 @@ exports.adminViewHome = function(req, res) {
 
     .then(function(rows) {
       console.log(rows.length + ' member(s) loaded.');
-      var members = [];
-      for (var i = 0; i < rows.length; i++){
-        members.push(rows[i]);
-      }
-      console.log(members);
       return res.render('admin', {
   			title: 'Theta Tau Management',
   			user: req.user,
-  			data: members,
+  			data: rows,
         seeTable: true
   	  });
     });
@@ -62,12 +56,9 @@ exports.addMember = function(req, res) {
 
     .then(function(rows) {
       console.log(rows.length + ' rows loaded.');
-      return rows.length;
-    })
-    .then(function(length){
-      if( length === 0 ){
-        return app.knex.insert(
-          {firstname: json.reg_firstname,
+      if( rows.length === 0 ){
+        return app.knex.insert({
+          firstname: json.reg_firstname,
           lastname: json.reg_lastname,
           username: json.reg_username,
           password: json.reg_password,
@@ -79,6 +70,7 @@ exports.addMember = function(req, res) {
           class: json.reg_class
         })
         .into('members')
+
         .catch(function(error) {
           console.error(error);
         });
@@ -94,42 +86,31 @@ exports.adminViewUpdate = function(req, res) {
     return res.redirect('/');
   }
 
-  // Check is argument is an int
   var id = req.params.id;
-  if(isNaN(id)) {
-    return res.redirect('/admin');
-  }
-  else {
-    app.knex('members')
-      .select('*')
-      .where('id', id)
+  app.knex('members')
+    .select('*')
+    .where('id', id)
 
-      .then(function(rows){
-        var members = [];
-        for (var i = 0; i < rows.length; i++){
-          members.push(rows[i]);
-        }
-        if(members.length === 0) {
-          return res.redirect('/admin');
-        }
-        else {
-          // Render admin update page and pass the data
-          return res.render('admin', {
-            title: 'Theta Tau Management',
-            user: req.user,
-            data: members,
-            seeUpdate: true,
-            updateURL: ('/admin/update/' + members[0].id)
-          });
-        }
-      });
-  }
+    .then(function(rows){
+      if(rows.length === 0) {
+        return res.redirect('/admin');
+      }
+      else {
+        // Render admin update page and pass the data
+        return res.render('admin', {
+          title: 'Theta Tau Management',
+          user: req.user,
+          data: rows,
+          seeUpdate: true,
+          updateURL: ('/admin/update/' + rows[0].id)
+        });
+      }
+    });
 };
 
 
 // Execute UPDATE query on database to update a member
 exports.updateMember = function(req, res) {
-
   // If user is not admin
   if(req.session.passport.user != 1) {
     return res.redirect('/dashboard');
@@ -139,8 +120,8 @@ exports.updateMember = function(req, res) {
   var json = req.body;
 
   app.knex('members')
-    .update(
-      {firstname: json.up_firstname,
+    .update({
+      firstname: json.up_firstname,
       lastname: json.up_lastname,
       password: json.up_password,
       email: json.up_email,
@@ -151,9 +132,11 @@ exports.updateMember = function(req, res) {
       class: json.up_class
     })
     .where('id', json.up_id)
+
     .catch(function(error) {
       console.error(error);
     })
+
     .then(function(){
       return res.redirect('/admin');
     });
