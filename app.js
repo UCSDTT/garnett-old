@@ -120,6 +120,8 @@ app.get('/admin', ensureAuthenticated, admin.adminViewHome);
 app.get('/admin/add', ensureAuthenticated, admin.adminViewAdd);
 app.get('/admin/update/:id', ensureAuthenticated, admin.adminViewUpdate);
 app.get('/dashboard', ensureAuthenticated, dashboard.dashboardView);
+app.get('/partials/:name', ensureAuthenticated, dashboard.partials);
+app.get('*', ensureAuthenticated, dashboard.dashboardView);
 
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/dashboard',
