@@ -1,6 +1,6 @@
 {
-  "name": "TTUCSDWebApp",
-  "version": "0.0.1",
+  "name": "Garnett",
+  "version": "0.0.0",
   "author": "ThetaTau App Team",
   "repository": {
     "type": "git",
@@ -28,7 +28,11 @@
     "morgan": "*",
     "method-override": "*",
     "connect": "*",
-    "knex": "*"
+    "knex": "*",
+    "bower": "*"
+  },
+  "scripts": {
+    "postinstall": "node_modules/.bin/bower install"
   },
   "engines": {
     "node": "*"

@@ -3,12 +3,14 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-  controller('AppCtrl', function ($scope, $http) {
-    console.log("enter main controller");
+  controller('AppCtrl', function ($scope, $http, $window) {
+    $scope.logout = function (){
+      console.log("enter logout from front end");
+      $window.location.href = '/logout';
+    };
   }).
-  controller('MyCtrl1', function ($scope) {
+  controller('MyCtrl1', function ($scope, $window) {
     // write Ctrl here
-    console.log("enter controller 1");
   }).
   controller('MyCtrl2', function ($scope) {
     // write Ctrl here
