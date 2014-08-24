@@ -10,7 +10,13 @@ Visit us at: [UCSD Theta Tau](http://thetatau.ucsd.edu/)
 1. Make a cloud9 ide account here, *signing up using your github account:* [Cloud9 IDE](https://c9.io).
 2. Once inside your dashboard, `Create New Workspace`, by hitting the green button on the upper left, and selecting `Clone from URL`: [https://github.com/bgenchel/TTUCSD-WebApp.git](https://github.com/bgenchel/TTUCSD-WebApp.git).
 3. Once your workspace is created, select it from the menu on the left and click `Start Editing` to enter your workspace.
-4. Run `sudo npm install` in the bash terminal to install all the required dependencies. (Run `rm -r node_modules` and try again if something goes wrong)
+4. Run `npm install` in the bash terminal to install all the required dependencies.
+
+If there are permission issues, run these and then step 4 again:
+
+    sudo chown -R `whoami` ~/.npm
+    sudo chown -R `whoami` node_modules
+    sudo rm -r node_modules
 
 
 ##To Run the Application:
