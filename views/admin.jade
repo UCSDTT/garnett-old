@@ -14,10 +14,12 @@ block body
             table.table.table-condensed.table-hover.table-responsive.table-bordered
               thead
                 tr
-                  h4(align='center') Click on a row to update member
+                  h4(align='center') Click on a 'Update' to update member
                 tr
                   td
                     h4 #
+                  td
+                    h4 Update
                   td
                     h4 First
                   td
@@ -41,17 +43,19 @@ block body
               tbody
                 each member in data
                   tr.rowdata
-                    td.rowid #{member.id}
-                    td.rowfirstname #{member.firstname}
-                    td.rowlastname #{member.lastname}
-                    td.rowusername #{member.username}
-                    td.rowpassword #{member.password}
-                    td.rowemail #{member.email}
-                    td.rowphonenumber #{member.phonenumber}
-                    td.rowstartyear #{member.startyear}
-                    td.rowgradyear #{member.gradyear}
-                    td.rowmajor #{member.major}
-                    td.rowclass #{member.class}
+                  td.rowid #{member.id}
+                  td.rowUpdate
+                    a(href='/admin/update/' + member.id) Update
+                  td.rowfirstname #{member.firstname}
+                  td.rowlastname #{member.lastname}
+                  td.rowusername #{member.username}
+                  td.rowpassword #{member.password}
+                  td.rowemail #{member.email}
+                  td.rowphonenumber #{member.phonenumber}
+                  td.rowstartyear #{member.startyear}
+                  td.rowgradyear #{member.gradyear}
+                  td.rowmajor #{member.major}
+                  td.rowclass #{member.class}
           if seeAdd
             form(role='form', action='/admin/add', method='post')
               h1 Add Member
@@ -183,4 +187,10 @@ block body
   script(src='https://code.jquery.com/jquery.js')
   script(src='/js/bootstrap.min.js')
   script(src='/js/bootstrap.js')
-  script(src='/js/ttapp.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.js')
+  script(src='/js/app.js')
+  script(src='/js/services/sampleService.js')
+  script(src='/js/controllers/sampleController.js')
+  script(src='/js/filters/sampleFilter.js')
+  script(src='/js/directives/sampleDirective.js')
