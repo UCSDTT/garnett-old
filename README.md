@@ -1,4 +1,5 @@
-#Garnett
+<img alt="Garnett" src="https://files.slack.com/files-pri/T02ESGX8M-F02GWQXTV/garnett_no_background.png" height="200px" />
+
 [![Build Status](https://travis-ci.org/UCSDTT/Garnett.svg?branch=master)](https://travis-ci.org/UCSDTT/Garnett)
 
 Web application for members of the Epsilon Delta Chapter of Theta Tau.
