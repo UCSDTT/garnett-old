@@ -13,5 +13,6 @@ deploy:
   provider: heroku
   api_key:
     secure: pdqAr/jngDdc3RMesztGaU1I0cRpSNZHHPm2nCASZp2vafBQa2OxVP2+FqFNk6DQKcZMyySWOvlmUziIGFGTgHuW2n3k2PniOPUmvSmGjRlS524K8qt2SDOpT2smVISKqX++funSmPekgB/1nbGoHPATHXu17VwdyhfTP6JxDv4=
-  master: garnett-master
-  production: garnett
+  app:
+    master: garnett-master
+    production: garnett
