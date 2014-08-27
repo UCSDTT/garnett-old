@@ -8,6 +8,10 @@ angular.module('myApp.controllers', []).
       console.log("enter logout from front end");
       $window.location.href = '/logout';
     };
+
+    $scope.sayHello = function() {
+      $scope.greeting = "Hello World";
+    };
   }).
   controller('MyCtrl1', function ($scope, $window) {
     // write Ctrl here
