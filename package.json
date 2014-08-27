@@ -7,9 +7,6 @@
     "url": "https://github.com/bgenchel/TTUCSD-WebApp"
   },
   "license": "MIT",
-  "scripts": {
-    "start": "node app.js"
-  },
   "dependencies": {
     "pg": "*",
     "jade": "*",
@@ -29,12 +26,25 @@
     "method-override": "*",
     "connect": "*",
     "knex": "*",
-    "bower": "*"
-  },
-  "scripts": {
-    "postinstall": "node_modules/.bin/bower install"
+    "bower": "*",
+    "karma": "*",
+    "karma-cli": "*",
+    "phantomjs": "*",
+    "karma-phantomjs-launcher": "*"
   },
   "engines": {
     "node": "*"
+  },
+  "devDependencies": {
+    "karma": "^0.12.22",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-phantomjs-launcher": "~0.1",
+    "karma-jasmine": "^0.1.5",
+    "karma-firefox-launcher": "~0.1"
+  },
+  "scripts": {
+    "postinstall": "node_modules/.bin/bower install",
+    "pretest": "npm install",
+    "test": "node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS"
   }
 }

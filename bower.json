@@ -19,6 +19,7 @@
   "dependencies": {
     "angular-bootstrap": "*",
     "angular": "*",
+    "angular-mocks": "*",
     "angular-route": "*",
     "bootstrap": "*",
     "font-awesome": "*",
