@@ -1,13 +1,17 @@
 language: node_js
 node_js:
-  - "0.10"
-
+- '0.10'
 notifications:
   slack: ucsdtt:swWUoEV6gZT7X2j1mThcrLz8
-
 before_script:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
 script:
-  - node_modules/.bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots --browsers=Firefox
+- node_modules/.bin/karma start karma.conf.js --no-auto-watch --single-run --reporters=dots
+  --browsers=Firefox
+deploy:
+  provider: heroku
+  api_key:
+    secure: pdqAr/jngDdc3RMesztGaU1I0cRpSNZHHPm2nCASZp2vafBQa2OxVP2+FqFNk6DQKcZMyySWOvlmUziIGFGTgHuW2n3k2PniOPUmvSmGjRlS524K8qt2SDOpT2smVISKqX++funSmPekgB/1nbGoHPATHXu17VwdyhfTP6JxDv4=
+  master: garnett-master
+  production: garnett

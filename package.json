@@ -7,6 +7,11 @@
     "url": "https://github.com/bgenchel/TTUCSD-WebApp"
   },
   "license": "MIT",
+  "scripts": {
+    "postinstall": "node_modules/.bin/bower install",
+    "pretest": "npm install",
+    "test": "node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS"
+  },
   "dependencies": {
     "pg": "*",
     "jade": "*",
@@ -41,10 +46,5 @@
     "karma-phantomjs-launcher": "~0.1",
     "karma-jasmine": "^0.1.5",
     "karma-firefox-launcher": "~0.1"
-  },
-  "scripts": {
-    "postinstall": "node_modules/.bin/bower install",
-    "pretest": "npm install",
-    "test": "node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS"
   }
 }
