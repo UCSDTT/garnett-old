@@ -23,3 +23,11 @@ If there are permission issues, run these and then step 4 again:
 1. Start the application by running the `app.js` file. (Right-click the file and click run)
 2. At the top of the terminal, you should see something along the lines of `Your code is running at https://workspacename-c9-username.c9.io.`
 3. Visit that link in your browser to see the application in action!
+
+##Testing:
+We use Karma and Jasmine for our Unit Test setup.
+End-to-end testing with Protractor will be added soon.
+Any changes made to remote will be automatically checked against all unit tests using Travis.ci.
+
+To run unit tests, run
+`node_modules/.bin/karma start karma.conf.js`
