@@ -12,6 +12,7 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express-handlebars');
 var morgan  = require('morgan');
+var dotenv = require('dotenv');
 
 //Dependencies for signin/authentication system
 var passport = exports.passport =  require('passport');
@@ -26,8 +27,9 @@ var dashboard = require('./routes/dashboard');
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
 // PostgreSQL
+dotenv.load();
 var pg = require('pg').native;
-var conString = "postgres://ttuser:ttuser@192.241.220.164/ttadmin";
+var conString = process.env.DB_CREDENTIALS;
 var knex = exports.knex = require('knex')({
   client: 'pg',
   connection: conString

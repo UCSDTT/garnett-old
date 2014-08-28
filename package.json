@@ -35,7 +35,8 @@
     "karma": "*",
     "karma-cli": "*",
     "phantomjs": "*",
-    "karma-phantomjs-launcher": "*"
+    "karma-phantomjs-launcher": "*",
+    "dotenv": "*"
   },
   "engines": {
     "node": "*"
