@@ -10,16 +10,20 @@ Visit us at: [UCSD Theta Tau](http://thetatau.ucsd.edu/)
 1. Make a cloud9 ide account here, *signing up using your github account:* [Cloud9 IDE](https://c9.io).
 2. Once inside your dashboard, `Create New Workspace`, by hitting the green button on the upper left, and selecting `Clone from URL`: [https://github.com/bgenchel/TTUCSD-WebApp.git](https://github.com/bgenchel/TTUCSD-WebApp.git).
 3. Once your workspace is created, select it from the menu on the left and click `Start Editing` to enter your workspace.
-4. Run `npm install` in the bash terminal to install all the required dependencies.
+4. Run `npm install` (without sudo!) in the bash terminal to install all the required dependencies.
 
 If there are permission issues, run these and then step 4 again:
 
+    sudo npm cache clean
     sudo chown -R `whoami` ~/.npm
     sudo chown -R `whoami` node_modules
     sudo rm -r node_modules
 
 
 ##To Run the Application:
+IMPORTANT: Before running the application you must create a `.env` file with database credentials in the root directory of the application.
+It will look something like `DB_CREDENTIALS=postgres://username:password@hostname/db`.  Ask an authorized administrator for proper credentials.
+
 1. Start the application by running the `app.js` file. (Right-click the file and click run)
 2. At the top of the terminal, you should see something along the lines of `Your code is running at https://workspacename-c9-username.c9.io.`
 3. Visit that link in your browser to see the application in action!
