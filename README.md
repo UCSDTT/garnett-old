@@ -1,4 +1,4 @@
-<img alt="Garnett" src="http://cdn.imghack.se/images/145a94ce83eb940739d13bcd5182e5fd.png" height="200px" />
+#Garnett
 
 [![Build Status](https://travis-ci.org/UCSDTT/Garnett.svg?branch=master)](https://travis-ci.org/UCSDTT/Garnett)
 

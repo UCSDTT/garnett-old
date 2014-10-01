@@ -10,7 +10,7 @@
   "scripts": {
     "postinstall": "node_modules/.bin/bower install",
     "pretest": "npm install",
-    "test": "node_modules/.bin/karma start --single-run --browsers Firefox,PhantomJS"
+    "test": "node_modules/.bin/karma start --single-run --browsers PhantomJS"
   },
   "dependencies": {
     "pg": "*",
@@ -36,7 +36,8 @@
     "karma-cli": "*",
     "phantomjs": "*",
     "karma-phantomjs-launcher": "*",
-    "dotenv": "*"
+    "dotenv": "*",
+    "protractor": "*"
   },
   "engines": {
     "node": "*"
