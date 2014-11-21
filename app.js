@@ -28,7 +28,7 @@ var dashboard = require('./routes/dashboard');
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
 // PostgreSQL
 dotenv.load();
-var pg = require('pg').native;
+var pg = require('pg');
 var conString = process.env.DB_CREDENTIALS;
 var knex = exports.knex = require('knex')({
   client: 'pg',
