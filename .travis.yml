@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - '0.10'
 notifications:
-  slack: ucsdtt:swWUoEV6gZT7X2j1mThcrLz8
+  slack: ucsdtt-app:l1RdRBIXiktnc3RFSZcRJduq
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
