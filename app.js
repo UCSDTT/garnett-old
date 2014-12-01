@@ -137,6 +137,9 @@ app.post('/admin/update/:id', admin.updateMember);
 var membersRouter = require(__dirname + '/api/members/membersRouter');
 app.use('/api/members', membersRouter);
 
+var eventsRouter = require(__dirname + '/api/events/eventsRouter');
+app.use('/api/events', eventsRouter);
+
 // If none of our routes are matched, we go to dashboard
 app.get('*', ensureAuthenticated, dashboard.dashboardView);
 
