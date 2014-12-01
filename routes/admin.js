@@ -58,6 +58,7 @@ exports.addMember = function(req, res) {
       console.log(rows.length + ' rows loaded.');
       if( rows.length === 0 ){
         return app.knex.insert({
+          activeid: json.reg_activeid,
           firstname: json.reg_firstname,
           lastname: json.reg_lastname,
           username: json.reg_username,
@@ -121,6 +122,7 @@ exports.updateMember = function(req, res) {
 
   app.knex('members')
     .update({
+      activeid: json.up_activeid,
       firstname: json.up_firstname,
       lastname: json.up_lastname,
       password: json.up_password,
