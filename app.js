@@ -140,6 +140,12 @@ app.use('/api/members', membersRouter);
 var eventsRouter = require(__dirname + '/api/events/eventsRouter');
 app.use('/api/events', eventsRouter);
 
+var commentsRouter = require(__dirname + '/api/comments/commentsRouter');
+app.use('/api/comments', commentsRouter);
+
+var attendingRouter = require(__dirname + '/api/attending/attendingRouter');
+app.use('/api/attending', attendingRouter);
+
 // If none of our routes are matched, we go to dashboard
 app.get('*', ensureAuthenticated, dashboard.dashboardView);
 
