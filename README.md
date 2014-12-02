@@ -38,9 +38,13 @@ To run unit tests, run
 
 ##Access Database:
 ssh into machine
-su - postgres
+su - <username_here>
 psql
+\du :: display users
 \list :: list all databases
+\c <db_name_here> :: connect to a database
+\dt :: display tables of current database
+\q :: quit the shell
 
 ##Date format
 '2011-05-16 15:36:38' (ANSII Standard)
