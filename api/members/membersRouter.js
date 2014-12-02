@@ -38,4 +38,13 @@ membersRouter.route('/:memberid/events/attending').get(function(req, res) {
   membersController.getMemberEventsAttending(req, res);
 });
 
+/*
+  POST
+  /api/members
+  Creates a new member given an input body
+*/
+membersRouter.route('/').post(function(req, res) {
+  membersController.createMember(req, res);
+});
+
 module.exports = membersRouter;
