@@ -35,3 +35,16 @@ Any changes made to remote will be automatically checked against all unit tests 
 
 To run unit tests, run
 `node_modules/.bin/karma start karma.conf.js`
+
+##Access Database:
+ssh into machine
+su - <username_here>
+psql
+\du :: display users
+\list :: list all databases
+\c <db_name_here> :: connect to a database
+\dt :: display tables of current database
+\q :: quit the shell
+
+##Date format
+'2011-05-16 15:36:38' (ANSII Standard)

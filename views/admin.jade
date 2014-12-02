@@ -21,6 +21,8 @@ block body
                   td
                     h4 Update
                   td
+                    h4 Active ID
+                  td
                     h4 First
                   td
                     h4 Last
@@ -46,6 +48,7 @@ block body
                   td.rowid #{member.id}
                   td.rowUpdate
                     a(href='/admin/update/' + member.id) Update
+                  td.rowactiveid #{member.activeid}
                   td.rowfirstname #{member.firstname}
                   td.rowlastname #{member.lastname}
                   td.rowusername #{member.username}
@@ -59,6 +62,8 @@ block body
           if seeAdd
             form(role='form', action='/admin/add', method='post')
               h1 Add Member
+              .form-group
+                input#reg_activeid.form-control(type='text', placeholder='Active Id', name='reg_activeid', required='required')
               .form-group
                 input#reg_firstname.form-control(type='text', placeholder='First Name', name='reg_firstname', required='required')
               .form-group
@@ -122,6 +127,8 @@ block body
           if seeUpdate
             form(role='form', action='#{updateURL}', method='post')
               h1 Update Member ID: #{data[0].id}, Username: #{data[0].username}
+              .form-group
+                input#up_activeid.form-control(type='text', placeholder='Active Id', name='up_activeid', value='#{data[0].activeid}', required='required')
               .form-group
                 input#up_firstname.form-control(type='text', placeholder='First Name', name='up_firstname', value='#{data[0].firstname}', required='required')
               .form-group

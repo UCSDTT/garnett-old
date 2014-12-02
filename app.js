@@ -123,7 +123,6 @@ app.get('/admin/add', ensureAuthenticated, admin.adminViewAdd);
 app.get('/admin/update/:id', ensureAuthenticated, admin.adminViewUpdate);
 app.get('/dashboard', ensureAuthenticated, dashboard.dashboardView);
 app.get('/partials/:name', ensureAuthenticated, dashboard.partials);
-app.get('*', ensureAuthenticated, dashboard.dashboardView);
 
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/dashboard',
@@ -133,6 +132,22 @@ app.post('/login',
 
 app.post('/admin/add', admin.addMember);
 app.post('/admin/update/:id', admin.updateMember);
+
+// Routes for api
+var membersRouter = require(__dirname + '/api/members/membersRouter');
+app.use('/api/members', membersRouter);
+
+var eventsRouter = require(__dirname + '/api/events/eventsRouter');
+app.use('/api/events', eventsRouter);
+
+var commentsRouter = require(__dirname + '/api/comments/commentsRouter');
+app.use('/api/comments', commentsRouter);
+
+var attendingRouter = require(__dirname + '/api/attending/attendingRouter');
+app.use('/api/attending', attendingRouter);
+
+// If none of our routes are matched, we go to dashboard
+app.get('*', ensureAuthenticated, dashboard.dashboardView);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
