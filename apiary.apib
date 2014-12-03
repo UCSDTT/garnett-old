@@ -1,22 +1,55 @@
 FORMAT: 1A
 
-# Garnett
-Notes API is a *short texts saving* service similar to its physical paper presence on your table.
+# Garnett API
+Garnett API is a service for UCSD Theta Tau's *Garnett* web application, with a
+timeline-focused approach that encourages social networking based on events.
 
-# Group Notes
-Notes related resources of the **Notes API**
+Github: https://github.com/UCSDTT/Garnett/
 
-## Notes Collection [/notes]
-### List all Notes [GET]
+# Group Members
+Members related resources of the **Garnett API**
+
+## Members Collection [/notes]
+Actions for manipulating the collection of members
+### List all Members [GET]
 + Response 200 (application/json)
 
         [{
-          "id": 1, "title": "Jogging in park"
-        }, {
-          "id": 2, "title": "Pick-up posters from post-office"
+            "id": 1,
+            "firstname": "Michael",
+            "lastname": "Luo",
+            "username": "mzluo",
+            "password": "password",
+            "email": "mzluo@tt.com",
+            "phonenumber": "5109995555",
+            "startyear": 2011,
+            "gradyear": 2015,
+            "major": "Computer Science",
+            "class": "Iota",
+            "securityquestion": "This is a security question",
+            "securityanswer": "This is a security question answer",
+            "activeid": 110,
+            "createdon": "2014-12-01T22:32:40.898Z"
+        },
+        {
+            "id": 3,
+            "firstname": "Benjie",
+            "lastname": "Genchel",
+            "username": "bgenchel",
+            "password": "banana",
+            "email": "bgenchel@tt.com",
+            "phonenumber": "3459590",
+            "startyear": 2010,
+            "gradyear": 2014,
+            "major": "Electrical Engineering",
+            "class": "Eta",
+            "securityquestion": "This is a security question",
+            "securityanswer": "This is a security answer",
+            "activeid":111,
+            "createdon": "2014-12-01T22:32:40.898Z"
         }]
 
-### Create a Note [POST]
+### Create a Member [POST]
 + Request (application/json)
 
         { "title": "Buy cheese and bread for breakfast." }
