@@ -1,10 +1,16 @@
 FORMAT: 1A
 
 # Garnett API
-Garnett API is a service for UCSD Theta Tau's *Garnett* web application, with a
+Garnett API is an internal service for UCSD Theta Tau's *Garnett* web application, with a
 timeline-focused approach that encourages social networking based on events.
 
-Github: https://github.com/UCSDTT/Garnett/
+###Useful Links
++ [Github](https://github.com/UCSDTT/Garnett/)
++ [Understanding HTTP](http://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177)
+
+###Errors and Suggestions
+Please notify the Garnett API developers on Slack if there are any inconsistencies with 
+the API or if you have any feature requests.
 
 # Group Members
 Members related resources of the **Garnett API**
@@ -32,7 +38,7 @@ Actions for manipulating the collection of members
             "createdon": "2014-12-01T22:32:40.898Z"
         },
         {
-            "id": 3,
+            "id": 2,
             "firstname": "Benjie",
             "lastname": "Genchel",
             "username": "bgenchel",
@@ -52,28 +58,70 @@ Actions for manipulating the collection of members
 ### Create a Member [POST]
 + Request (application/json)
 
-        { "title": "Buy cheese and bread for breakfast." }
+        {
+            "firstname": "Michael",
+            "lastname": "Luo",
+            "username": "mzluo",
+            "password": "password",
+            "email": "mzluo@tt.com",
+            "phonenumber": "5109995555",
+            "startyear": 2011,
+            "gradyear": 2015,
+            "major": "Computer Science",
+            "class": "Iota",
+            "securityquestion": "This is a security question",
+            "securityanswer": "This is a security question answer",
+            "activeid": 110,
+        }
 
 + Response 201 (application/json)
 
-        { "id": 3, "title": "Buy cheese and bread for breakfast." }
+        {
+            "id": 1,
+            "firstname": "Michael",
+            "lastname": "Luo",
+            "username": "mzluo",
+            "password": "password",
+            "email": "mzluo@tt.com",
+            "phonenumber": "5109995555",
+            "startyear": 2011,
+            "gradyear": 2015,
+            "major": "Computer Science",
+            "class": "Iota",
+            "securityquestion": "This is a security question",
+            "securityanswer": "This is a security question answer",
+            "activeid": 110,
+            "createdon": "2014-12-01T22:32:40.898Z"
+        }
 
-## Note [/notes/{id}]
-A single Note object with all its details
+## Member [/members/{memberid}]
+Manipulate a single member object
 
 + Parameters
-    + id (required, number, `1`) ... Numeric `id` of the Note to perform action with. Has example value.
+    + memberid (required, number, `1`) ... Numeric `id` of the Member to perform action with. Has example value.
 
-### Retrieve a Note [GET]
+### Retrieve a Member [GET]
 + Response 200 (application/json)
-
-    + Header
-
-            X-My-Header: The Value
 
     + Body
 
-            { "id": 2, "title": "Pick-up posters from post-office" }
+            [{
+                "id": 1,
+                "firstname": "Michael",
+                "lastname": "Luo",
+                "username": "mzluo",
+                "password": "password",
+                "email": "mzluo@tt.com",
+                "phonenumber": "5109995555",
+                "startyear": 2011,
+                "gradyear": 2015,
+                "major": "Computer Science",
+                "class": "Iota",
+                "securityquestion": "This is a security question",
+                "securityanswer": "This is a security question answer",
+                "activeid": 110,
+                "createdon": "2014-12-01T22:32:40.898Z"
+            }]
 
-### Remove a Note [DELETE]
+### Remove a Member [DELETE]
 + Response 204
