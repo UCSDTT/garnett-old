@@ -20,8 +20,7 @@ module.exports = function(config) {
       'public/js/**/*.js',
       'public/js/*.js',
       'test/unit/**/*.js',
-      'api/test/unit/**/*.js',
-      'node_modules'
+      'api/test/unit/**/*.js'
     ],
 
 
