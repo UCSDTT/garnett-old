@@ -48,15 +48,15 @@ block body
                   td.rowid #{member.id}
                   td.rowUpdate
                     a(href='/admin/update/' + member.id) Update
-                  td.rowactiveid #{member.activeid}
-                  td.rowfirstname #{member.firstname}
-                  td.rowlastname #{member.lastname}
+                  td.rowactiveid #{member.active_id}
+                  td.rowfirstname #{member.first_name}
+                  td.rowlastname #{member.last_name}
                   td.rowusername #{member.username}
                   td.rowpassword #{member.password}
                   td.rowemail #{member.email}
-                  td.rowphonenumber #{member.phonenumber}
-                  td.rowstartyear #{member.startyear}
-                  td.rowgradyear #{member.gradyear}
+                  td.rowphonenumber #{member.phone_number}
+                  td.rowstartyear #{member.start_year}
+                  td.rowgradyear #{member.grad_year}
                   td.rowmajor #{member.major}
                   td.rowclass #{member.class}
           if seeAdd
@@ -128,21 +128,21 @@ block body
             form(role='form', action='#{updateURL}', method='post')
               h1 Update Member ID: #{data[0].id}, Username: #{data[0].username}
               .form-group
-                input#up_activeid.form-control(type='text', placeholder='Active Id', name='up_activeid', value='#{data[0].activeid}', required='required')
+                input#up_activeid.form-control(type='text', placeholder='Active Id', name='up_activeid', value='#{data[0].active_id}', required='required')
               .form-group
-                input#up_firstname.form-control(type='text', placeholder='First Name', name='up_firstname', value='#{data[0].firstname}', required='required')
+                input#up_firstname.form-control(type='text', placeholder='First Name', name='up_firstname', value='#{data[0].first_name}', required='required')
               .form-group
-                input#up_lastname.form-control(type='text', placeholder='Last Name', name='up_lastname', value='#{data[0].lastname}', required='required')
+                input#up_lastname.form-control(type='text', placeholder='Last Name', name='up_lastname', value='#{data[0].last_name}', required='required')
               .form-group
                 input#up_password.form-control(type='text', title='6-32 Alphanumeric Characters', placeholder='Password', name='up_password', value='#{data[0].password}', required='required')
               .form-group
                 input#up_email.form-control(type='email', placeholder='Email', name='up_email', value='#{data[0].email}', required='required')
               .form-group
-                input#up_phonenumber.form-control(type='tel', title='i.e. 777-777-7777', placeholder='Phone Number', name='up_phonenumber', value='#{data[0].phonenumber}', required='required')
+                input#up_phonenumber.form-control(type='tel', title='i.e. 777-777-7777', placeholder='Phone Number', name='up_phonenumber', value='#{data[0].phone_number}', required='required')
               .form-group
-                input#up_startyear.form-control(type='text', title='i.e. 2014', placeholder='Start Year', name='up_startyear', value='#{data[0].startyear}', required='required')
+                input#up_startyear.form-control(type='text', title='i.e. 2014', placeholder='Start Year', name='up_startyear', value='#{data[0].start_year}', required='required')
               .form-group
-                input#up_gradyear.form-control(type='text', title='i.e. 2014', placeholder='Grad Year', name='up_gradyear', value='#{data[0].gradyear}', required='required')
+                input#up_gradyear.form-control(type='text', title='i.e. 2014', placeholder='Grad Year', name='up_gradyear', value='#{data[0].grad_year}', required='required')
               .form-group
                 select#up_major.form-control(type='text', name='up_major', required='required')
                   option(value='#{data[0].major}') #{data[0].major}

@@ -52,8 +52,8 @@ passport.use(new LocalStrategy({
       } else {
         return done(null, {
           "id": rows[0].id,
-          "firstname": rows[0].firstname,
-          "username": rows[0].username
+          "first_name": rows[0].first_name,
+          "user_name": rows[0].username
         });
       }
     })
@@ -76,7 +76,7 @@ passport.deserializeUser(function(id, done) {
       }).select('*')
 
       .then(function(rows) {
-        return done(null, rows[0].firstname);
+        return done(null, rows[0].first_name);
       });
 });
 

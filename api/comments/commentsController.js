@@ -10,8 +10,8 @@ exports.getComments = function(req, res) {
 };
 
 exports.getComment = function(req, res) {
-  var commentid = req.params.commentid;
-  app.knex('comments').where('id', commentid)
+  var comment_id = req.params.commentid;
+  app.knex('comments').where('id', comment_id)
     .then(function(row) {
       console.log(row);
       return res.json(row);
