@@ -1,6 +1,6 @@
 var app = require('../../app');
 
-exports.getAttendings = function(req, res) {
+exports.getAttending = function(req, res) {
   app.knex('attending')
     .orderBy('id', 'asc')
     .then(function(rows) {
@@ -9,9 +9,9 @@ exports.getAttendings = function(req, res) {
     });
 };
 
-exports.getAttending = function(req, res) {
-  var attendingid = req.params.attendingid;
-  app.knex('attending').where('id', attendingid)
+exports.getOneAttending = function(req, res) {
+  var attending_id = req.params.attending_id;
+  app.knex('attending').where('id', attending_id)
     .then(function(row) {
       console.log(row);
       return res.json(row);

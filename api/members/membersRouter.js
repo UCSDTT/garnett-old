@@ -47,4 +47,24 @@ membersRouter.route('/').post(function(req, res) {
   membersController.createMember(req, res);
 });
 
+/*
+  POST
+  /api/members/:memberid
+  Updates an existing member whose id = memberid
+*/
+membersRouter.route('/:memberid').post(function(req, res) {
+  membersController.updateMember(req, res);
+});
+
+/*
+  DELETE
+  /api/members/:memberid
+  Deletes an existing member whose id = memberid
+  
+  NOTE: This route is not required for Garnett but helps in our unit tests
+*/
+membersRouter.route('/:memberid').delete(function(req, res) {
+  membersController.deleteMember(req, res);
+});
+
 module.exports = membersRouter;

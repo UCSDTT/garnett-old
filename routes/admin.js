@@ -58,15 +58,15 @@ exports.addMember = function(req, res) {
       console.log(rows.length + ' rows loaded.');
       if( rows.length === 0 ){
         return app.knex.insert({
-          activeid: json.reg_activeid,
-          firstname: json.reg_firstname,
-          lastname: json.reg_lastname,
+          active_id: json.reg_activeid,
+          first_name: json.reg_firstname,
+          last_name: json.reg_lastname,
           username: json.reg_username,
           password: json.reg_password,
           email: json.reg_email,
-          phonenumber: json.reg_phonenumber,
-          startyear: json.reg_startyear,
-          gradyear: json.reg_gradyear,
+          phone_number: json.reg_phonenumber,
+          start_year: json.reg_startyear,
+          grad_year: json.reg_gradyear,
           major: json.reg_major,
           class: json.reg_class
         })
@@ -122,14 +122,14 @@ exports.updateMember = function(req, res) {
 
   app.knex('members')
     .update({
-      activeid: json.up_activeid,
-      firstname: json.up_firstname,
-      lastname: json.up_lastname,
+      active_id: json.up_activeid,
+      first_name: json.up_firstname,
+      last_name: json.up_lastname,
       password: json.up_password,
       email: json.up_email,
-      phonenumber: json.up_phonenumber,
-      startyear: json.up_startyear,
-      gradyear: json.up_gradyear,
+      phone_number: json.up_phonenumber,
+      start_year: json.up_startyear,
+      grad_year: json.up_gradyear,
       major: json.up_major,
       class: json.up_class
     })

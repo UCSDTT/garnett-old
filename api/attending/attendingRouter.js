@@ -8,7 +8,7 @@ var attendingController = require('./attendingController');
   Returns all attending rows
 */
 attendingRouter.route('/').get(function(req, res) {
-  attendingController.getAttendings(req, res);
+  attendingController.getAttending(req, res);
 });
 
 /*
@@ -17,7 +17,7 @@ attendingRouter.route('/').get(function(req, res) {
   Returns attending with id = attendingid
 */
 attendingRouter.route('/:attendingid').get(function(req, res) {
-  attendingController.getAttending(req, res);
+  attendingController.getOneAttending(req, res);
 });
 
 module.exports = attendingRouter;
