@@ -13,8 +13,13 @@ exports.getMember = function(req, res) {
   var member_id = req.params.memberid;
   app.knex('members').where('id', member_id)
     .then(function(row) {
-      console.log(row);
-      return res.json(row);
+      // Cannot find member
+      if(row.length === 0) {
+        return res.status(404).json(row);
+      // Found member
+      } else {
+        return res.status(200).json(row);  
+      }
     });
 };
 
@@ -76,10 +81,16 @@ exports.createMember = function(req, res) {
       if( rows.length === 0 ) {
         app.knex
           .insert(member)
+          .returning('id')
           .into('members')
           .then(function(row) {
-            console.log(row);
-            return res.json(row);
+            // Respond with the created member's id
+            var msg = {
+              "id": row[0],
+              "message": "Created new member"
+            };
+            // 201 means created a resource
+            return res.status(201).json(msg);
           });
       // Return duplicate status code and error message
       } else {
@@ -111,6 +122,7 @@ exports.updateMember = function(req, res) {
   // Update appropriate member_id
   app.knex('members')
     .update(member)
+    .returning('id')
     .where('id', member_id)
     
     // Server error maybe
@@ -126,9 +138,44 @@ exports.updateMember = function(req, res) {
           "error": "Could not find member to update"
         };
         return res.status(404).json(msg);
+        
       } else {
-        console.log(rows);
-        return res.json(rows);
+        var msg2 = {
+          "id": rows[0],
+          "message": "Updated existing member"
+        };
+        return res.status(200).json(msg2);
+      }
+    });
+};
+
+exports.deleteMember = function(req, res) {
+  var member_id = req.params.memberid;
+  
+  // Delete member id
+  app.knex('members')
+    .where('id', member_id)
+    .del()
+    .returning('id')
+    // Server error maybe
+    .catch(function(error) {
+      console.error(error);
+      return res.status(500).json(error);
+    })
+    
+    .then(function(rows) {
+      if(rows.length === 0) {
+        var msg = {
+          "error": "Could not find member to delete"
+        };
+        return res.status(404).json(msg);
+        
+      } else {
+        var msg2 = {
+          "id": rows[0],
+          "message": "Deleted a member"
+        };
+        return res.status(200).json(msg2);
       }
     });
 };
