@@ -19,6 +19,10 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'partials/partial2',
       controller: 'MyCtrl2'
     }).
+    when('/new', {
+      templateUrl: 'partials/newEvent',
+      controller: 'EventsCtrl'
+    }).
     otherwise({
       redirectTo: '/view1'
     });
