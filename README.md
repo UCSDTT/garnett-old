@@ -18,7 +18,7 @@ If there are permission issues, run these and then step 4 again:
     sudo chown -R `whoami` ~/.npm
     sudo chown -R `whoami` node_modules
     sudo rm -r node_modules
-
+5. Pull the data in case your version is out of date by typing: `git pull origin master`
 
 ##To Run the Application:
 IMPORTANT: Before running the application you must create a `.env` file with database credentials in the root directory of the application.
