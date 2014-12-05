@@ -48,11 +48,11 @@ membersRouter.route('/').post(function(req, res) {
 });
 
 /*
-  POST
+  PUT
   /api/members/:memberid
   Updates an existing member whose id = memberid
 */
-membersRouter.route('/:memberid').post(function(req, res) {
+membersRouter.route('/:memberid').put(function(req, res) {
   membersController.updateMember(req, res);
 });
 
