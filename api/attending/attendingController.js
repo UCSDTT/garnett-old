@@ -10,7 +10,7 @@ exports.getAttending = function(req, res) {
 };
 
 exports.getOneAttending = function(req, res) {
-  var attending_id = req.params.attending_id;
+  var attending_id = req.params.attendingid;
   app.knex('attending').where('id', attending_id)
     .then(function(row) {
       console.log(row);
