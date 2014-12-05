@@ -502,4 +502,31 @@ Events related resources. Actions for manipulating or retrieving information fro
                 }
             ]
 
+# Group Comments
+Comments related resources. Actions for manipulating or retrieving information from the collection of comments.
 
+## /comments
+### Retrieve all comments [GET]
++ Response 200 (application/json)
+
+        [
+            {
+            "id": 1,
+            "member_id": 3,
+            "event_id": 1,
+            "message": "The first comment",
+            "likes": 0,
+            "created_on": "2014-12-04T11:47:53.973Z",
+            "updated_on": null
+            },
+            {
+            "id": 4,
+            "member_id": 1,
+            "event_id": 2,
+            "message": "This is another comment",
+            "likes": 5,
+            "created_on": "2014-12-04T11:47:53.973Z",
+            "updated_on": "2014-12-04T11:48:53.973Z"
+            }
+        ]
+        
