@@ -8,6 +8,7 @@ timeline-focused approach that encourages social networking based on events.
 + [Github](https://github.com/UCSDTT/Garnett/)
 + [Understanding HTTP](http://code.tutsplus.com/tutorials/http-the-protocol-every-web-developer-must-know-part-1--net-31177)
 + [HTTP Response Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Response_codes)
++ [HTTP Requests Blog Post](https://stormpath.com/blog/put-or-post/)
 
 ###Errors and Suggestions
 Please notify the Garnett API developers on Slack if there are any inconsistencies with 
@@ -57,27 +58,25 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
             }
         ]
 
-### Create a Member [POST]
+### Create a member [POST]
 
 + Request (application/json)
 
-        [
-            {
-                "first_name": "Michael",
-                "last_name": "Luo",
-                "username": "mzluo",
-                "password": "password",
-                "email": "mzluo@tt.com",
-                "phone_number": "510-999-5555",
-                "start_year": 2011,
-                "grad_year": 2015,
-                "major": "Computer Science",
-                "class": "Iota",
-                "security_question": "This is a security question",
-                "security_answer": "This is a security question answer",
-                "active_id": 110
-            }
-        ]
+        {
+            "first_name": "Michael",
+            "last_name": "Luo",
+            "username": "mzluo",
+            "password": "password",
+            "email": "mzluo@tt.com",
+            "phone_number": "510-999-5555",
+            "start_year": 2011,
+            "grad_year": 2015,
+            "major": "Computer Science",
+            "class": "Iota",
+            "security_question": "This is a security question",
+            "security_answer": "This is a security question answer",
+            "active_id": 110
+        }
 
 + Response 201 (application/json)
 
@@ -95,13 +94,13 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
                 "error": "Duplicate member exists with active_id: 110 or username: mzluo"
             }
         ]
-
+        
 ## /members/{memberid}
 
 + Parameters
     + memberid (required, number, `1`) ... Numeric `id` of the Member. 
 
-### Retrieve a Member [GET]
+### Retrieve a member [GET]
 + Response 200 (application/json)
 
     + Body
@@ -132,7 +131,7 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
 
             []
 
-### Remove a Member [DELETE]
+### Remove a member [DELETE]
 + Response 200 (application/json)
 
     + Body
@@ -154,27 +153,26 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
                 }
             ]
             
-### Update a Member [POST]
+### Update a member [PUT]
 
 + Request (application/json)
 
     + Body
             
-            [
-                {
-                    "active_id": 110,
-                    "first_name": "Michael",
-                    "last_name": "Luo",
-                    "username": "mzluo",
-                    "password": "betterpassword",
-                    "email": "mzluo@tt.com",
-                    "phone_number": "444-223-1231",
-                    "start_year": 2012,
-                    "grad_year": 2016,
-                    "major": "Computer Science",
-                    "class": "Iota"
-                }
-            ]
+            
+            {
+                "active_id": 110,
+                "first_name": "Michael",
+                "last_name": "Luo",
+                "username": "mzluo",
+                "password": "betterpassword",
+                "email": "mzluo@tt.com",
+                "phone_number": "444-223-1231",
+                "start_year": 2012,
+                "grad_year": 2016,
+                "major": "Computer Science",
+                "class": "Iota"
+            }
 
 + Response 200 (application/json)
 
@@ -202,7 +200,7 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
 + Parameters
     + memberid (required, number, `1`) ... Numeric `id` of the Member. 
 
-### Get All Events That A Member is Attending [GET]
+### Get events that a member is attending [GET]
 + Response 200 (application/json)
 
     + Body
@@ -241,7 +239,7 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
 + Parameters
     + memberid (required, number, `1`) ... Numeric `id` of the Member. 
 
-### Get all Events a Member Created [GET]
+### Get events a member created [GET]
 + Response 200 (application/json)
 
     + Body
@@ -259,6 +257,19 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
                     "location": Jacobs 4309,
                     "updated_on": 2011-05-16T19:33:33.000Z,
                     "event_type": 1
+                },
+                {
+                    "id": 2,
+                    "created_on": "2014-12-01T07:14:23.372Z",
+                    "title": "GBM 2",
+                    "description": "Second GBM of the quarter",
+                    "budget": "$11.00",
+                    "start_time": "2011-05-16T19:33:33.000Z",
+                    "created_by": 1,
+                    "end_time": 2011-05-16T19:33:33.000Z,
+                    "location": Jacobs 4309,
+                    "updated_on": 2011-05-16T19:33:33.000Z,
+                    "event_type": 1
                 }
             ]
 
@@ -266,7 +277,7 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
 Events related resources. Actions for manipulating or retrieving information from the collection of events.
 
 ## /events
-### Retrieve all Events [GET]
+### Retrieve all events [GET]
 + Response 200 (application/json)
 
         [
@@ -298,28 +309,20 @@ Events related resources. Actions for manipulating or retrieving information fro
             }
         ]
 
-### Create an Event [POST]
+### Create an event [POST]
 
 + Request (application/json)
 
-
-        [
-            {
-                "first_name": "Michael",
-                "last_name": "Luo",
-                "username": "mzluo",
-                "password": "password",
-                "email": "mzluo@tt.com",
-                "phone_number": "510-999-5555",
-                "start_year": 2011,
-                "grad_year": 2015,
-                "major": "Computer Science",
-                "class": "Iota",
-                "security_question": "This is a security question",
-                "security_answer": "This is a security question answer",
-                "active_id": 110
-            }
-        ]
+        {
+            "title": "GBM 1",
+            "description": "First gbm",
+            "budget": "$100.33",
+            "start_time": "2011-05-16T19:33:33.000Z",
+            "created_by": 1,
+            "end_time": 2011-05-16T19:33:33.000Z,
+            "location": "Jacobs 4309",
+            "event_type": 2
+        }
 
 + Response 201 (application/json)
 
@@ -335,7 +338,7 @@ Events related resources. Actions for manipulating or retrieving information fro
 + Parameters
     + eventid (required, number, `1`) ... Numeric `id` of the Event. 
 
-### Retrieve an Event [GET]
+### Retrieve an event [GET]
 + Response 200 (application/json)
 
     + Body
@@ -343,20 +346,16 @@ Events related resources. Actions for manipulating or retrieving information fro
             [
                 {
                     "id": 1,
-                    "first_name": "Michael",
-                    "last_name": "Luo",
-                    "username": "mzluo",
-                    "password": "password",
-                    "email": "mzluo@tt.com",
-                    "phone_number": "510-999-5555",
-                    "start_year": 2011,
-                    "grad_year": 2015,
-                    "major": "Computer Science",
-                    "class": "Iota",
-                    "security_question": "This is a security question",
-                    "security_answer": "This is a security question answer",
-                    "active_id": 110,
-                    "created_on": "2014-12-01T22:32:40.898Z"
+                    "created_on": "2014-12-01T07:14:23.372Z",
+                    "title": "GBM 1",
+                    "description": "First gbm",
+                    "budget": "$100.33",
+                    "start_time": "2011-05-16T19:33:33.000Z",
+                    "created_by": 1,
+                    "end_time": 2014-12-01T07:14:23.372Z,
+                    "location": "Henry Booker Room",
+                    "updated_on": 2014-12-01T07:14:23.372Z,
+                    "event_type": 1
                 }
             ]
             
@@ -366,7 +365,7 @@ Events related resources. Actions for manipulating or retrieving information fro
 
             []
 
-### Remove an Event [DELETE]
+### Remove an event [DELETE]
 + Response 200 (application/json)
 
     + Body
@@ -388,27 +387,21 @@ Events related resources. Actions for manipulating or retrieving information fro
                 }
             ]
             
-### Update an Event [POST]
+### Update an event [PUT]
 
 + Request (application/json)
 
     + Body
             
-            [
-                {
-                    "active_id": 110,
-                    "first_name": "Michael",
-                    "last_name": "Luo",
-                    "username": "mzluo",
-                    "password": "betterpassword",
-                    "email": "mzluo@tt.com",
-                    "phone_number": "444-223-1231",
-                    "start_year": 2012,
-                    "grad_year": 2016,
-                    "major": "Computer Science",
-                    "class": "Iota"
-                }
-            ]
+            {
+                "title": "GBM 1",
+                "description": "First gbm",
+                "budget": "$123.33",
+                "start_time": "2011-05-16T19:33:33.000Z",
+                "end_time": "2011-05-16T19:33:33.000Z",
+                "location": "Jacobs 4309",
+                "event_type": 3
+            }
 
 + Response 200 (application/json)
 
@@ -431,5 +424,82 @@ Events related resources. Actions for manipulating or retrieving information fro
                 }
             ]
 
+## /events/{eventid}/comments
+
++ Parameters
+    + eventid (required, number, `1`) ... Numeric `id` of the Event. 
+
+### Get comments on event [GET]
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                    "id": 1,
+                    "member_id": 3,
+                    "event_id": 1,
+                    "message": "This is the first comment",
+                    "likes": 0,
+                    "created_on": "2014-12-04T11:47:53.973Z",
+                    "updated_on": null
+                },
+                {
+                    "id": 7,
+                    "member_id": 1,
+                    "event_id": 1,
+                    "message": "This is the second comment",
+                    "likes": 1,
+                    "created_on": "2014-12-04T11:57:33.973Z",
+                    "updated_on": "2014-12-04T11:58:35.973Z"
+                }
+            ]
+
+## /events/{eventid}/attending
+
++ Parameters
+    + eventid (required, number, `1`) ... Numeric `id` of the Event. 
+
+### Get members attending event [GET]
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                    "id": 1,
+                    "first_name": "Michael",
+                    "last_name": "Luo",
+                    "username": "mzluo",
+                    "password": "password",
+                    "email": "mzluo@tt.com",
+                    "phone_number": "510-999-5555",
+                    "start_year": 2011,
+                    "grad_year": 2015,
+                    "major": "Computer Science",
+                    "class": "Iota",
+                    "security_question": "This is a security question",
+                    "security_answer": "This is a security question answer",
+                    "active_id": 110,
+                    "created_on": "2014-12-01T22:32:40.898Z"
+                },
+                {
+                    "id": 2,
+                    "first_name": "Benjie",
+                    "last_name": "Genchel",
+                    "username": "bgenchel",
+                    "password": "banana",
+                    "email": "bgenchel@tt.com",
+                    "phone_number": "345-333-2323",
+                    "start_year": 2010,
+                    "grad_year": 2014,
+                    "major": "Electrical Engineering",
+                    "class": "Eta",
+                    "security_question": "This is a security question",
+                    "security_answer": "This is a security answer",
+                    "active_id":111,
+                    "created_on": "2014-12-01T22:32:40.898Z"
+                }
+            ]
 
 
