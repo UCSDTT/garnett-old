@@ -20,86 +20,8 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
 ### Retrieve all Members [GET]
 + Response 200 (application/json)
 
-        [{
-            "id": 1,
-            "first_name": "Michael",
-            "last_name": "Luo",
-            "username": "mzluo",
-            "password": "password",
-            "email": "mzluo@tt.com",
-            "phone_number": "510-999-5555",
-            "start_year": 2011,
-            "grad_year": 2015,
-            "major": "Computer Science",
-            "class": "Iota",
-            "security_question": "This is a security question",
-            "security_answer": "This is a security question answer",
-            "active_id": 110,
-            "created_on": "2014-12-01T22:32:40.898Z"
-        },
-        {
-            "id": 2,
-            "first_name": "Benjie",
-            "last_name": "Genchel",
-            "username": "bgenchel",
-            "password": "banana",
-            "email": "bgenchel@tt.com",
-            "phone_number": "345-333-2323",
-            "start_year": 2010,
-            "grad_year": 2014,
-            "major": "Electrical Engineering",
-            "class": "Eta",
-            "security_question": "This is a security question",
-            "security_answer": "This is a security answer",
-            "active_id":111,
-            "created_on": "2014-12-01T22:32:40.898Z"
-        }]
-
-### Create a Member [POST]
-
-+ Request (application/json)
-
-
-        {
-            "first_name": "Michael",
-            "last_name": "Luo",
-            "username": "mzluo",
-            "password": "password",
-            "email": "mzluo@tt.com",
-            "phone_number": "510-999-5555",
-            "start_year": 2011,
-            "grad_year": 2015,
-            "major": "Computer Science",
-            "class": "Iota",
-            "security_question": "This is a security question",
-            "security_answer": "This is a security question answer",
-            "active_id": 110
-        }
-
-+ Response 201 (application/json)
-
-        {
-            "id": 1,
-            "message": "Created new member"
-        }
-
-+ Response 409 (application/json)
-
-        {
-            "error": "Duplicate member exists with active_id: 110 or username: mzluo"
-        }
-
-## /members/{memberid}
-
-+ Parameters
-    + memberid (required, number, `1`) ... Numeric `id` of the Member. 
-
-### Retrieve a Member [GET]
-+ Response 200 (application/json)
-
-    + Body
-
-            [{
+        [
+            {
                 "id": 1,
                 "first_name": "Michael",
                 "last_name": "Luo",
@@ -115,7 +37,94 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
                 "security_answer": "This is a security question answer",
                 "active_id": 110,
                 "created_on": "2014-12-01T22:32:40.898Z"
-            }]
+            },
+            {
+                "id": 2,
+                "first_name": "Benjie",
+                "last_name": "Genchel",
+                "username": "bgenchel",
+                "password": "banana",
+                "email": "bgenchel@tt.com",
+                "phone_number": "345-333-2323",
+                "start_year": 2010,
+                "grad_year": 2014,
+                "major": "Electrical Engineering",
+                "class": "Eta",
+                "security_question": "This is a security question",
+                "security_answer": "This is a security answer",
+                "active_id":111,
+                "created_on": "2014-12-01T22:32:40.898Z"
+            }
+        ]
+
+### Create a Member [POST]
+
++ Request (application/json)
+
+        [
+            {
+                "first_name": "Michael",
+                "last_name": "Luo",
+                "username": "mzluo",
+                "password": "password",
+                "email": "mzluo@tt.com",
+                "phone_number": "510-999-5555",
+                "start_year": 2011,
+                "grad_year": 2015,
+                "major": "Computer Science",
+                "class": "Iota",
+                "security_question": "This is a security question",
+                "security_answer": "This is a security question answer",
+                "active_id": 110
+            }
+        ]
+
++ Response 201 (application/json)
+
+        [
+            {
+                "id": 1,
+                "message": "Created new member"
+            }
+        ]
+
++ Response 409 (application/json)
+
+        [
+            {
+                "error": "Duplicate member exists with active_id: 110 or username: mzluo"
+            }
+        ]
+
+## /members/{memberid}
+
++ Parameters
+    + memberid (required, number, `1`) ... Numeric `id` of the Member. 
+
+### Retrieve a Member [GET]
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": 1,
+                    "first_name": "Michael",
+                    "last_name": "Luo",
+                    "username": "mzluo",
+                    "password": "password",
+                    "email": "mzluo@tt.com",
+                    "phone_number": "510-999-5555",
+                    "start_year": 2011,
+                    "grad_year": 2015,
+                    "major": "Computer Science",
+                    "class": "Iota",
+                    "security_question": "This is a security question",
+                    "security_answer": "This is a security question answer",
+                    "active_id": 110,
+                    "created_on": "2014-12-01T22:32:40.898Z"
+                }
+            ]
             
 + Response 404 (application/json)
 
@@ -128,18 +137,22 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
 
     + Body
     
-            {
-                "id": 1,
-                "message": "Deleted a member"
-            }
+            [
+                {
+                    "id": 1,
+                    "message": "Deleted a member"
+                }
+            ]
 
 + Response 404 (application/json)
 
     + Body
             
-            {
-                "error": "Could not find member to delete"
-            }
+            [
+                {
+                    "error": "Could not find member to delete"
+                }
+            ]
             
 ### Update a Member [POST]
 
@@ -147,36 +160,42 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
 
     + Body
             
-            {
-                "active_id": 110,
-                "first_name": "Michael",
-                "last_name": "Luo",
-                "username": "mzluo",
-                "password": "betterpassword",
-                "email": "mzluo@tt.com",
-                "phone_number": "444-223-1231",
-                "start_year": 2012,
-                "grad_year": 2016,
-                "major": "Computer Science",
-                "class": "Iota"
-            }
+            [
+                {
+                    "active_id": 110,
+                    "first_name": "Michael",
+                    "last_name": "Luo",
+                    "username": "mzluo",
+                    "password": "betterpassword",
+                    "email": "mzluo@tt.com",
+                    "phone_number": "444-223-1231",
+                    "start_year": 2012,
+                    "grad_year": 2016,
+                    "major": "Computer Science",
+                    "class": "Iota"
+                }
+            ]
 
 + Response 200 (application/json)
 
     + Body
         
-            {
-                "id": 1,
-                "message": "Updated existing member"
-            }
+            [
+                {
+                    "id": 1,
+                    "message": "Updated existing member"
+                }
+            ]
             
 + Response 404 (application/json)
 
     + Body
         
-            {
-                "error": "Could not find member to update"
-            }
+            [
+                {
+                    "error": "Could not find member to update"
+                }
+            ]
 
 ## /members/{memberid}/events/attending
 
@@ -222,7 +241,7 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
 + Parameters
     + memberid (required, number, `1`) ... Numeric `id` of the Member. 
 
-### Get all Events a Member created [GET]
+### Get all Events a Member Created [GET]
 + Response 200 (application/json)
 
     + Body
@@ -243,10 +262,174 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
                 }
             ]
 
+# Group Events
+Events related resources. Actions for manipulating or retrieving information from the collection of events.
+
+## /events
+### Retrieve all Events [GET]
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "created_on": "2014-12-01T07:14:23.372Z",
+                "title": "GBM 1",
+                "description": "First gbm",
+                "budget": "$100.33",
+                "start_time": "2011-05-16T19:33:33.000Z",
+                "created_by": 1,
+                "end_time": "2011-05-16T19:33:33.000Z",
+                "location": "Jacobs 4309",
+                "updated_on": "2011-05-16T19:33:33.000Z",
+                "event_type": 1
+            },
+            {
+                "id": 2,
+                "created_on": "2014-12-01T04:20:11.304Z",
+                "title": "GBM 2",
+                "description": "Second GBM",
+                "budget": "$141.33",
+                "start_time": "2011-05-16T19:33:33.000Z",
+                "created_by": 2,
+                "end_time": "2011-05-16T19:33:33.000Z",
+                "location": "Henry Booker Room",
+                "updated_on": "2011-05-16T19:33:33.000Z",
+                "event_type": 1
+            }
+        ]
+
+### Create an Event [POST]
+
++ Request (application/json)
 
 
+        [
+            {
+                "first_name": "Michael",
+                "last_name": "Luo",
+                "username": "mzluo",
+                "password": "password",
+                "email": "mzluo@tt.com",
+                "phone_number": "510-999-5555",
+                "start_year": 2011,
+                "grad_year": 2015,
+                "major": "Computer Science",
+                "class": "Iota",
+                "security_question": "This is a security question",
+                "security_answer": "This is a security question answer",
+                "active_id": 110
+            }
+        ]
 
++ Response 201 (application/json)
 
+        [
+            {
+                "id": 1,
+                "message": "Created new event"
+            }
+        ]
+
+## /events/{eventid}
+
++ Parameters
+    + eventid (required, number, `1`) ... Numeric `id` of the Event. 
+
+### Retrieve an Event [GET]
++ Response 200 (application/json)
+
+    + Body
+
+            [
+                {
+                    "id": 1,
+                    "first_name": "Michael",
+                    "last_name": "Luo",
+                    "username": "mzluo",
+                    "password": "password",
+                    "email": "mzluo@tt.com",
+                    "phone_number": "510-999-5555",
+                    "start_year": 2011,
+                    "grad_year": 2015,
+                    "major": "Computer Science",
+                    "class": "Iota",
+                    "security_question": "This is a security question",
+                    "security_answer": "This is a security question answer",
+                    "active_id": 110,
+                    "created_on": "2014-12-01T22:32:40.898Z"
+                }
+            ]
+            
++ Response 404 (application/json)
+
+    + Body
+
+            []
+
+### Remove an Event [DELETE]
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                    "id": 1,
+                    "message": "Deleted an event"
+                }
+            ]
+
++ Response 404 (application/json)
+
+    + Body
+            
+            [
+                {
+                    "error": "Could not find event to delete"
+                }
+            ]
+            
+### Update an Event [POST]
+
++ Request (application/json)
+
+    + Body
+            
+            [
+                {
+                    "active_id": 110,
+                    "first_name": "Michael",
+                    "last_name": "Luo",
+                    "username": "mzluo",
+                    "password": "betterpassword",
+                    "email": "mzluo@tt.com",
+                    "phone_number": "444-223-1231",
+                    "start_year": 2012,
+                    "grad_year": 2016,
+                    "major": "Computer Science",
+                    "class": "Iota"
+                }
+            ]
+
++ Response 200 (application/json)
+
+    + Body
+        
+            [
+                {
+                    "id": 1,
+                    "message": "Updated existing event"
+                }
+            ]
+            
++ Response 404 (application/json)
+
+    + Body
+        
+            [
+                {
+                    "error": "Could not find event to update"
+                }
+            ]
 
 
 
