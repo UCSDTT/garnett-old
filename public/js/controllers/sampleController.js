@@ -19,4 +19,8 @@ angular.module('myApp.controllers', []).
   controller('MyCtrl2', function ($scope) {
     // write Ctrl here
     console.log("enter controller 2");
+  }).
+  controller('EventsCtrl', function ($scope) {
+    // write Ctrl here
+    console.log("enter EventsCtrl");
   });
