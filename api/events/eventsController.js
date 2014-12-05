@@ -76,7 +76,7 @@ exports.createEvent = function(req, res) {
   event.created_by = req.body.created_by;
   event.end_time = req.body.end_time;
   event.location = req.body.location;
-  event.updated_on = req.body.updated_on;
+  event.updated_on = Date.now().toISOString();
   event.event_type = req.body.event_type;
 
   app.knex
