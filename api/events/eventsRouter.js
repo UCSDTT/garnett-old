@@ -38,4 +38,31 @@ eventsRouter.route('/:eventid/attending').get(function(req, res) {
   eventsController.getEventAttendees(req, res);
 });
 
+/*
+  POST
+  /api/events
+  Creates a new event given an input body
+*/
+eventsRouter.route('/').post(function(req, res) {
+  eventsController.createEvent(req, res);
+});
+
+/*
+  PUT
+  /api/events/:eventid
+  Updates an existing event whose id = eventid
+*/
+eventsRouter.route('/:eventid').put(function(req, res) {
+  eventsController.updateEvent(req, res);
+});
+
+/*
+  DELETE
+  /api/events/:eventid
+  Deletes an existing event whose id = eventid
+*/
+eventsRouter.route('/:eventid').delete(function(req, res) {
+  eventsController.deleteEvent(req, res);
+});
+
 module.exports = eventsRouter;
