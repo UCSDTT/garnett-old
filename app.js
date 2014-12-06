@@ -101,7 +101,7 @@ app.use(session( {
   saveUninitialized: true,
   resave: true
 }));
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
+//app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 app.use(bodyParser.urlencoded({
   extended: true

@@ -3,6 +3,11 @@ var app = require('../../app');
 exports.getMembers = function(req, res) {
   app.knex('members')
     .orderBy('id', 'asc')
+    // Server error maybe
+    .catch(function(error) {
+      console.error(error);
+      return res.status(500).json(error);
+    })
     .then(function(rows) {
       console.log(rows.length + ' member(s) returned');
       return res.json(rows);
@@ -11,7 +16,13 @@ exports.getMembers = function(req, res) {
 
 exports.getMember = function(req, res) {
   var member_id = req.params.memberid;
-  app.knex('members').where('id', member_id)
+  app.knex('members')
+    .where('id', member_id)
+    // Server error maybe
+    .catch(function(error) {
+      console.error(error);
+      return res.status(500).json(error);
+    })
     .then(function(row) {
       // Cannot find member
       if(row.length === 0) {
@@ -27,6 +38,11 @@ exports.getMemberEventsCreated = function(req, res) {
   var member_id = req.params.memberid;
   app.knex('events').where('created_by', member_id)
     .orderBy('created_on', 'desc')
+    // Server error maybe
+    .catch(function(error) {
+      console.error(error);
+      return res.status(500).json(error);
+    })
     .then(function(rows) {
       console.log(rows.length + ' events were created by member with id ' + member_id);
       return res.json(rows);
@@ -38,8 +54,14 @@ exports.getMemberEventsAttending = function(req, res) {
   var subquery = app.knex('attending')
     .where('member_id', member_id)
     .select('event_id');
+    
   app.knex('events').where('id', 'in', subquery)
     .orderBy('created_on', 'desc')
+    // Server error maybe
+    .catch(function(error) {
+      console.error(error);
+      return res.status(500).json(error);
+    })
     .then(function(rows) {
       console.log(rows.length + ' events attending by member with id ' + member_id);
       return res.json(rows);
@@ -69,13 +91,11 @@ exports.createMember = function(req, res) {
     .select('*')
     .where('active_id', member.active_id)
     .orWhere('username', member.username)
-    
     // Server error maybe
     .catch(function(error) {
       console.error(error);
       return res.status(500).json(error);
     })
-    
     .then(function(rows) {
       // Insert since there is no duplicate member
       if( rows.length === 0 ) {
@@ -83,21 +103,26 @@ exports.createMember = function(req, res) {
           .insert(member)
           .returning('id')
           .into('members')
+          // Server error maybe
+          .catch(function(error) {
+            console.error(error);
+            return res.status(500).json(error);
+          })
           .then(function(row) {
             // Respond with the created member's id
-            var msg = {
+            var msg = [{
               "id": row[0],
               "message": "Created new member"
-            };
+            }];
             // 201 means created a resource
             return res.status(201).json(msg);
           });
       // Return duplicate status code and error message
       } else {
-        var msg = {
+        var msg = [{
           "error": "Duplicate member exists with active_id: " + 
                     member.active_id + " or username: " + member.username
-        };
+        }];
         return res.status(409).json(msg);
       }
     });
@@ -124,26 +149,24 @@ exports.updateMember = function(req, res) {
     .update(member)
     .returning('id')
     .where('id', member_id)
-    
     // Server error maybe
     .catch(function(error) {
       console.error(error);
       return res.status(500).json(error);
     })
-    
-    // Respond with updated member
+    // Check if we were able to update the member
     .then(function(rows) {
       if(rows.length === 0) {
-        var msg = {
+        var msg = [{
           "error": "Could not find member to update"
-        };
+        }];
         return res.status(404).json(msg);
         
       } else {
-        var msg2 = {
+        var msg2 = [{
           "id": rows[0],
           "message": "Updated existing member"
-        };
+        }];
         return res.status(200).json(msg2);
       }
     });
@@ -151,7 +174,7 @@ exports.updateMember = function(req, res) {
 
 exports.deleteMember = function(req, res) {
   var member_id = req.params.memberid;
-  
+
   // Delete member id
   app.knex('members')
     .where('id', member_id)
@@ -162,19 +185,19 @@ exports.deleteMember = function(req, res) {
       console.error(error);
       return res.status(500).json(error);
     })
-    
+    // Check if we were able to delete member
     .then(function(rows) {
       if(rows.length === 0) {
-        var msg = {
+        var msg = [{
           "error": "Could not find member to delete"
-        };
+        }];
         return res.status(404).json(msg);
         
       } else {
-        var msg2 = {
+        var msg2 = [{
           "id": rows[0],
           "message": "Deleted a member"
-        };
+        }];
         return res.status(200).json(msg2);
       }
     });
