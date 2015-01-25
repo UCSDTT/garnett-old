@@ -11,8 +11,8 @@ angular.module('garnett', [
 ]).
 config(function ($routeProvider, $locationProvider) {
   $routeProvider.
-    when('/view1', {
-      templateUrl: 'partials/partial1',
+    when('/timeline', {
+      templateUrl: 'partials/timeline',
       controller: 'MyCtrl1'
     }).
     when('/view2', {
@@ -24,8 +24,6 @@ config(function ($routeProvider, $locationProvider) {
       controller: 'EventsCtrl'
     }).
     otherwise({
-      redirectTo: '/view1'
+      redirectTo: '/timeline'
     });
-
-  $locationProvider.html5Mode(true);
 });
