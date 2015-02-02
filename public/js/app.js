@@ -23,6 +23,10 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'partials/newEvent',
       controller: 'EventsCtrl'
     }).
+    when('/events/:id', {
+      templateUrl: 'partials/eventPage',
+      controller: 'EventPageCtrl'
+    }).
     otherwise({
       redirectTo: '/404'
     });
