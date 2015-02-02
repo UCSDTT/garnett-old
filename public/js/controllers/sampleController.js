@@ -15,6 +15,7 @@ angular.module('myApp.controllers', []).
   }).
   controller('MyCtrl1', function ($scope, $window) {
     // write Ctrl here
+    console.log("in view 1");
   }).
   controller('MyCtrl2', function ($scope) {
     // write Ctrl here
