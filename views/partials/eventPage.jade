@@ -1,45 +1,20 @@
-div.container
-
-  div.page-header
-    h1 Event Name Here
-
-  if errors
-    each error in errors
-      div.alert.alert-danger
-        span #{error.error}
-  if saved
-    div.alert.alert-success
-      span Your profile has been saved
-  form.login-form.form-horizontal(method='post', role='form')
-    input(name='_csrf', type='hidden', value=csrfToken)
-
-    div.form-group
-      label.col-sm-4 Event Name
-      div.col-sm-8
-        input.form-control(
-          placeholder='Enter event name',
-          required=true,
-          name='eventName',
-          type='text',
-          value=eventName)
-    div.form-group
-      label.col-sm-4 Event Date
-      div.col-sm-8
-        input.form-control(placeholder='Enter Event Date',
-          required=true,
-          name='date',
-          type='text',
-          value=date)
-    div.form-group
-      label.col-sm-4 Event Description
-      div.col-sm-8
-        textarea.form-control(
-          placeholder='Enter Description Here...',
-          rows='6',
-          required=true,
-          name='description'
-          value=description
-        )
-    div.form-group
-      div.col-sm-offset-4.col-sm-8
-        button.login.btn.btn-primary(type='submit') Create
+.container
+    div(ng-controller='AppCtrl')
+      h1.event-name {{ eventData.title }}
+        |
+        .row
+          .col-sm-8
+            h4 Created By: {{ memberData.first_name + " " + memberData.last_name }} on {{ eventData.created_on | date:'MM/dd/yy'}} at {{ eventData.created_on | date:'h:mm a' }}
+            |
+            hr.event-hr
+            h5 Description: {{ eventData.description }}
+            h5 Date: {{ eventData.start_time | date:'MM/dd/yy' }}
+            h5 Time: {{ eventData.start_time | date:'h:mm a' }}
+            h5 Location: {{ eventData.location }}
+            h5 Estimated Budget: {{ eventData.budget }}
+            h5 Actual Budget: TBD
+          |
+          .col-sm-4
+            h4 Comments
+            |
+            .event-comments

@@ -23,7 +23,7 @@ config(function ($routeProvider, $locationProvider) {
       templateUrl: 'partials/newEvent',
       controller: 'EventsCtrl'
     }).
-    when('/events/:id', {
+    when('/events/:eventId', {
       templateUrl: 'partials/eventPage',
       controller: 'EventPageCtrl'
     }).
