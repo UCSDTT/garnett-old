@@ -2,28 +2,28 @@ extends layout
 
 block body
   .dashboard(ng-controller='AppCtrl')
-    .row
-      .col-md-3.col-sm-6.col-xs-12
-        //headers + user info
-        .container
+    .container-fluid
+      .row
+        .col-md-3.col-sm-6.col-xs-12
+          //headers + user info
           .page-header
             h1 Theta Tau UCSD Dashboard
           h2  Welcome, #{user}!
           a(ng-click='logout()') Logout
           ol.menu
             li
-              a(href='timeline') view1
+              a(href='timeline') Timeline
             li
               a(href='view2') view2
             li
-              a(href='new') new events page
-      .col-md-6.col-sm-6.col-xs-12
-        //main block
-        .container
-            div(ng-view)
-                    // div
-                    //   | Angular seed app: v
-                    //   span(app-version)
-      .col-md-3.col-sm-6.col-xs-12
-        //charms + buttons
-        .container
+              a(href='new') New Events Page
+        .col-md-6.col-sm-6.col-xs-12
+          //main block
+          div(ng-view)
+                  // div
+                  //   | Angular seed app: v
+                  //   span(app-version)
+        .col-md-3.col-sm-6.col-xs-12
+          //charms + buttons
+          .page-header
+            h1 Charms and Buttons

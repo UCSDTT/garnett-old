@@ -2,9 +2,10 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-  controller('AppCtrl', function ($scope, $http, $window) {
-    $scope.logout = function (){
+var app = angular.module('myApp.controllers', []);
+
+  app.controller('AppCtrl', function ($scope, $http, $window) {
+      $scope.logout = function (){
       console.log("enter logout from front end");
       $window.location.href = '/logout';
     };
@@ -12,16 +13,19 @@ angular.module('myApp.controllers', []).
     $scope.sayHello = function() {
       $scope.greeting = "Hello World";
     };
-  }).
-  controller('MyCtrl1', function ($scope, $window) {
+  });
+  
+  app.controller('MyCtrl1', function ($scope, $window) {
     // write Ctrl here
     console.log("in view 1");
-  }).
-  controller('MyCtrl2', function ($scope) {
+  });
+  
+  app.controller('MyCtrl2', function ($scope) {
     // write Ctrl here
     console.log("enter controller 2");
-  }).
-  controller('EventsCtrl', function ($scope) {
+  });
+  
+  app.controller('EventsCtrl', function ($scope) {
     // write Ctrl here
     console.log("enter EventsCtrl");
   });
