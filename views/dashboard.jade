@@ -7,8 +7,15 @@ block body
         .col-md-3.col-sm-6.col-xs-12
           //headers + user info
           .page-header
-            h1 Theta Tau UCSD Dashboard
-          h2  Welcome, #{user}!
+
+            h3 Theta Tau UCSD Dashboard
+          div
+            img(src='images/thetatau.png', width="50px", height="50px")
+            h4  Welcome, #{user}!
+            h7  xxxxx@gmail.com
+            br
+            h7  (xxx)-xxx-xxxx
+            br
           a(ng-click='logout()') Logout
           ol.menu
             li
