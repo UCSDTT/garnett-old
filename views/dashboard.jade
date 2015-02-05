@@ -4,11 +4,14 @@ block body
   .dashboard(ng-controller='AppCtrl')
     .container-fluid
       .row
-        .col-md-3.col-sm-6.col-xs-12
+        .col-md-3.col-sm-6.col-xs-12.overlay-left
           //headers + user info
           .page-header
             h1 Theta Tau UCSD Dashboard
-          h2  Welcome, #{user}!
+          .welcome-matt
+            img.profile-picture.center-block(src='/images/notpictured_thetatau.jpg')
+            div.welcome-message Welcome, #{user}!
+            br
           a(ng-click='logout()') Logout
           ol.menu
             li
@@ -17,13 +20,27 @@ block body
               a(href='view2') view2
             li
               a(href='new') New Events Page
-        .col-md-6.col-sm-6.col-xs-12
+        .col-md-12.col-sm-12.col-xs-12
           //main block
           div(ng-view)
                   // div
                   //   | Angular seed app: v
                   //   span(app-version)
-        .col-md-3.col-sm-6.col-xs-12
+        .col-md-3.col-sm-6.col-xs-12.overlay-right
           //charms + buttons
           .page-header
             h1 Charms and Buttons
+          .button-grp
+            .right-side-button.center-block
+              a(href='timeline')
+                button.btn.btn-default.btn-lg.fill-up(type='button' aria-label='Left Align')
+                  span Timeline
+            .right-side-button.center-block
+              button.btn.btn-default.btn-lg.fill-up(type='button' aria-label='Left Align')
+                span Filters
+            .right-side-button.center-block
+              a(href='new')
+                button.btn.btn-default.btn-lg.fill-up(type='button' aria-label='Left Align')
+                  span New Event
+            
+            

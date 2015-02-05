@@ -1,4 +1,54 @@
+.button-grp {
+    height: 200px;
+    width: 10%;
+    position: fixed;
+    padding-right: 80px;
+    right: 0;
+    bottom: 0;
+}
 
+.right-side-button{
+    position:relative;
+    margin-bottom: 10px;
+}
+
+.fill-up{
+    width: 100%;
+    height: 100%;
+}
+
+
+.overlay-left {
+    position: fixed;
+    height:100%;
+    float: left;
+}
+
+.overlay-right {
+    position: fixed;
+    right: 0;
+    height:100%;
+}
+
+.wecome-message {
+  max-width: 50px;
+  height: 50px;
+  float:left;
+  background-color: red;
+}
+
+.profile-picture {
+    max-width: 60px;
+    max-height: 60px;
+    float: left;
+    padding:1px
+}
+
+.welcome-matt {
+    height: 100px;
+    width: 100%;
+    padding: 5px;
+}
 
 .timeline {
     list-style: none;
