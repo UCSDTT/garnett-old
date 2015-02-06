@@ -38,10 +38,11 @@
 }
 
 .profile-picture {
-    max-width: 60px;
-    max-height: 60px;
+    max-width: 100px;
+    max-height: 100px;
     float: left;
-    padding:1px
+    padding:1px;
+    margin: 0px 10px 0px 10px;
 }
 
 .welcome-matt {

@@ -16,7 +16,10 @@ var app = angular.module('myApp.controllers', []);
   });
   
   app.controller('MyCtrl1', function ($scope, $window) {
-    // write Ctrl here
+    
+
+    $scope.current_date = new Date();
+    console.log($scope.current_date);
     console.log("in view 1");
   });
   
