@@ -1,11 +1,9 @@
 .container
     div(ng-controller='AppCtrl')
       h1.event-name {{ eventData.title }}
-        |
         .row
           .col-sm-8
             h4 Created By: {{ memberData.first_name + " " + memberData.last_name }} on {{ eventData.created_on | date:'MM/dd/yy'}} at {{ eventData.created_on | date:'h:mm a' }}
-            |
             hr.event-hr
             h5 Description: {{ eventData.description }}
             h5 Date: {{ eventData.start_time | date:'MM/dd/yy' }}
@@ -13,8 +11,6 @@
             h5 Location: {{ eventData.location }}
             h5 Estimated Budget: {{ eventData.budget }}
             h5 Actual Budget: TBD
-          |
           .col-sm-4
             h4 Comments
-            |
             .event-comments
