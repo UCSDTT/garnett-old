@@ -6,9 +6,9 @@
     opacity: 0.5;
 }
 
-.borders {
+/*.borders {
     border: 1px solid black;
-}
+}*/
 
 .timeline {
     list-style: none;
@@ -353,4 +353,11 @@
         position: relative;
         margin-right: 0;
     }
+}
+
+.top30 {
+    margin-top: 30px;
+}
+.top10 {
+    margin-top: 10px;
 }

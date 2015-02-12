@@ -1,24 +1,25 @@
 #wrapper
-  #sidebar-wrapper-left.borders
+  #sidebar-wrapper-left
     ul.sidebar-nav.left
-      li.sidebar-brand
-        a(href='#')
-          | Start Bootstrap
-      li
-        a(href='#') Dashboard
-      li
-        a(href='#') Shortcuts
-      li
-        a(href='#') Overview
-      li
-        a(href='#') Events
-      li
-        a(href='#') About
-      li
-        a(href='#') Services
-      li
-        a(href='#') Contact
-  #page-content-wrapper.borders
+      .row.top30
+        .col-xs-offset-1.col-xs-6
+            img.img-responsive.img-rounded(src='http://placehold.it/350x350', alt='Responsive image')
+      .row.top10
+        .col-xs-offset-1.col-xs-11
+          address
+            strong John Doe
+            br
+            |   johndoe123@gmail.com
+            br
+            abbr(title='Phone') P:
+            |  (123) 456-7890
+            br
+            strong Family:
+            |  Incredibles
+            br
+            strong Class:
+            |  Etas
+  #page-content-wrapper
     .container-fluid
       .page-header
         h1#timeline Timeline
@@ -103,11 +104,11 @@
             .timeline-body
               p
                 | Mussum ipsum cacilds, vidis litro abertis. Consetis adipiscings elitis. Pra lá , depois divoltis porris, paradis. Paisis, filhis, espiritis santis. Mé faiz elementum girarzis, nisi eros vermeio, in elementis mé pra quem é amistosis quis leo. Manduma pindureta quium dia nois paga. Sapien in monti palavris qui num significa nadis i pareci latim. Interessantiss quisso pudia ce receita de bolis, mais bolis eu num gostis.
-  #sidebar-wrapper-right.borders
+  #sidebar-wrapper-right
     ul.sidebar-nav.right
       li.head-charm
         .glyphicon.charm.glyphicon-search
-          a(href='#') 
+          a(href='#')
       li
         .glyphicon.charm.glyphicon-envelope
           a(href='#')
@@ -123,4 +124,3 @@
       li
         .glyphicon.charm.glyphicon-cog
           a(href='#')
-  
