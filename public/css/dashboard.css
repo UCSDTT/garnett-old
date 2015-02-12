@@ -2,6 +2,10 @@
     font-size: 40px;
 }
 
+.glyphicon.charm:hover {
+    opacity: 0.5;
+}
+
 .borders {
     border: 1px solid black;
 }
@@ -268,10 +272,15 @@
     list-style: none;
 }
 
-
 .sidebar-nav.left li {
     text-indent: 20px;
     line-height: 40px;
+}
+
+.sidebar-nav.right {
+    right: 0;
+    margin-right: 10px;
+    width: 100px;
 }
 
 .sidebar-nav.right li {
