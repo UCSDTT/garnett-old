@@ -264,12 +264,30 @@
     list-style: none;
 }
 
-.sidebar-nav li {
+/*right and left classes 
+ *only made to serve as labels
+ *for children, shouldn't
+ *actually effect anything
+*/
+.right {
+    background-color: transparent; 
+}
+
+.left {
+    background-color: transparent;
+}
+
+.sidebar-nav.left li {
     text-indent: 20px;
     line-height: 40px;
 }
 
-.sidebar-nav li a {
+.sidebar-nav.right li {
+    text-indent: 20px;
+    line-height: 80px;
+}
+
+.sidebar-left-nav li a {
     display: block;
     text-decoration: none;
     color: #999999;
