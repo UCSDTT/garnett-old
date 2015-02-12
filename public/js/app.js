@@ -24,7 +24,7 @@ config(function ($routeProvider, $locationProvider) {
       controller: 'EventsCtrl'
     }).
     otherwise({
-      redirectTo: '/404'
+      redirectTo: '/timeline'
     });
 
     $locationProvider.html5Mode(true);
