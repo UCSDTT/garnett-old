@@ -1,23 +1,24 @@
 #wrapper
   #sidebar-wrapper-left.borders
     ul.sidebar-nav.left
-      li.sidebar-brand
-        a(href='#')
-          | Start Bootstrap
-      li
-        a(href='#') Dashboard
-      li
-        a(href='#') Shortcuts
-      li
-        a(href='#') Overview
-      li
-        a(href='#') Events
-      li
-        a(href='#') About
-      li
-        a(href='#') Services
-      li
-        a(href='#') Contact
+      .row.top30
+        .col-xs-offset-1.col-xs-6
+            img.img-responsive.img-rounded(src='http://placehold.it/350x350', alt='Responsive image')
+      .row.top10
+        .col-xs-offset-1.col-xs-11
+          address
+            strong John Doe
+            br
+            |   johndoe123@gmail.com
+            br
+            abbr(title='Phone') P:
+            |  (123) 456-7890
+            br
+            strong Family:
+            |  Incredibles
+            br
+            strong Class:
+            |  Etas
   #page-content-wrapper.borders
     .container-fluid
       .page-header
@@ -107,7 +108,7 @@
     ul.sidebar-nav.right
       li
         .glyphicon.glyphicon-search
-          a(href='#') 
+          a(href='#')
       li
         .glyphicon.glyphicon-envelope
           a(href='#')
@@ -123,4 +124,3 @@
       li
         .glyphicon.glyphicon-cog
           a(href='#')
-  

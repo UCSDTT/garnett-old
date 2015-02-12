@@ -1,6 +1,6 @@
-.borders {
+/*.borders {
     border: 1px solid black;
-}
+}*/
 
 .timeline {
     list-style: none;
@@ -264,13 +264,13 @@
     list-style: none;
 }
 
-/*right and left classes 
+/*right and left classes
  *only made to serve as labels
  *for children, shouldn't
  *actually effect anything
 */
 .right {
-    background-color: transparent; 
+    background-color: transparent;
 }
 
 .left {
@@ -348,4 +348,11 @@
         position: relative;
         margin-right: 0;
     }
+}
+
+.top30 {
+    margin-top: 30px;
+}
+.top10 {
+    margin-top: 10px;
 }
