@@ -1,7 +1,10 @@
 extends layout
 
 block body
-  div(ng-view)
-    // div
-    //   | Angular seed app: v
-    //   span(app-version)
+  .dashboard
+      .container
+          div(ng-controller='AppCtrl')
+            div(ng-view)
+                      // div
+                      //   | Angular seed app: v
+                      //   span(app-version)
