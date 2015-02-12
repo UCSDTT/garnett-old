@@ -10,7 +10,7 @@ div.container
   if saved
     div.alert.alert-success
       span Your profile has been saved
-  form.login-form.form-horizontal(method='post', role='form')
+  form.login-form.form-horizontal(method='post', role='form', action='/event/add')
     input(name='_csrf', type='hidden', value=csrfToken)
 
     div.form-group
@@ -42,4 +42,4 @@ div.container
         )
     div.form-group
       div.col-sm-offset-4.col-sm-8
-        button.login.btn.btn-primary(type='submit') Create
+        button.login.btn.btn-primary(type='submit' value='save') Create

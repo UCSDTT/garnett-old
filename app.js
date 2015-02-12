@@ -23,6 +23,7 @@ var session = require('express-session');
 var auth = require('./routes/auth');
 var admin = require('./routes/admin');
 var dashboard = require('./routes/dashboard');
+var event = require('./routes/event');
 
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
@@ -132,6 +133,7 @@ app.post('/login',
 
 app.post('/admin/add', admin.addMember);
 app.post('/admin/update/:id', admin.updateMember);
+app.post('/event/add', event.addEvent);
 
 // Routes for api
 var membersRouter = require(__dirname + '/api/members/membersRouter');
