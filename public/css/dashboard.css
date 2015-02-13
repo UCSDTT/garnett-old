@@ -1,3 +1,7 @@
+.timeline-container {
+    width: 100%;
+}
+
 .glyphicon.charm {
     font-size: 40px;
 }
@@ -325,8 +329,8 @@
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 250px;
-        padding-right: 250px;
+        padding-left: 150px;
+        padding-right: 100px;
     }
 
     #wrapper.toggled {
