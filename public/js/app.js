@@ -5,6 +5,7 @@
 angular.module('garnett', [
   'ngRoute',
   'myApp.controllers',
+  'timeline.controller',
   'myApp.filters',
   'myApp.services',
   'myApp.directives'
@@ -13,7 +14,7 @@ config(function ($routeProvider, $locationProvider) {
   $routeProvider.
     when('/timeline', {
       templateUrl: 'partials/timeline',
-      controller: 'MyCtrl1'
+      controller: 'TimelineCtrl'
     }).
     when('/view2', {
       templateUrl: 'partials/partial2',
