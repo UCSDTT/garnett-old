@@ -23,22 +23,10 @@
     .container-fluid.center-column
       .page-header
         h1#timeline Timeline
-      ul.timeline(ng-repeat="event in events")
-        li(ng-if="$index % 2 == 0")
+      ul.timeline
+        li(ng-class="{'timeline-inverted' : $index % 2 != 0}" ng-repeat="event in events")
           .timeline-badge
             i.glyphicon.glyphicon-check
-          .timeline-panel
-            .timeline-heading
-                h4.timeline-title {{event.title}}
-              p
-                small.text-muted
-                  i.glyphicon.glyphicon-time
-                  |  11 hours ago via Twitter
-            .timeline-body
-                p {{event.description}}
-        li.timeline-inverted(ng-if="$index % 2 != 0")
-          .timeline-badge.warning
-            i.glyphicon.glyphicon-credit-card
           .timeline-panel
             .timeline-heading
                 h4.timeline-title {{event.title}}
