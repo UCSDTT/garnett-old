@@ -1,4 +1,5 @@
 var app = require('../../app');
+var bcrypt = require('bcrypt');
 
 exports.getMembers = function(req, res) {
   app.knex('members')
@@ -68,6 +69,48 @@ exports.getMemberEventsAttending = function(req, res) {
     });
 };
 
+// For login
+exports.checkMember = function(req, res) {
+  // Get the request body
+  var username = req.body.username;
+  var password = req.body.password;
+  var done = req.body.done;
+
+  app.knex('members').where({
+      username: username
+    }).select('*')
+
+    .then(function(rows) {
+      console.log(rows.length + ' row(s) were received');
+      if(rows.length === 0) {
+        var msg = [{
+          "error": "User does not exist."
+        }];
+        return res.status(400).json(msg);
+      } else {
+        // verify the given password with hashed password in db
+        var hash = bcrypt.hashSync(password, rows[0].salt);
+
+        // password is correct
+        if(hash === rows[0].hashed_password) {
+          var msg = [{
+            "id": rows[0].id,
+            "first_name": rows[0].first_name,
+            "username": rows[0].username,
+            "message": "Logged in successfully"
+          }];
+          return res.status(200).json(msg);
+        } else { // password is incorrect
+          var msg = [{
+            "error": "Incorrect user/password combination."
+          }];
+          return res.status(400).json(msg);
+        }
+      }
+    });
+};
+
+// For register
 exports.createMember = function(req, res) {
   var member = {};
   
@@ -85,6 +128,12 @@ exports.createMember = function(req, res) {
   member.class = req.body.class;
   member.security_question = req.body.security_question;
   member.security_answer = req.body.security_answer;
+
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(req.body.password, salt);
+
+  member.hashed_password = hash;
+  member.salt = salt;
 
   // Check if member with active_id or username already exists, then insert
   app.knex('members')
@@ -143,6 +192,12 @@ exports.updateMember = function(req, res) {
   member.grad_year = req.body.grad_year;
   member.major = req.body.major;
   member.class = req.body.class;
+
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(req.body.password, salt);
+
+  member.hashed_password = hash;
+  member.salt = salt;
   
   // Update appropriate member_id
   app.knex('members')

@@ -67,4 +67,13 @@ membersRouter.route('/:memberid').delete(function(req, res) {
   membersController.deleteMember(req, res);
 });
 
+/*
+  POST
+  /api/members/login
+  Checks the username and password with the hashed password in db
+*/
+membersRouter.route('/login').post(function(req, res) {
+  membersController.checkMember(req, res);
+});
+
 module.exports = membersRouter;
