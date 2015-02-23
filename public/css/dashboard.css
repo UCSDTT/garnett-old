@@ -11,6 +11,20 @@
     font-size: 40px;
 }
 
+.glyphicon.page_header_btn {
+    font-size: 25px;
+    padding: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    background-color: #0aaaaa;
+    color: #000000;
+    border-radius: 100px;
+}
+
+.glyphicon.page_header_btn:hover {
+    opacity: 0.5;
+}
+
 .glyphicon.charm:hover {
     opacity: 0.5;
 }

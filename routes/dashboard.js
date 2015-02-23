@@ -11,7 +11,7 @@ exports.dashboardView = function(req, res) {
 	}
 	else {
 		return res.render('dashboard', {
-			title: 'Dashboard',
+			title: 'Dashboard - Garnett',
 			user: req.user
 		});
 	}

@@ -1,58 +1,22 @@
-#wrapper
-  #sidebar-wrapper-left
-    ul.sidebar-nav.left
-      .row.top30
-        .col-xs-offset-1.col-xs-6
-            img.img-responsive.img-rounded(src='http://placehold.it/350x350', alt='Responsive image')
-      .row.top10
-        .col-xs-offset-1.col-xs-11
-          address
-            strong John Doe
-            br
-            |   johndoe123@gmail.com
-            br
-            abbr(title='Phone') P:
-            |  (123) 456-7890
-            br
-            strong Family:
-            |  Incredibles
-            br
-            strong Class:
-            |  Etas
-  #page-content-wrapper
-    .container-fluid.center-column
-      .page-header
+
+.container-fluid.center-column
+  .page-header
+    .row
+      .col-xs-2
         h1#timeline Timeline
-      ul.timeline
-        li(ng-class="{'timeline-inverted' : $index % 2 != 0}" ng-repeat="event in events")
-          .timeline-badge
-            i.glyphicon.glyphicon-check
-          .timeline-panel
-            .timeline-heading
-                h4.timeline-title {{event.title}}
-              p
-                small.text-muted
-                  i.glyphicon.glyphicon-time
-                  |  11 hours ago via Twitter
-            .timeline-body
-                p {{event.description}}
-  #sidebar-wrapper-right
-    ul.sidebar-nav.right
-      li.head-charm
-        .glyphicon.charm.glyphicon-search
-          a(href='#')
-      li
-        .glyphicon.charm.glyphicon-envelope
-          a(href='#')
-      li
-        .glyphicon.charm.glyphicon-calendar
-          a(href='#')
-      li
-        .glyphicon.charm.glyphicon.glyphicon-folder-open
-          a(href='#')
-      li
-        .glyphicon.charm.glyphicon-usd
-          a(href='#')
-      li
-        .glyphicon.charm.glyphicon-cog
-          a(href='#')
+      .col-xs-3
+        a(href='/new' title="Create New Event")
+          .glyphicon.page_header_btn.glyphicon-plus
+  ul.timeline
+    li(ng-class="{'timeline-inverted' : $index % 2 != 0}" ng-repeat="event in events")
+      .timeline-badge
+        i.glyphicon.glyphicon-check
+      .timeline-panel
+        .timeline-heading
+            h4.timeline-title {{event.title}}
+          p
+            small.text-muted
+              i.glyphicon.glyphicon-time
+              |  11 hours ago via Twitter
+        .timeline-body
+            p {{event.description}}

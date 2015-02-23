@@ -13,9 +13,9 @@ angular.module('myApp.controllers', []).
       $scope.greeting = "Hello World";
     };
   }).
-  controller('MyCtrl1', function ($scope, $window) {
+  controller('TimelineCtrl', function ($scope, $window) {
     // write Ctrl here
-    console.log("in view 1");
+    console.log("in timeline");
   }).
   controller('MyCtrl2', function ($scope) {
     // write Ctrl here
