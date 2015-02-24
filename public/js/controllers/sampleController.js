@@ -24,4 +24,12 @@ angular.module('myApp.controllers', []).
   controller('EventsCtrl', function ($scope) {
     // write Ctrl here
     console.log("enter EventsCtrl");
-  });
+  }).
+  controller('EventPageCtrl', ['$scope', '$routeParams', 'EventData', function ($scope, $routeParams, EventData) {
+    EventData.get($routeParams.eventId, function(data) {
+      $scope.eventData = data.eventData[0];
+      $scope.memberData = data.memberData[0];
+    });
+    // write Ctrl here
+    console.log("enter EventPageCtrl");
+  }]);

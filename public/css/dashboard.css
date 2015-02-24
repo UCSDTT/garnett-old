@@ -1,3 +1,10 @@
+.event-hr {
+    border: none;
+    height: 3px;
+    /* Set the hr color */
+    background-color: gray; /* Modern Browsers */
+}
+
 .timeline-container {
     width: 100%;
 }
