@@ -14,16 +14,22 @@ var handlebars = require('express-handlebars');
 var morgan  = require('morgan');
 var dotenv = require('dotenv');
 
-//Dependencies for signin/authentication system
+// Dependencies for signin/authentication system
 var passport = exports.passport =  require('passport');
 var LocalStrategy = exports.LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 
-//Route variables
+// Route variables
 var auth = require('./routes/auth');
 var admin = require('./routes/admin');
 var dashboard = require('./routes/dashboard');
 var event = require('./routes/event');
+
+// Make requests to our API
+var request = require('superagent');
+
+// Other variables
+var port = process.env.PORT || 2014;
 
 // Connect to the PostgreSQL database, whether locally or on Heroku
 // MAKE SURE TO CHANGE THE NAME FROM 'ttapp' TO ... IN OTHER PROJECTS
@@ -41,31 +47,28 @@ passport.use(new LocalStrategy({
   passwordField: 'password'
 },
   function(username, password, done) {
-    knex('members').where({
-      username: username,
-      password: password
-    }).select('*')
+    request.post('http://localhost:' + port + '/api/members/login')
+      .send({ 'username': username, 'password': password })
+      .end(function(err, resp) {
+        if(err) {
+          return done(null, false, { error: 'Error logging in.'});
+        }
 
-    .then(function(rows) {
-      console.log(rows.length + ' row(s) were received');
-      if(rows.length === 0) {
-        return done(null, false, { message: 'Incorrect user/password combination.' });
-      } else {
-        return done(null, {
-          "id": rows[0].id,
-          "first_name": rows[0].first_name,
-          "user_name": rows[0].username
-        });
-      }
-    })
-
-    .catch(function(error) {
-      return console.error('error making query', error);
-    });
+        resp = JSON.parse(JSON.stringify(resp.body));
+        if(resp.length === 0 || resp[0].error) {
+          return done(null, false, { error: 'Incorrect user/password combination.' });
+        } else {
+          return done(null, {
+            'id': resp[0].id,
+            'first_name': resp[0].first_name,
+            'username': resp[0].username
+          });
+        }
+      });
   }
 ));
 
-// Derialize the user session by id
+// Serialize the user session by id
 passport.serializeUser(function(user, done) {
   return done(null, user.id);
 });
@@ -86,8 +89,6 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/');
 }
-
-var port = process.env.PORT || 2014;
 
 // all environments
 app.set('port', port);
