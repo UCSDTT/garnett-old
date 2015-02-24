@@ -1,4 +1,5 @@
 var app = require('../app');
+var request = require('superagent');
 /**
  * Admin page
  */
@@ -10,17 +11,21 @@ exports.adminViewHome = function(req, res) {
     return res.redirect('/dashboard');
   }
 
-  app.knex('members')
-    .orderBy('id', 'asc')
-
-    .then(function(rows) {
-      console.log(rows.length + ' member(s) loaded.');
-      return res.render('admin', {
-  			title: 'Theta Tau Management',
-  			user: req.user,
-  			data: rows,
-        seeTable: true
-  	  });
+  var host = req.headers.host;
+  request.get('http://' + host + '/api/members')
+    .end(function(err, resp) {
+      var rows = JSON.parse(JSON.stringify(resp.body));
+      if(err || rows[0].error ) {
+        console.error(err);
+        return res.render('login');
+      } else {
+        return res.render('admin', {
+          title: 'Theta Tau Management',
+          user: req.user,
+          data: rows[0].data,
+          seeTable: true
+        });
+      }
     });
 };
 
@@ -48,33 +53,24 @@ exports.addMember = function(req, res) {
 	// Grab the input data
 	var json = req.body;
 
-	//Check if primary key constraint for id is broken or unique username broken
-  app.knex('members')
-    .select('*')
-    .where('id', json.reg_id)
-    .orWhere('username', json.reg_username)
-
-    .then(function(rows) {
-      console.log(rows.length + ' rows loaded.');
-      if( rows.length === 0 ){
-        return app.knex.insert({
-          active_id: json.reg_activeid,
-          first_name: json.reg_firstname,
-          last_name: json.reg_lastname,
-          username: json.reg_username,
-          password: json.reg_password,
-          email: json.reg_email,
-          phone_number: json.reg_phonenumber,
-          start_year: json.reg_startyear,
-          grad_year: json.reg_gradyear,
-          major: json.reg_major,
-          class: json.reg_class
-        })
-        .into('members')
-
-        .catch(function(error) {
-          console.error(error);
-        });
+  var host = req.headers.host;
+  request.post('http://' + host + '/api/members')
+    .send({
+      active_id: json.reg_activeid,
+      first_name: json.reg_firstname,
+      last_name: json.reg_lastname,
+      username: json.reg_username,
+      password: json.reg_password,
+      email: json.reg_email,
+      phone_number: json.reg_phonenumber,
+      start_year: json.reg_startyear,
+      grad_year: json.reg_gradyear,
+      major: json.reg_major,
+      class: json.reg_class
+    })
+    .end(function(err, resp) {
+      if(err) {
+        console.error(err);
       }
     });
   return res.redirect('/');
@@ -88,27 +84,27 @@ exports.adminViewUpdate = function(req, res) {
   }
 
   var id = req.params.id;
-  app.knex('members')
-    .select('*')
-    .where('id', id)
+  var host = req.headers.host;
 
-    .then(function(rows){
-      if(rows.length === 0) {
+  request.get('http://' + host + '/api/members/' + id)
+    .end(function(err, resp) {
+      var row = JSON.parse(JSON.stringify(resp.body));
+      console.log(row[0].data);
+      if(err || row[0].error) {
+        console.error(err);
         return res.redirect('/admin');
-      }
-      else {
+      } else {
         // Render admin update page and pass the data
         return res.render('admin', {
           title: 'Theta Tau Management',
           user: req.user,
-          data: rows,
+          data: row[0].data,
           seeUpdate: true,
-          updateURL: ('/admin/update/' + rows[0].id)
+          updateURL: ('/admin/update/' + row[0].data.id)
         });
       }
     });
 };
-
 
 // Execute UPDATE query on database to update a member
 exports.updateMember = function(req, res) {
@@ -120,8 +116,9 @@ exports.updateMember = function(req, res) {
   // Grab the input data
   var json = req.body;
 
-  app.knex('members')
-    .update({
+  var host = req.headers.host;
+  request.put('http://' + host + '/api/members/' + json.up_id)
+    .send({
       active_id: json.up_activeid,
       first_name: json.up_firstname,
       last_name: json.up_lastname,
@@ -133,13 +130,10 @@ exports.updateMember = function(req, res) {
       major: json.up_major,
       class: json.up_class
     })
-    .where('id', json.up_id)
-
-    .catch(function(error) {
-      console.error(error);
-    })
-
-    .then(function(){
+    .end(function(err, resp) {
+      if(err) {
+        console.error(err);
+      }
       return res.redirect('/admin');
     });
 };

@@ -2,35 +2,52 @@ var app = require('../../app');
 var bcrypt = require('bcrypt');
 
 exports.getMembers = function(req, res) {
+  var errMsg = [{
+    "error": "Cannot find member"
+  }];
+
   app.knex('members')
     .orderBy('id', 'asc')
     // Server error maybe
     .catch(function(error) {
       console.error(error);
-      return res.status(500).json(error);
+      return res.status(500).json(errMsg);
     })
     .then(function(rows) {
+      var successMsg = [{
+        "data": rows,
+        "message": "Found members successfully"
+      }];
       console.log(rows.length + ' member(s) returned');
-      return res.json(rows);
+      return res.status(200).json(successMsg);
     });
 };
 
 exports.getMember = function(req, res) {
   var member_id = req.params.memberid;
+
+  var errMsg = [{
+    "error": "Cannot find member"
+  }];
+
   app.knex('members')
     .where('id', member_id)
     // Server error maybe
     .catch(function(error) {
       console.error(error);
-      return res.status(500).json(error);
+      return res.status(500).json(errMsg);
     })
     .then(function(row) {
       // Cannot find member
       if(row.length === 0) {
-        return res.status(404).json(row);
+        return res.status(404).json(errMsg);
       // Found member
       } else {
-        return res.status(200).json(row);  
+        var successMsg = [{
+          "data": row,
+          "message": "Found member successfully"
+        }];
+        return res.status(200).json(successMsg);
       }
     });
 };
@@ -74,7 +91,10 @@ exports.checkMember = function(req, res) {
   // Get the request body
   var username = req.body.username;
   var password = req.body.password;
-  var done = req.body.done;
+
+  var errMsg = [{
+    "error": "Incorrect user/password combination."
+  }];
 
   app.knex('members').where({
       username: username
@@ -88,25 +108,34 @@ exports.checkMember = function(req, res) {
         }];
         return res.status(400).json(msg);
       } else {
+        var successMsg = [{
+          "id": rows[0].id,
+          "first_name": rows[0].first_name,
+          "username": rows[0].username,
+          "message": "Logged in successfully"
+        }];
+
+        // temporary solution in case some users don't have hashed pws
+        if(rows[0].salt === null) {
+          if(password === rows[0].password)
+            return res.status(200).json(successMsg);
+          else
+            return res.status(400).json(errMsg);
+        }
+
         // verify the given password with hashed password in db
         var hash = bcrypt.hashSync(password, rows[0].salt);
 
         // password is correct
         if(hash === rows[0].hashed_password) {
-          var msg = [{
-            "id": rows[0].id,
-            "first_name": rows[0].first_name,
-            "username": rows[0].username,
-            "message": "Logged in successfully"
-          }];
-          return res.status(200).json(msg);
+          return res.status(200).json(successMsg);
         } else { // password is incorrect
-          var msg = [{
-            "error": "Incorrect user/password combination."
-          }];
-          return res.status(400).json(msg);
+          return res.status(400).json(errMsg);
         }
       }
+    })
+    .catch(function(error) {
+      return res.status(400).json(errMsg);
     });
 };
 
@@ -212,17 +241,16 @@ exports.updateMember = function(req, res) {
     // Check if we were able to update the member
     .then(function(rows) {
       if(rows.length === 0) {
-        var msg = [{
+        var errMsg = [{
           "error": "Could not find member to update"
         }];
-        return res.status(404).json(msg);
-        
+        return res.status(404).json(errMsg);
       } else {
-        var msg2 = [{
+        var successMsg = [{
           "id": rows[0],
           "message": "Updated existing member"
         }];
-        return res.status(200).json(msg2);
+        return res.status(200).json(successMsg);
       }
     });
 };
@@ -243,17 +271,16 @@ exports.deleteMember = function(req, res) {
     // Check if we were able to delete member
     .then(function(rows) {
       if(rows.length === 0) {
-        var msg = [{
+        var errMsg = [{
           "error": "Could not find member to delete"
         }];
-        return res.status(404).json(msg);
-        
+        return res.status(404).json(errMsg);
       } else {
-        var msg2 = [{
+        var successMsg = [{
           "id": rows[0],
           "message": "Deleted a member"
         }];
-        return res.status(200).json(msg2);
+        return res.status(200).json(successMsg);
       }
     });
 };
