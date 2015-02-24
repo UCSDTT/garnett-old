@@ -31,6 +31,10 @@ block body
                   td
                     h4 Password
                   td
+                    h4 Hashed Password
+                  td
+                    h4 Salt
+                  td
                     h4 Email
                   td
                     h4 Phone
@@ -53,6 +57,8 @@ block body
                   td.rowlastname #{member.last_name}
                   td.rowusername #{member.username}
                   td.rowpassword #{member.password}
+                  td.rowhashedpassword #{member.hashed_password}
+                  td.rowsalt #{member.salt}
                   td.rowemail #{member.email}
                   td.rowphonenumber #{member.phone_number}
                   td.rowstartyear #{member.start_year}

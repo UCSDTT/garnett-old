@@ -95,6 +95,43 @@ Members related resources of the **Garnett API**. Actions for manipulating or re
             }
         ]
         
+## /members/login
+
+### Attempts to login with specified username and password [POST]
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "username": "mzluo",
+                "password": "somepassword"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+    
+            [
+                {
+                    "id": 1,
+                    "first_name": "Michael",
+                    "username": "mzluo"
+                    "message": "Logged in successfully"
+                }
+            ]
+            
++ Response 400 (application/json)
+
+    + Body
+
+            [
+                {
+                    "error": "Incorrect user/password combination."
+                }
+            ]
+
+        
 ## /members/{memberid}
 
 + Parameters

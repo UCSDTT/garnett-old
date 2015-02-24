@@ -2,22 +2,52 @@ extends layout
 
 block body
   .dashboard
-      .container
-          h1 Theta Tau UCSD Dashboard
-          br
-          br
+      .container.timeline-container
           div(ng-controller='AppCtrl')
-            p  Welcome, #{user}!
-            a(ng-click='logout()') Logout
-            ol.menu
-              li
-                a(href='timeline') view1
-              li
-                a(href='view2') view2
-              li
-                a(href='new') new events page
-
-            div(ng-view)
+          #wrapper
+            #sidebar-wrapper-left
+              ul.sidebar-nav.left
+                .row.top30
+                  .col-xs-offset-1.col-xs-6
+                      img.img-responsive.img-rounded(src='http://placehold.it/350x350', alt='Responsive image')
+                .row.top10
+                  .col-xs-offset-1.col-xs-11
+                    address
+                      strong John Doe
+                      br
+                      |   johndoe123@gmail.com
+                      br
+                      abbr(title='Phone') P:
+                      |  (123) 456-7890
+                      br
+                      strong Family:
+                      |  Incredibles
+                      br
+                      strong Class:
+                      |  Etas
+                
+            #page-content-wrapper
+              div(ng-view)
                       // div
                       //   | Angular seed app: v
                       //   span(app-version)
+            #sidebar-wrapper-right
+              ul.sidebar-nav.right
+                li.head-charm
+                  .glyphicon.charm.glyphicon-search
+                    a(href='#')
+                li
+                  .glyphicon.charm.glyphicon-envelope
+                    a(href='#')
+                li
+                  .glyphicon.charm.glyphicon-calendar
+                    a(href='#')
+                li
+                  .glyphicon.charm.glyphicon.glyphicon-folder-open
+                    a(href='#')
+                li
+                  .glyphicon.charm.glyphicon-usd
+                    a(href='#')
+                li
+                  .glyphicon.charm.glyphicon-cog
+                    a(href='#')
