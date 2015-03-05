@@ -1,12 +1,9 @@
 
 .container-fluid.center-column
   .page-header
-    .row
-      .col-xs-2
-        h1#timeline Timeline
-      .col-xs-3
-        a(href='/new' title="Create New Event")
-          .glyphicon.page_header_btn.glyphicon-plus
+    h1.header_text#timeline Timeline
+    a(href='/new' title="Create New Event")
+      .glyphicon.page_header_btn.plus.glyphicon-plus
   ul.timeline
     li(ng-class="{'timeline-inverted' : $index % 2 != 0}" ng-repeat="event in events")
       .timeline-badge

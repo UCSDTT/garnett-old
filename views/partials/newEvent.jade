@@ -1,12 +1,9 @@
 .container
 
   .page-header
-    .row
-      .col-xs-3
-        h1#timeline New Event
-      .col-xs-3
-        a(href='/timeline' title="Cancel New Event Creation")
-          .glyphicon.page_header_btn.glyphicon-remove
+      h1.header_text New Event
+      a(href='/timeline' title="Cancel New Event Creation")
+        .glyphicon.page_header_btn.x.glyphicon-remove
   if errors
     each error in errors
       div.alert.alert-danger
