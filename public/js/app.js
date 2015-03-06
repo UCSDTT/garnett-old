@@ -6,6 +6,7 @@ angular.module('garnett', [
   'ngRoute',
   'myApp.controllers',
   'timeline.controller',
+  'newEvent.controller',
   'myApp.filters',
   'myApp.services',
   'myApp.directives'
@@ -22,11 +23,7 @@ config(function ($routeProvider, $locationProvider) {
     }).
     when('/new', {
       templateUrl: 'partials/newEvent',
-      controller: 'EventsCtrl'
-    }).
-    when('/events/:eventId', {
-      templateUrl: 'partials/eventPage',
-      controller: 'EventPageCtrl'
+      controller: 'NewEventCtrl'
     }).
     otherwise({
       redirectTo: '/timeline'

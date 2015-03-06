@@ -42,5 +42,22 @@
           value=description
         )
     div.form-group
+      label.col-sm-4 Location
+      div.col-sm-8
+        input.form-control(
+          type='text',
+          ng-auto-complete='',
+          ng-model='result',
+          required=true,
+          name='eventLocation',
+          value=location
+        )
+    div.form-group
+      div.col-sm-offset-4.col-sm-8
+        ui-gmap-google-map(center='map.center', zoom='map.zoom')
+    div.form-group
       div.col-sm-offset-4.col-sm-8
         button.login.btn.btn-primary(type='submit' value='save') Create
+        
+      
+        
