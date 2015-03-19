@@ -11,7 +11,7 @@ exports.addEvent = function(req, res) {
 
 	//Check if primary key constraint for id is broken or unique username broken
   app.knex('events').insert({
-          title: json.reg_activeid,
+          title: json.eventName,
           description: json.description,
           budget: "",
           start_time: "2011-05-16T19:33:33.000Z",
