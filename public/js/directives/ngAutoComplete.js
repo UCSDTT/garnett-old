@@ -91,7 +91,6 @@ angular.module( "ngAutoComplete", [])
               scope.$apply(function() {
 
                 scope.details = result;
-
                 controller.$setViewValue(element.val());
               });
             }

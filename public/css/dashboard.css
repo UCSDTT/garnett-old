@@ -4,6 +4,18 @@
     border: 1px solid #bbbbbb;
 }
 
+.full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+}
+
+.partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+}
+
 .event-hr {
     border: none;
     height: 3px;

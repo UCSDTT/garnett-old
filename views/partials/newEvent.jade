@@ -13,7 +13,7 @@
       span Your profile has been saved
   form.login-form.form-horizontal(method='post', role='form', action='/event/add')
     input(name='_csrf', type='hidden', value=csrfToken)
-
+    
     div.form-group
       label.col-sm-4 Event Name
       div.col-sm-8
@@ -24,13 +24,25 @@
           type='text',
           value=eventName)
     div.form-group
+      label.col-sm-4 Event Type
+      div.col-sm-8
+        select.form-control(
+          required = true,
+          name = 'eventType',
+          value = eventType)
+          option 1
+          option 2
+          option 3
+          option 4
+          option 5
+    div.form-group
       label.col-sm-4 Event Date
       div.col-sm-8
-        input.form-control(placeholder='Enter Event Date',
-          required=true,
-          name='date',
-          type='text',
-          value=date)
+        p.input-group
+          input.form-control(type="text", datepicker-popup="dd-MMMM-yyyy", ng-model="dt", is-open="opened", min-date="minDate", max-date="'2015-06-22'", datepicker-options="dateOptions", date-disabled="disabled(date, mode)", ng-required="true", close-text="Close")
+          span.input-group-btn
+            button.btn.btn-default(type="button", ng-click="open($event)")
+              i.glyphicon.glyphicon-calendar
     div.form-group
       label.col-sm-4 Event Description
       div.col-sm-8
@@ -50,11 +62,14 @@
           ng-model='result',
           required=true,
           name='eventLocation',
-          value=location
+          value=location,
+          details="details",
+          options="options"
         )
     div.form-group
       div.col-sm-offset-4.col-sm-8
         ui-gmap-google-map(center='map.center', zoom='map.zoom')
+          ui-gmap-marker(coords="marker.coords", options="marker.options", idkey="marker.id")
     div.form-group
       div.col-sm-offset-4.col-sm-8
         button.login.btn.btn-primary(type='submit' value='save') Create
