@@ -1,17 +1,88 @@
 var app = require('../../app');
+var TOTAL_EVENTS = 10;
 
 exports.getEvents = function(req, res) {
-  app.knex('events')
-    .orderBy('id', 'asc')
-    // Server error maybe
-    .catch(function(error) {
-      console.error(error);
-      return res.status(500).json(error);
-    })
-    .then(function(rows) {
-      console.log(rows.length + ' event(s) returned');
-      return res.json(rows);
-    });
+  if(!req.query || req.query.length == 0) {
+    app.knex('events')
+      .orderBy('id', 'asc')
+      // Server error maybe
+      .catch(function(error) {
+        console.error(error);
+        return res.status(500).json(error);
+      })
+      .then(function(rows) {
+        console.log(rows.length + ' event(s) returned');
+        return res.json(rows);
+      });
+  } else {
+    var query = req.query;
+    // Get the 10 events closest to the current time, whether it has happened or
+    // will happen. We want to try to distribute the number of events before
+    // and after evenly (5 and 5)
+    if(query.since == 'now') {
+      var timeNow = new Date(Date.now());
+      // First db query to get prior events
+      app.knex('events')
+        .where('start_time', '<', timeNow)
+        .limit(TOTAL_EVENTS)
+        .orderBy('id', 'desc')
+        // Server error maybe
+        .catch(function(error) {
+          console.error(error);
+          return res.status(500).json(error);
+        })
+        .then(function(eventsBefore) {
+          console.log(eventsBefore.length + ' event(s) before now returned');
+
+          // Second db query to get after events
+          app.knex('events')
+            .where('start_time', '>', timeNow)
+            .limit(TOTAL_EVENTS)
+            .orderBy('id', 'asc')
+            // Server error maybe
+            .catch(function(error) {
+              console.error(error);
+              return res.status(500).json(error);
+            })
+            .then(function(eventsAfter) {
+              console.log(eventsAfter.length + ' event(s) after now returned');
+
+              var numEventsBefore = eventsBefore.length;
+              var numEventsAfter = eventsAfter.length;
+
+              console.log(eventsBefore);
+              console.log('\n\n\n');
+              console.log(eventsAfter);
+
+              // temporary hacky way to build the resulting size 10 or lower array
+              var resultEvents = [];
+
+              if(numEventsBefore + numEventsAfter <= TOTAL_EVENTS) {
+                // TODO test this case
+                resultEvents = eventsBefore.reverse().concat(eventsAfter);
+              } else if(numEventsBefore >= TOTAL_EVENTS/2 && numEventsAfter >= TOTAL_EVENTS/2) {
+                resultEvents = eventsBefore.slice(0, TOTAL_EVENTS/2).reverse();
+                resultEvents = resultEvents.concat(eventsAfter.slice(0, TOTAL_EVENTS/2));
+              } else {
+                // if two arrays are uneven
+                if(numEventsBefore < TOTAL_EVENTS/2) {
+                  // TODO test this case
+                  resultEvents = eventsBefore.reverse();
+                  resultEvents = resultEvents.concat(eventsAfter.slice(0, TOTAL_EVENTS - numEventsBefore));
+                } else if(numEventsAfter < TOTAL_EVENTS/2) {
+                  resultEvents = eventsBefore.slice(0, TOTAL_EVENTS - numEventsAfter).reverse();
+                  resultEvents = resultEvents.concat(eventsAfter);
+                }
+              }
+
+              return res.status(200).json(resultEvents);
+            });
+
+        });
+    } else {
+      return res.json({});
+    }
+  }
 };
 
 exports.getEvent = function(req, res) {
@@ -50,7 +121,7 @@ exports.getEventAttendees = function(req, res) {
   var subquery = app.knex('attending')
     .where('event_id', event_id)
     .select('member_id');
-    
+
   app.knex('members')
     .where('id', 'in', subquery)
     .orderBy('first_name', 'asc')
@@ -101,7 +172,7 @@ exports.createEvent = function(req, res) {
 exports.updateEvent = function(req, res) {
   var event_id = req.params.eventid;
   var event = {};
-  
+
   // Get the body, do not updated created_by field
   event.title = req.body.title;
   event.description = req.body.description;
@@ -111,7 +182,7 @@ exports.updateEvent = function(req, res) {
   event.location = req.body.location;
   event.updated_on = Date.now().toISOString();
   event.event_type = req.body.event_type;
-  
+
   // TODO: Update the event ONLY IF this user is the creator
   app.knex('events')
     .update(event)
@@ -129,7 +200,7 @@ exports.updateEvent = function(req, res) {
           "error": "Could not find event to update"
         }];
         return res.status(404).json(msg);
-        
+
       } else {
         var msg2 = [{
           "id": rows[0],
@@ -142,7 +213,7 @@ exports.updateEvent = function(req, res) {
 
 exports.deleteEvent = function(req, res) {
   var event_id = req.params.eventid;
-  
+
   // Delete event id
   app.knex('events')
     .where('id', event_id)
@@ -160,7 +231,7 @@ exports.deleteEvent = function(req, res) {
           "error": "Could not find event to delete"
         }];
         return res.status(404).json(msg);
-        
+
       } else {
         var msg2 = [{
           "id": rows[0],
