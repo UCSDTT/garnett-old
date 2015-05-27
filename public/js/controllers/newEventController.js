@@ -121,4 +121,6 @@ angular.module('newEvent.controller', ['uiGmapgoogle-maps', 'ngAutoComplete', 'u
         
             return '';
         };
+        
+        
     });
