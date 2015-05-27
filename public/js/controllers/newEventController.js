@@ -118,9 +118,28 @@ angular.module('newEvent.controller', ['uiGmapgoogle-maps', 'ngAutoComplete', 'u
                     }
                 }
             }
-        
             return '';
         };
         
+        //Time Picker
+        $scope.starttime = new Date();
+        $scope.starttime.setHours(12);
+        $scope.starttime.setMinutes(0);
+        $scope.hstep = 1;
+        $scope.mstep = 1;
         
+        $scope.endtime = new Date();
+        $scope.endtime.setHours(12);
+        $scope.endtime.setMinutes(0);
+        
+        $scope.changed = function () {
+            if($scope.endtime - $scope.starttime < 0){
+                $scope.endtime = $scope.starttime;
+            }
+        };
+        
+        $scope.ismeridian = true;
+        $scope.toggleMode = function() {
+            $scope.ismeridian = ! $scope.ismeridian;
+        };
     });

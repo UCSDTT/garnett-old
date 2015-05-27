@@ -36,10 +36,52 @@
           option 4
           option 5
     div.form-group
+      label.col-sm-4 Start Time
+      div.col-sm-8
+        timepicker(
+          ng-model='starttime', 
+          ng-change='changed()', 
+          hour-step='hstep', 
+          minute-step='mstep', 
+          show-meridian='ismeridian')
+        input.form-control(
+          required=true,
+          type = 'hidden',
+          name='startTime',
+          value="{{starttime}}")
+    div.form-group
+      label.col-sm-4 End Time
+      div.col-sm-8
+        timepicker(
+          ng-model='endtime', 
+          ng-change='changed()', 
+          hour-step='hstep', 
+          minute-step='mstep', 
+          show-meridian='ismeridian')
+        input.form-control(
+          required=true,
+          type = 'hidden',
+          name='endTime',
+          value="{{endtime}}")
+    div.form-group
+      label.col-sm-4 
+    div.form-group
       label.col-sm-4 Event Date
       div.col-sm-8
         p.input-group
-          input.form-control(type="text", datepicker-popup="dd-MMMM-yyyy", ng-model="dt", is-open="opened", min-date="minDate", max-date="'2015-06-22'", datepicker-options="dateOptions", date-disabled="disabled(date, mode)", ng-required="true", close-text="Close")
+          input.form-control(
+            type="text", 
+            datepicker-popup="yyyy-MM-dd", 
+            ng-model="dt", 
+            is-open="opened", 
+            min-date="minDate", 
+            max-date="'2015-06-22'", 
+            datepicker-options="dateOptions", 
+            date-disabled="disabled(date, mode)", 
+            ng-required="true", 
+            close-text="Close",
+            name = "eventDate",
+            value = eventDate)
           span.input-group-btn
             button.btn.btn-default(type="button", ng-click="open($event)")
               i.glyphicon.glyphicon-calendar
@@ -50,8 +92,8 @@
           placeholder='Enter Description Here...',
           rows='6',
           required=true,
-          name='description'
-          value=description
+          name='eventDescription'
+          value=eventDescription
         )
     div.form-group
       label.col-sm-4 Location
@@ -62,10 +104,9 @@
           ng-model='result',
           required=true,
           name='eventLocation',
-          value=location,
+          value=eventLocation,
           details="details",
-          options="options"
-        )
+          options="options")
     div.form-group
       div.col-sm-offset-4.col-sm-8
         ui-gmap-google-map(center='map.center', zoom='map.zoom')
