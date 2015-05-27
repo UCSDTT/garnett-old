@@ -1,8 +1,15 @@
 var app = require('../../app');
-var TOTAL_EVENTS = 10;
 
+// List of query params:
+// since - 'now'
+// prev - [a datetime]
+// next - [a datetime]
+
+// total events must be even or else there will be a bug
+var TOTAL_EVENTS = 10;
 exports.getEvents = function(req, res) {
-  if(!req.query || req.query.length == 0) {
+  if(Object.keys(req.query).length === 0) {
+    console.log('here');
     app.knex('events')
       .orderBy('id', 'asc')
       // Server error maybe
@@ -16,16 +23,17 @@ exports.getEvents = function(req, res) {
       });
   } else {
     var query = req.query;
+    // Default timeline ordering.
     // Get the 10 events closest to the current time, whether it has happened or
     // will happen. We want to try to distribute the number of events before
     // and after evenly (5 and 5)
-    if(query.since == 'now') {
+    if(query.since && query.since == 'now') {
       var timeNow = new Date(Date.now());
       // First db query to get prior events
       app.knex('events')
         .where('start_time', '<', timeNow)
         .limit(TOTAL_EVENTS)
-        .orderBy('id', 'desc')
+        .orderBy('start_time', 'desc')
         // Server error maybe
         .catch(function(error) {
           console.error(error);
@@ -38,7 +46,7 @@ exports.getEvents = function(req, res) {
           app.knex('events')
             .where('start_time', '>', timeNow)
             .limit(TOTAL_EVENTS)
-            .orderBy('id', 'asc')
+            .orderBy('start_time', 'asc')
             // Server error maybe
             .catch(function(error) {
               console.error(error);
@@ -47,12 +55,10 @@ exports.getEvents = function(req, res) {
             .then(function(eventsAfter) {
               console.log(eventsAfter.length + ' event(s) after now returned');
 
+              var resultObject = {};
+
               var numEventsBefore = eventsBefore.length;
               var numEventsAfter = eventsAfter.length;
-
-              console.log(eventsBefore);
-              console.log('\n\n\n');
-              console.log(eventsAfter);
 
               // temporary hacky way to build the resulting size 10 or lower array
               var resultEvents = [];
@@ -75,9 +81,108 @@ exports.getEvents = function(req, res) {
                 }
               }
 
-              return res.status(200).json(resultEvents);
+              // put events in returned object
+              resultObject.data = resultEvents;
+
+              // build the next and prev links if there are more events to show
+              if(resultEvents.length === TOTAL_EVENTS) {
+                var earliestDate = new Date(resultEvents[0].start_time);
+                var latestDate = new Date(resultEvents[resultEvents.length-1].start_time);
+
+                var prevUrl = 'http://' + req.hostname;
+                if(req.hostname === 'localhost' || req.hostname === '127.0.0.1') {
+                  prevUrl = prevUrl + ':' + req.app.settings.port;
+                }
+                prevUrl = encodeURI(prevUrl + '/api/events?prev=' + earliestDate);
+
+                var nextUrl = 'http://' + req.hostname;
+                if(req.hostname === 'localhost' || req.hostname === '127.0.0.1') {
+                  nextUrl = nextUrl + ':' + req.app.settings.port;
+                }
+                nextUrl = encodeURI(nextUrl + '/api/events?next=' + latestDate);
+
+                // put paging urls in returned object
+                resultObject.paging = {};
+                resultObject.paging.prev = prevUrl;
+                resultObject.paging.next = nextUrl;
+              }
+
+              console.log(resultEvents.length + ' event(s) from events before and after now returned');
+              console.log(resultObject);
+              return res.status(200).json(resultObject);
             });
 
+        });
+    // following the prev link for pagination
+    } else if(query.prev) {
+      var beforeDate = query.prev;
+      var resultObject = {};
+
+      app.knex('events')
+        .where('start_time', '<', new Date(beforeDate))
+        .limit(TOTAL_EVENTS)
+        .orderBy('start_time', 'asc')
+        // Server error maybe
+        .catch(function(error) {
+          console.error(error);
+          return res.status(500).json(error);
+        })
+        .then(function(resultEvents) {
+          console.log(resultEvents.length + ' event(s) before ' + beforeDate + ' returned');
+          // put events in returned object
+          resultObject.data = resultEvents;
+
+          // build the prev link if there are more events to show
+          if(resultEvents.length === TOTAL_EVENTS) {
+            var earliestDate = new Date(resultEvents[0].start_time);
+
+            var prevUrl = 'http://' + req.hostname;
+            if(req.hostname === 'localhost' || req.hostname === '127.0.0.1') {
+              prevUrl = prevUrl + ':' + req.app.settings.port;
+            }
+            prevUrl = encodeURI(prevUrl + '/api/events?prev=' + earliestDate);
+
+            // put paging url in returned object
+            resultObject.paging = {};
+            resultObject.paging.prev = prevUrl;
+          }
+
+          return res.json(resultObject);
+        });
+    } else if(query.next) {
+      var latestDate = query.next;
+      var resultObject = {};
+
+      app.knex('events')
+        .where('start_time', '>', new Date(latestDate))
+        .limit(TOTAL_EVENTS)
+        .orderBy('start_time', 'desc')
+        // Server error maybe
+        .catch(function(error) {
+          console.error(error);
+          return res.status(500).json(error);
+        })
+        .then(function(resultEvents) {
+          console.log(resultEvents.length + ' event(s) after ' + query.next + ' returned');
+          // put events in returned object
+          resultObject.data = resultEvents;
+
+          // build the next link if there are more events to show
+          if(resultEvents.length === TOTAL_EVENTS) {
+            var latestDate = new Date(resultEvents[0].start_time);
+
+            var nextUrl = 'http://' + req.hostname;
+            if(req.hostname === 'localhost' || req.hostname === '127.0.0.1') {
+              nextUrl = nextUrl + ':' + req.app.settings.port;
+            }
+            nextUrl = encodeURI(nextUrl + '/api/events?next=' + latestDate);
+
+            // put paging url in returned object
+            resultObject.paging = {};
+            resultObject.paging.next = prevUrl;
+          }
+
+          return res.json(resultObject);
         });
     } else {
       return res.json({});

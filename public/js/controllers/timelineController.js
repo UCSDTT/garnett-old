@@ -7,7 +7,7 @@ angular.module('timeline.controller', []).
     $http.get('/api/events?since=now').
       success(function(data, status, headers, config) {
         console.log(data);
-        data.forEach( function (item) {
+        data.data.forEach( function (item) {
           $scope.events.push(item);
         });
       }).
