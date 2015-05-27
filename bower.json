@@ -23,7 +23,9 @@
     "angular-route": "*",
     "bootstrap": "*",
     "font-awesome": "*",
-    "jquery": "*"
+    "jquery": "*",
+    "lodash": "*",
+    "angular-google-maps": "*"
   },
   "resolutions": {
     "angular": "~1.3.3"
